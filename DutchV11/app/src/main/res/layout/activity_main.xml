@@ -2,9 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -42,67 +43,61 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/searchlocationbutton1"
-                    style="@style/MainSearchLocationButton"
+                <LinearLayout
+                    android:id="@+id/buttonview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="첫번째 위치 설정하기"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></Button>
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/searchlocationbutton2"
-                    style="@style/MainSearchLocationButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="두번째 위치 설정하기"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/searchlocationbutton1"></Button>
+                    <Button
+                        android:id="@+id/serachlocationbutton1"
+                        style="@style/MainSearchLocationButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1번 위치를 입력해주세요"></Button>
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/add_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/searchlocationbutton2"></ImageButton>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+                    <Button
+                        android:id="@+id/serachlocationbutton2"
+                        style="@style/MainSearchLocationButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2번 위치를 입력해주세요"></Button>
 
-        <com.tomer.fadingtextview.FadingTextView
-            android:layout_width="match_parent"
+                </LinearLayout>
+            </ScrollView>
+
+
+        <ImageButton
+            android:id="@+id/plusbutton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:background="@drawable/add_black_24dp"
             app:layout_constraintBottom_toTopOf="@+id/searchmiddlelocationbutton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:texts="@array/maininfotext"
-            app:timeout="500"></com.tomer.fadingtextview.FadingTextView>
+            app:layout_constraintStart_toStartOf="parent"></ImageButton>
 
         <Button
             android:id="@+id/searchmiddlelocationbutton"
             style="@style/ButtonMiddleLocationSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:background="@drawable/button_middle_location_search"
             android:text="중간지점 찾기"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -110,4 +105,5 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+</LinearLayout></layout>
