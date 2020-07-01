@@ -6,14 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginLeft
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.first.dutchv11.databinding.ActivityMainBinding
 import java.security.MessageDigest
 
@@ -27,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         getAppKeyHash()
-        val buttonview = findViewById<LinearLayout>(R.id.buttonview)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.serachlocationbutton1.setOnClickListener {

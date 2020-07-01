@@ -25,11 +25,13 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageButton>
 
 
             <TextView
+                android:id="@+id/textView"
                 style="@style/MainText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

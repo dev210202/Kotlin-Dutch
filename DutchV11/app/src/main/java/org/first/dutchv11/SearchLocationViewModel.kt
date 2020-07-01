@@ -1,35 +1,33 @@
 package org.first.dutchv11
 
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.databinding.BaseObservable
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import org.first.dutchv11.Data.LocationData
 import java.util.ArrayList
-import java.util.logging.Handler
 
 class SearchLocationViewModel : ViewModel() {
     lateinit var input: String
     lateinit var item: TMapPOIItem
-    var locationList = mutableListOf<LocationData>()
-    var isComplete = 0
-    var COMPLETE = 1
-    var LOAD_FAIL = -1
+    var locationList = MutableLiveData<ArrayList<LocationData>>()
+    lateinit var locationArrayList : ArrayList<LocationData>
+    var isDataLoadFail = MutableLiveData<Boolean>()
+
     lateinit var locationdata : LocationData
     fun searchLocationData() {
         var tMapData = TMapData()
+//        locationList = MutableLiveData<ArrayList<LocationData>>()
+        locationArrayList = ArrayList<LocationData>()
         if (input != "") {
 
             Log.e("Search Start", "1")
             tMapData.findAllPOI(input, object : TMapData.FindAllPOIListenerCallback {
                 override fun onFindAllPOI(p0: ArrayList<TMapPOIItem>?) {
                     if (p0?.size == 0) {
-                        isComplete = LOAD_FAIL
+                        isDataLoadFail.postValue(true)
+                        Log.e("FAIL","!!")
                     } else {
                         for (i in 0..p0!!.size - 1)
                         {
@@ -43,10 +41,11 @@ class SearchLocationViewModel : ViewModel() {
                                     item.poiPoint.latitude,
                                     item.poiPoint.longitude
                                 )
-                                locationList.add(locationdata)
+                                locationArrayList.add(locationdata)
+                                locationList.postValue(locationArrayList)
                             }
 
-                            isComplete = COMPLETE
+
 
                         }
                         Log.e("Search End", "1")
