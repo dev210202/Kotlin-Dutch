@@ -23,9 +23,10 @@
            android:layout_weight="1">
 
            <TextView
+               android:text="세종대"
                android:id="@+id/nametextview"
                android:paddingLeft="10dp"
-               android:paddingTop="10dp"
+               android:paddingTop="5dp"
                android:gravity="start"
                android:textColor="@color/black"
                android:textStyle="bold"
@@ -34,10 +35,12 @@
                android:layout_height="wrap_content">
            </TextView>
            <TextView
+               android:text="세종대"
                android:id="@+id/addresstextview"
                android:textColor="@color/black"
                android:paddingLeft="10dp"
                android:paddingTop="5dp"
+               android:paddingBottom="5dp"
                android:gravity="start"
                android:textSize="20dp"
                android:layout_width="match_parent"
@@ -51,6 +54,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/locationsetbutton"
                 android:textSize="20dp"
                 android:background="@color/black"
                 android:textColor="@color/white"

@@ -50,7 +50,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
@@ -72,18 +72,20 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:textColor="@color/black"
                         android:id="@+id/serachlocationbutton1"
                         style="@style/MainSearchLocationButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="1번 위치를 입력해주세요"></Button>
+                        android:text="위치를 입력해주세요"></Button>
 
                     <Button
+                        android:textColor="@color/black"
                         android:id="@+id/serachlocationbutton2"
                         style="@style/MainSearchLocationButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="2번 위치를 입력해주세요"></Button>
+                        android:text="위치를 입력해주세요"></Button>
 
                 </LinearLayout>
             </ScrollView>
@@ -91,6 +93,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1">
@@ -102,10 +105,21 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="20dp"
         android:background="@drawable/add_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/searchmiddlelocationbutton"
+        app:layout_constraintBottom_toTopOf="@+id/fadingTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></ImageButton>
-
+    <com.tomer.fadingtextview.FadingTextView
+        android:id="@+id/fadingTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/searchmiddlelocationbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:texts="@array/maininfotext"
+        app:timeout="500"></com.tomer.fadingtextview.FadingTextView>
         <Button
             android:id="@+id/searchmiddlelocationbutton"
             style="@style/ButtonMiddleLocationSearch"
