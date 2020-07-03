@@ -16,9 +16,9 @@ import org.first.dutchv11.databinding.ActivityLocationCheckBinding
 
 class LocationCheckActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityLocationCheckBinding
-    lateinit var locationInfo : LocationData
-    lateinit var tMapView : TMapView
+    private lateinit var binding : ActivityLocationCheckBinding
+    private lateinit var locationInfo : LocationData
+    private lateinit var tMapView : TMapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

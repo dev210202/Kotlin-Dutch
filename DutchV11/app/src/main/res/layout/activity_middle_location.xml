@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/middlemapview"
+            android:layout_width="match_parent"
+            android:layout_weight="8"
+            android:layout_height="0dp">
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="세종대"
+                android:id="@+id/middlenametextview"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:gravity="start"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <TextView
+                android:text="세종대"
+                android:id="@+id/middleaddresstextview"
+                android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="start"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:text="인근 지하철역 : 없음"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:id="@+id/nearsubwaytextview"
+                android:textColor="@color/colorPrimary"
+                android:gravity="end"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/orange"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/nearfacilitybutton"
+                android:textSize="20dp"
+                android:background="@color/orange"
+                android:textColor="@color/white"
+                android:text="주변시설 확인하기"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

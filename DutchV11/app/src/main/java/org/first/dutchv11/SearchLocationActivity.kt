@@ -21,8 +21,8 @@ import org.first.dutchv11.databinding.ActivitySearchLocationBinding
 
 class SearchLocationActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivitySearchLocationBinding
-    lateinit var viewModel: SearchLocationViewModel
+    private lateinit var binding: ActivitySearchLocationBinding
+    private lateinit var viewModel: SearchLocationViewModel
     var REQUEST_OK = 20
 
     override fun onCreate(savedInstanceState: Bundle?) {
