@@ -3,8 +3,8 @@
 
 
     <string-array name="maininfotext">
+        <item>+ 버튼을 눌러 설정할 위치를 추가하세요</item>
         <item>2개 이상의 위치를 설정하고 중간지점 찾기 버튼을 눌러주세요</item>
-        <item>+ 버튼을 누르면 더 많은 위치를 설정하실 수 있습니다</item>
     </string-array>
 
 </resources>

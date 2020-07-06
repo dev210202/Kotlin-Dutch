@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +30,7 @@ class SearchLocationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_location)
-        var tmapAPI = TMapTapi(this)
+        val tmapAPI = TMapTapi(this)
         tmapAPI.setSKTMapAuthentication("l7xx75e02f3eccaa4f56b3f269cb4a9f2b43")
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_location)
@@ -44,7 +46,7 @@ class SearchLocationActivity : AppCompatActivity() {
             }
 
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                setTouchEvent(rv,e)
+                setTouchEvent(rv, e)
                 return false
             }
 
@@ -53,13 +55,24 @@ class SearchLocationActivity : AppCompatActivity() {
             }
 
         })
+        binding.inputedittext.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+
+                viewModel.input = binding.inputedittext.text.toString()
+                viewModel.searchLocationData()
+                true
+            } else {
+                false
+            }
+
+        }
         binding.searchButton.setOnClickListener {
 
             viewModel.input = binding.inputedittext.text.toString()
             viewModel.searchLocationData()
 
         }
-        var isDataLoadFailObserver: Observer<Boolean> =
+        val isDataLoadFailObserver: Observer<Boolean> =
             Observer { isFail ->
                 if (isFail) {
                     Log.e("Toast", "!")
@@ -68,23 +81,22 @@ class SearchLocationActivity : AppCompatActivity() {
             }
         viewModel.isDataLoadFail.observe(this, isDataLoadFailObserver)
 
-        var locationLiveDataObserver: Observer<ArrayList<LocationData>> =
-            Observer { livedata ->
-                var newAdapter = RecyclerAdapter(this, viewModel.locationList)
+        val locationLiveDataObserver: Observer<ArrayList<LocationData>> =
+            Observer {
+                val newAdapter = RecyclerAdapter(this, viewModel.locationList)
                 binding.recyclerview.adapter = newAdapter
             }
         viewModel.locationList.observe(this, locationLiveDataObserver)
     }
 
 
-
-    fun setTouchEvent(rv : RecyclerView, e : MotionEvent){
-        var child = rv.findChildViewUnder(e.getX(), e.getY())
+    fun setTouchEvent(rv: RecyclerView, e: MotionEvent) {
+        val child = rv.findChildViewUnder(e.x, e.y)
         if (child != null) {
-            var position = rv.getChildAdapterPosition(child)
-            var itemView = rv.layoutManager!!.findViewByPosition(position)
+            val position = rv.getChildAdapterPosition(child)
+            val itemView = rv.layoutManager!!.findViewByPosition(position)
             itemView?.setOnClickListener {
-                var intent =
+                val intent =
                     Intent(this@SearchLocationActivity, LocationCheckActivity::class.java)
                 intent.putExtra(
                     "locationName",
@@ -96,20 +108,21 @@ class SearchLocationActivity : AppCompatActivity() {
                 )
                 intent.putExtra(
                     "latitude",
-                    viewModel.locationList.value!!.get(position).latitude
+                    viewModel.locationList.value!![position].latitude
                 )
                 intent.putExtra(
                     "longitude",
-                    viewModel.locationList.value!!.get(position).longitude
+                    viewModel.locationList.value!![position].longitude
                 )
 
                 startActivityForResult(intent, REQUEST_OK)
             }
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_OK){
+        if (requestCode == REQUEST_OK) {
             Log.e("SearchL REQUEST OK", "1")
             if (resultCode == Activity.RESULT_OK) {
                 Log.e("SearchL A REQUEST OK", "1")

@@ -71,21 +71,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <Button
-                        android:textColor="@color/black"
-                        android:id="@+id/searchlocationbutton1"
-                        style="@style/MainSearchLocationButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="위치를 입력해주세요"></Button>
 
-                    <Button
-                        android:textColor="@color/black"
-                        android:id="@+id/searchlocationbutton2"
-                        style="@style/MainSearchLocationButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="위치를 입력해주세요"></Button>
 
                 </LinearLayout>
             </ScrollView>

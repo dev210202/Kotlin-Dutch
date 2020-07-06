@@ -21,6 +21,7 @@
 
 
             <EditText
+                android:inputType="textPostalAddress"
                 android:id="@+id/inputedittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
