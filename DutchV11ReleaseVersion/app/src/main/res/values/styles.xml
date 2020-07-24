@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/orange</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="ButtonWhiteBig">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="MainTopBackground">
+
+        <item name="android:background">#000000</item>
+
+    </style>
+
+    <style name="MainLogo">
+
+        <item name="android:background">@drawable/logo36</item>
+
+    </style>
+
+    <style name="MainText">
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:text">중간지점을 찾기 위한\n위치를 입력해주세요</item>
+        <item name="android:textSize">26dp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="MainSearchLocationButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@drawable/button_main_location_search</item>
+
+    </style>
+
+
+    <style name="ButtonMiddleLocationSearch">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+</resources>
