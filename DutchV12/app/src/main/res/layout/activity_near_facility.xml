@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="당신이 찾은 중간지점을 \n친구들과 공유하세요"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+                <Button
+                    android:textStyle="bold"
+                    android:id="@+id/transbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearfacility_traffic_button"
+                    android:gravity="fill"
+                    android:paddingLeft="15dp"
+                    android:text="대중교통"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"></Button>
+
+                <Button
+
+                    android:textStyle="bold"
+                    android:id="@+id/culturebutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearfacility_culture_button"
+                    android:gravity="fill"
+                    android:paddingLeft="15dp"
+                    android:text="문화시설"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"></Button>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                <Button
+
+                    android:textStyle="bold"
+                    android:paddingLeft="15dp"
+                    android:gravity="fill"
+                    android:text="음식점"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:id="@+id/foodbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/nearfacility_restaurant_button"></Button>
+
+                <Button
+
+                    android:textStyle="bold"
+                    android:paddingLeft="15dp"
+                    android:gravity="fill"
+                    android:text="카페"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:id="@+id/cafebutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/nearfacility_button"></Button>
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</layout>

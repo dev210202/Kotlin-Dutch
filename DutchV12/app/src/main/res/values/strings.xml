@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">더치</string>
+
+
+    <string-array name="maininfotext">
+        <item>+ 버튼을 눌러 설정할 위치를 추가하세요</item>
+        <item>2개 이상의 위치를 설정하고 중간지점 찾기 버튼을 눌러주세요</item>
+    </string-array>
+
+</resources>
