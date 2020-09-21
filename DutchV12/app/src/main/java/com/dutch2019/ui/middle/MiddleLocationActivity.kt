@@ -11,6 +11,7 @@ import com.dutch2019.R
 import com.dutch2019.databinding.ActivityMiddleLocationBinding
 import com.dutch2019.ui.nearfacillity.NearFacilityActivity
 import com.dutch2019.ui.setting.SettingActivity
+import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 import java.lang.Exception
 
@@ -75,14 +76,25 @@ class MiddleLocationActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == SETTING_OK) {
-            Log.e("SETTING OK!!","!")
+            Log.e("SETTING OK!!", "!")
             if (data != null) {
-               // viewModel.setChangePoint(data.getStringArrayListExtra("ratioArrayList"), tMapView, this)
-                viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
+                var APoint = TMapPoint(
+                    data.getDoubleExtra("APointLat", 0.0),
+                    data.getDoubleExtra("APointLon", 0.0)
+                )
+                var BPoint = TMapPoint(
+                    data.getDoubleExtra("BPointLat", 0.0),
+                    data.getDoubleExtra("BPointLon", 0.0)
+                )
+                var ratio = data.getIntExtra("progressValue", 0)
+
+                    viewModel.setChangePoint(APoint, BPoint, ratio)
+                    viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
+
             }
-        }
-        else if(resultCode == RESET_OK){
+        } else if (resultCode == RESET_OK) {
             viewModel.resetChangePoint(tMapView)
         }
     }
 }
+

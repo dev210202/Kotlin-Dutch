@@ -1,4 +1,4 @@
-package com.dutch2019.Data
+package com.dutch2019.data
 
 data class LocationData(
     var locationName : String,

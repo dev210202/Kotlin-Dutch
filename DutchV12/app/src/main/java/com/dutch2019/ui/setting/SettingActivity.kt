@@ -1,6 +1,5 @@
 package com.dutch2019.ui.setting
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.databinding.DataBindingUtil
-import com.dutch2019.Adapter.RatioRecyclerAdapter
-import com.dutch2019.Data.LocationData
-import com.dutch2019.Data.LocationSetData
+import com.dutch2019.adapter.RatioRecyclerAdapter
+import com.dutch2019.data.LocationSetData
 import com.dutch2019.R
-import com.dutch2019.databinding.ActivityMainBinding
 import com.dutch2019.databinding.ActivitySettingBinding
-import com.dutch2019.ui.main.MainViewModel
-import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : AppCompatActivity() {
 
@@ -23,6 +18,7 @@ class SettingActivity : AppCompatActivity() {
     lateinit var dialog: Dialog
     var SETTING_OK = 22
     var RESET_OK = 23
+    var value = 4;
     lateinit var adapter: RatioRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +29,7 @@ class SettingActivity : AppCompatActivity() {
         binding.ratioRecyclerview.adapter = adapter
 
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            var value = 0;
+
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 value = progress
                 binding.seekbarvalueTextview.text = "" + (value + 1) + ":" + (9 - value)
@@ -54,11 +50,19 @@ class SettingActivity : AppCompatActivity() {
         }
         binding.okButton.setOnClickListener {
             var intent = Intent()
-            intent.putExtra("ratioArrayList", adapter.getRatioArrayList())
+
+            intent.putExtra("progressValue", value + 1)
+
+            var pointArray = adapter.getRatioPointArrayList()
+
+            intent.putExtra("APointLat",pointArray[0].latitude)
+            intent.putExtra("APointLon",pointArray[0].longitude)
+            intent.putExtra("BPointLat",pointArray[1].latitude)
+            intent.putExtra("BPointLon",pointArray[1].longitude)
+
             setResult(SETTING_OK, intent)
             finish()
         }
-        binding.ratioRecyclerview.adapter
     }
 
     fun resetButtonClicked(view: View) {

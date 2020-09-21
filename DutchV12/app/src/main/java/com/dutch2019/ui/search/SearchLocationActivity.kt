@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skt.Tmap.TMapTapi
 import kotlinx.android.synthetic.main.location_list_item.view.*
-import com.dutch2019.Adapter.SearchRecyclerAdapter
-import com.dutch2019.Data.LocationData
+import com.dutch2019.adapter.SearchRecyclerAdapter
+import com.dutch2019.data.LocationData
 import com.dutch2019.ui.locationcheck.LocationCheckActivity
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivitySearchLocationBinding

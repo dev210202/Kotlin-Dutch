@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
-import com.dutch2019.Data.LocationData
+import com.dutch2019.data.LocationData
 import java.util.ArrayList
 
 class SearchLocationViewModel : ViewModel() {

@@ -1,4 +1,4 @@
-package com.dutch2019.Data
+package com.dutch2019.data
 
 class LocationSetData {
     companion object{

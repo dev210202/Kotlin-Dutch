@@ -17,7 +17,7 @@ class ExampleUnitTest {
         var point1 = TMapPoint(0.0, 0.0)
         var point2 = TMapPoint(1.0,-1.0)
         var expectPoint = TMapPoint(0.0, 0.0)
-        var changePoint = viewModel.setChangePoint(point1, point2, 2)
+        var changePoint = viewModel.setChangePoint(point1, point2, 1)
         assertEquals(expectPoint, changePoint)
     }
 }

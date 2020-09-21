@@ -6,14 +6,12 @@ import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dutch2019.Data.LocationSetData
+import com.dutch2019.data.LocationSetData
 import com.dutch2019.MarkerOverlay
 import com.dutch2019.R
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 
 public class MiddleLocationViewModel : ViewModel() {
@@ -179,22 +177,37 @@ public class MiddleLocationViewModel : ViewModel() {
     fun setChangePoint(point1: TMapPoint, point2: TMapPoint, ratio: Int) : TMapPoint? {
 
         when {
+
+            (ratio == 5) ->{
+                changePoint = TMapPoint((point1.latitude + point2.latitude )/ 2,(point1.longitude + point2.longitude )/ 2)
+
+                Log.e("0","!!")
+            }
+
             is1stQuadrant(point1, point2) -> {
+
+                Log.e("1","!!")
                 var changeLat = ((10 - ratio)  * point1.latitude + (ratio) * point2.latitude) / (10)
                 var changeLon = ((10 - ratio) * point1.longitude + ratio * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is2ndQuadrant(point1, point2) -> {
+
+                Log.e("2","!!")
                 var changeLat = ((10 - ratio)  * point1.latitude + ratio * point2.latitude) / (10)
                 var changeLon = (ratio* point2.longitude + (10 - ratio) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is3rdQuadrant(point1, point2) -> {
+
+                Log.e("3","!!")
                 var changeLat = (ratio * point2.latitude + (10 - ratio) * point1.latitude) / (10)
                 var changeLon = (ratio * point2.longitude + (10 - ratio) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is4thQuadrant(point1, point2) -> {
+
+                Log.e("4","!!")
                 var changeLat = (ratio * point2.latitude + (10 - ratio) * point1.latitude) / (10)
                 var changeLon = ((10 - ratio) * point1.longitude + ratio * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)

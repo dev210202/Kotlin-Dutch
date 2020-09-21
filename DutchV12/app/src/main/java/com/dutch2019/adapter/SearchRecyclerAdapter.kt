@@ -1,4 +1,4 @@
-package com.dutch2019.Adapter
+package com.dutch2019.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,20 +6,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.location_list_item.view.*
-import com.dutch2019.Data.LocationData
+import com.dutch2019.data.LocationData
 import com.dutch2019.R
 
-class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :
-    RecyclerView.Adapter<NearRecyclerAdapter.ViewHolder>() {
-
-    class ViewHolder constructor(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.location_list_item, parent, false)
-    ) {
-        val locationNameTextView = itemView.locationnametextview
-        val locationAddressTextView = itemView.locationaddresstextview
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+class SearchRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :
+    RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(parent)
 
     override fun getItemCount(): Int = dataList.value!!.size
@@ -33,4 +25,12 @@ class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :
             }
         }
     }
+
+    class ViewHolder constructor(parent: ViewGroup) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.location_list_item, parent, false)
+    ) {
+        val locationNameTextView = itemView.locationnametextview
+        val locationAddressTextView = itemView.locationaddresstextview
+    }
+
 }

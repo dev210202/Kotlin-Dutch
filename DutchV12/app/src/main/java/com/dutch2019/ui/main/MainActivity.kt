@@ -14,20 +14,16 @@ import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.annotation.IntegerRes
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.dutch2019.*
-import com.dutch2019.Adapter.RatioRecyclerAdapter
-import com.dutch2019.Data.LocationData
-import com.dutch2019.Data.LocationSetData
+import com.dutch2019.data.LocationData
+import com.dutch2019.data.LocationSetData
 import com.dutch2019.databinding.ActivityMainBinding
 import com.dutch2019.ui.middle.MiddleLocationActivity
 import com.dutch2019.ui.search.SearchLocationActivity
-import com.dutch2019.ui.setting.SettingActivity
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {

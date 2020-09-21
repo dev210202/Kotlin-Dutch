@@ -15,7 +15,7 @@ import com.kakao.network.callback.ResponseCallback
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
-import com.dutch2019.Data.LocationData
+import com.dutch2019.data.LocationData
 import java.util.*
 
 class NearFacilityViewModel : ViewModel() {

@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skt.Tmap.TMapPoint
-import com.dutch2019.Adapter.SearchRecyclerAdapter
-import com.dutch2019.Data.LocationData
+import com.dutch2019.adapter.SearchRecyclerAdapter
+import com.dutch2019.data.LocationData
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivityNearFacilityBinding
 

@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.skt.Tmap.TMapMarkerItem
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
-import com.dutch2019.Data.LocationData
+import com.dutch2019.data.LocationData
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivityLocationCheckBinding
 
