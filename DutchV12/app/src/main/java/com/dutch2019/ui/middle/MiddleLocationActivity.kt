@@ -37,8 +37,8 @@ class MiddleLocationActivity : AppCompatActivity() {
 
         binding.nearfacilitybutton.setOnClickListener {
             val intent = Intent(this, NearFacilityActivity::class.java)
-            intent.putExtra("centerLat", viewModel.centerPoint.latitude)
-            intent.putExtra("centerLon", viewModel.centerPoint.longitude)
+            intent.putExtra("centerLat", viewModel.centerPoint.latitude) // Point 수정필요
+            intent.putExtra("centerLon", viewModel.centerPoint.longitude) // Point 수정필요
             startActivity(intent)
         }
         binding.settingButton.setOnClickListener {
@@ -49,8 +49,8 @@ class MiddleLocationActivity : AppCompatActivity() {
             override fun run() {
                 try {
                     viewModel.calculateCenterPoint()
-                    viewModel.getLocationAddress()
-                    viewModel.findNearSubway()
+                    viewModel.middleLocationAddress.postValue(viewModel.getLocationAddress(viewModel.centerPoint))
+                    viewModel.nearStationName.postValue(viewModel.findNearSubway(viewModel.centerPoint))
                     viewModel.markSearchLoaction(tMapView, this@MiddleLocationActivity)
                     viewModel.markMiddleLocation(tMapView, this@MiddleLocationActivity)
                     viewModel.setPolyLine(tMapView)
@@ -88,8 +88,9 @@ class MiddleLocationActivity : AppCompatActivity() {
                 )
                 var ratio = data.getIntExtra("progressValue", 0)
 
-                    viewModel.setChangePoint(APoint, BPoint, ratio)
-                    viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
+                viewModel.setChangePoint(APoint, BPoint, ratio)
+                viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
+                viewModel.setMarkClickListener(tMapView)
 
             }
         } else if (resultCode == RESET_OK) {

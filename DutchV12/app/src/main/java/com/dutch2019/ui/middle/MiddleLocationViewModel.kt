@@ -3,15 +3,15 @@ package com.dutch2019.ui.middle
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.PointF
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dutch2019.data.LocationSetData
 import com.dutch2019.MarkerOverlay
 import com.dutch2019.R
-import com.skt.Tmap.TMapData
-import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapView
+import com.skt.Tmap.*
+import java.util.ArrayList
 
 
 public class MiddleLocationViewModel : ViewModel() {
@@ -21,6 +21,7 @@ public class MiddleLocationViewModel : ViewModel() {
     var nearStationName = MutableLiveData<String>()
     lateinit var centerPoint: TMapPoint
     var changePoint: TMapPoint? = null
+
     fun calculateCenterPoint() {
         for (i in 0 until LocationSetData.data.size) {
             totalLatitude += LocationSetData.data[i].latitude
@@ -36,26 +37,26 @@ public class MiddleLocationViewModel : ViewModel() {
 
     }
 
-    fun findNearSubway() {
+    fun findNearSubway(point: TMapPoint): String {
 
         val stationData = TMapData()
-
-        stationData.findAroundNamePOI(
-            centerPoint,
+        var subwayName = ""
+        var tMapPOIItems = stationData.findAroundNamePOI(
+            point,
             "지하철",
             20,
             3
-        ) { p0 ->
-            try {
-                if (p0 == null) {
-                    nearStationName.postValue("없음")
-                } else {
-                    nearStationName.postValue(p0[0].poiName)
-                }
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
+        )
+
+        if (tMapPOIItems[0].poiName == ""){
+            subwayName = "없음"
         }
+        else{
+            subwayName = tMapPOIItems[0].poiName
+        }
+
+        return subwayName
+
     }
 
     fun markSearchLoaction(tMapView: TMapView, context: Context) {
@@ -174,40 +175,43 @@ public class MiddleLocationViewModel : ViewModel() {
 
     }
 
-    fun setChangePoint(point1: TMapPoint, point2: TMapPoint, ratio: Int) : TMapPoint? {
+    fun setChangePoint(point1: TMapPoint, point2: TMapPoint, ratio: Int): TMapPoint? {
 
         when {
 
-            (ratio == 5) ->{
-                changePoint = TMapPoint((point1.latitude + point2.latitude )/ 2,(point1.longitude + point2.longitude )/ 2)
+            (ratio == 5) -> {
+                changePoint = TMapPoint(
+                    (point1.latitude + point2.latitude) / 2,
+                    (point1.longitude + point2.longitude) / 2
+                )
 
-                Log.e("0","!!")
+                Log.e("0", "!!")
             }
 
             is1stQuadrant(point1, point2) -> {
 
-                Log.e("1","!!")
-                var changeLat = ((10 - ratio)  * point1.latitude + (ratio) * point2.latitude) / (10)
+                Log.e("1", "!!")
+                var changeLat = ((10 - ratio) * point1.latitude + (ratio) * point2.latitude) / (10)
                 var changeLon = ((10 - ratio) * point1.longitude + ratio * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is2ndQuadrant(point1, point2) -> {
 
-                Log.e("2","!!")
-                var changeLat = ((10 - ratio)  * point1.latitude + ratio * point2.latitude) / (10)
-                var changeLon = (ratio* point2.longitude + (10 - ratio) * point1.longitude) / (10)
+                Log.e("2", "!!")
+                var changeLat = ((10 - ratio) * point1.latitude + ratio * point2.latitude) / (10)
+                var changeLon = (ratio * point2.longitude + (10 - ratio) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is3rdQuadrant(point1, point2) -> {
 
-                Log.e("3","!!")
+                Log.e("3", "!!")
                 var changeLat = (ratio * point2.latitude + (10 - ratio) * point1.latitude) / (10)
                 var changeLon = (ratio * point2.longitude + (10 - ratio) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is4thQuadrant(point1, point2) -> {
 
-                Log.e("4","!!")
+                Log.e("4", "!!")
                 var changeLat = (ratio * point2.latitude + (10 - ratio) * point1.latitude) / (10)
                 var changeLon = ((10 - ratio) * point1.longitude + ratio * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
@@ -215,9 +219,6 @@ public class MiddleLocationViewModel : ViewModel() {
         }
         return changePoint
     }
-
-
-
 
 
     fun is1stQuadrant(point1: TMapPoint, point2: TMapPoint): Boolean {
@@ -248,18 +249,19 @@ public class MiddleLocationViewModel : ViewModel() {
         return false
     }
 
-    fun getLocationAddress() {
+    fun getLocationAddress(point: TMapPoint): String {
         val tMapData = TMapData()
+        var locationAddress = ""
         try {
-            middleLocationAddress.postValue(
+            locationAddress =
                 tMapData.convertGpsToAddress(
-                    totalLatitude / LocationSetData.data.size,
-                    totalLongitude / LocationSetData.data.size
+                    point.latitude, point.longitude
                 )
-            )
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        return locationAddress
     }
 
     fun setMarkRatioLocation(changePoint: TMapPoint, tMapView: TMapView, context: Context) {
@@ -271,6 +273,7 @@ public class MiddleLocationViewModel : ViewModel() {
 
 
         val marker = MarkerOverlay(context, tMapView, "비율변경지점", "ratioMarkerItem")
+
         var strId = "ratiomarkerItem"
         marker.id = strId
         marker.changeTextColor(context)
@@ -278,10 +281,19 @@ public class MiddleLocationViewModel : ViewModel() {
         marker.setPosition(-0.05F, 1F)
         marker.tMapPoint = changePoint
         tMapView.addMarkerItem2(strId, marker)
-
+        marker.markerTouch
     }
 
     fun resetChangePoint(tMapView: TMapView) {
         tMapView.removeMarkerItem2("ratiomarkerItem")
+    }
+
+    fun setBallonOverlayClickEvent(tMapView: TMapView) {
+        tMapView.setOnMarkerClickEvent(object : TMapView.OnCalloutMarker2ClickCallback {
+            override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2?) {
+                // middleLocationAddress =
+            }
+
+        })
     }
 }
