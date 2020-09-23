@@ -79,10 +79,16 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
     }
 
     fun getRatioPointArrayList(): ArrayList<TMapPoint> {
-        pointArrayList.add(APoint)
-        pointArrayList.add(BPoint)
-        Log.e("PointArray", pointArrayList.toString())
-        return pointArrayList
+
+        if(isAChecked && isBChecked){
+            pointArrayList.add(APoint)
+            pointArrayList.add(BPoint)
+            Log.e("PointArray", pointArrayList.toString())
+            return pointArrayList
+        }
+        else{
+            return ArrayList<TMapPoint>()
+        }
     }
 
 }

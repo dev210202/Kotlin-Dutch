@@ -37,8 +37,8 @@ class MiddleLocationActivity : AppCompatActivity() {
 
         binding.nearfacilitybutton.setOnClickListener {
             val intent = Intent(this, NearFacilityActivity::class.java)
-            intent.putExtra("centerLat", viewModel.centerPoint.latitude) // Point 수정필요
-            intent.putExtra("centerLon", viewModel.centerPoint.longitude) // Point 수정필요
+            intent.putExtra("centerLat", viewModel.searchNearFacilityPoint.latitude) // Point 수정필요
+            intent.putExtra("centerLon", viewModel.searchNearFacilityPoint.longitude) // Point 수정필요
             startActivity(intent)
         }
         binding.settingButton.setOnClickListener {
@@ -90,7 +90,9 @@ class MiddleLocationActivity : AppCompatActivity() {
 
                 viewModel.setChangePoint(APoint, BPoint, ratio)
                 viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
-                viewModel.setMarkClickListener(tMapView)
+
+
+                            viewModel.setBallonOverlayClickEvent(tMapView)
 
             }
         } else if (resultCode == RESET_OK) {

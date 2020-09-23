@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.dutch2019.adapter.RatioRecyclerAdapter
 import com.dutch2019.data.LocationSetData
@@ -49,19 +50,23 @@ class SettingActivity : AppCompatActivity() {
             dialog.show();
         }
         binding.okButton.setOnClickListener {
-            var intent = Intent()
-
-            intent.putExtra("progressValue", value + 1)
 
             var pointArray = adapter.getRatioPointArrayList()
+            if (pointArray.isEmpty()) {
+                Toast.makeText(this, "A와 B지점을 모두 선택해주세요!", Toast.LENGTH_LONG).show()
+            } else {
+                var intent = Intent()
 
-            intent.putExtra("APointLat",pointArray[0].latitude)
-            intent.putExtra("APointLon",pointArray[0].longitude)
-            intent.putExtra("BPointLat",pointArray[1].latitude)
-            intent.putExtra("BPointLon",pointArray[1].longitude)
+                intent.putExtra("progressValue", value + 1)
 
-            setResult(SETTING_OK, intent)
-            finish()
+                intent.putExtra("APointLat", pointArray[0].latitude)
+                intent.putExtra("APointLon", pointArray[0].longitude)
+                intent.putExtra("BPointLat", pointArray[1].latitude)
+                intent.putExtra("BPointLon", pointArray[1].longitude)
+
+                setResult(SETTING_OK, intent)
+                finish()
+            }
         }
     }
 

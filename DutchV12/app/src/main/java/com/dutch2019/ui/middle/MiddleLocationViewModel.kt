@@ -20,6 +20,7 @@ public class MiddleLocationViewModel : ViewModel() {
     var middleLocationAddress = MutableLiveData<String>()
     var nearStationName = MutableLiveData<String>()
     lateinit var centerPoint: TMapPoint
+    var searchNearFacilityPoint = TMapPoint(0.0, 0.0)
     var changePoint: TMapPoint? = null
 
     fun calculateCenterPoint() {
@@ -32,6 +33,8 @@ public class MiddleLocationViewModel : ViewModel() {
             totalLatitude / LocationSetData.data.size,
             totalLongitude / LocationSetData.data.size
         )
+        searchNearFacilityPoint = centerPoint
+
         Log.e("centerPoint", centerPoint.toString())
 
 
@@ -48,10 +51,9 @@ public class MiddleLocationViewModel : ViewModel() {
             3
         )
 
-        if (tMapPOIItems[0].poiName == ""){
+        if (tMapPOIItems.isEmpty()) {
             subwayName = "없음"
-        }
-        else{
+        } else {
             subwayName = tMapPOIItems[0].poiName
         }
 
@@ -290,8 +292,21 @@ public class MiddleLocationViewModel : ViewModel() {
 
     fun setBallonOverlayClickEvent(tMapView: TMapView) {
         tMapView.setOnMarkerClickEvent(object : TMapView.OnCalloutMarker2ClickCallback {
-            override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2?) {
-                // middleLocationAddress =
+            override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2) {
+                object : Thread() {
+                    override fun run() {
+                        try {
+                            var point = p1.tMapPoint
+                            Log.e("!??!?", getLocationAddress(point))
+                            middleLocationAddress.postValue(getLocationAddress(point))
+                            searchNearFacilityPoint = point
+                            nearStationName.postValue(findNearSubway(point))
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }.start()
             }
 
         })
