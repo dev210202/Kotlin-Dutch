@@ -92,7 +92,7 @@ class MiddleLocationActivity : AppCompatActivity() {
                 viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
 
 
-                            viewModel.setBallonOverlayClickEvent(tMapView)
+                            viewModel.setBallonOverlayClickEvent(tMapView, binding.middlelocationresultTextview)
 
             }
         } else if (resultCode == RESET_OK) {

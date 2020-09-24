@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.skt.Tmap.TMapMarkerItem2
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
+import org.w3c.dom.Text
 
 
 class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: String) :
@@ -165,7 +166,14 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
         mHandler = Handler()
         mHandler!!.post(mRunnable)
     }
-    fun changeTextColor(context : Context){
-        balloonView.findViewById<TextView>(R.id.bubble_title).setTextColor(ContextCompat.getColor(context, R.color.orange))
+
+    fun changeTextRedColor(context: Context) {
+        balloonView.findViewById<TextView>(R.id.bubble_title)
+            .setTextColor(ContextCompat.getColor(context, R.color.orange))
+    }
+
+    fun chagneTextBlueColor(context: Context) {
+        balloonView.findViewById<TextView>(R.id.bubble_title)
+            .setTextColor(ContextCompat.getColor(context, R.color.blue))
     }
 }

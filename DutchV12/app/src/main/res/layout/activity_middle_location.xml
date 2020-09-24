@@ -22,22 +22,25 @@
             android:orientation="vertical">
 
             <TextView
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/middlelocationresult_textview"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
-                android:textSize="20dp"
+                android:textSize="14dp"
                 android:textColor="#e24b35"
                 android:text="중간지점 결과"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></TextView>
             <TextView
+                android:fontFamily="sans-serif-medium"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="2dp"
                 android:id="@+id/middleaddresstextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingTop="6dp"
-                android:paddingBottom="5dp"
                 android:text="1"
                 android:textColor="@color/black"
                 android:textSize="18sp"></TextView>
@@ -59,7 +62,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginBottom="22dp"
                     android:text="근처 지하철 역:"
-                    android:textSize="18dp"
+                    android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"></TextView>
 
@@ -72,7 +75,7 @@
                     android:gravity="end"
                     android:text=""
                     android:textColor="#8f8f8f"
-                    android:textSize="18dp"
+                    android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView5"
                     app:layout_constraintStart_toEndOf="@+id/textView5"></TextView>
             </androidx.constraintlayout.widget.ConstraintLayout>

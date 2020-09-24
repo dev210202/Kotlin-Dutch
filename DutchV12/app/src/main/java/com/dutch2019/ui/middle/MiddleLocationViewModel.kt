@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PointF
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dutch2019.data.LocationSetData
@@ -69,7 +70,7 @@ public class MiddleLocationViewModel : ViewModel() {
             val markerImage =
                 BitmapFactory.decodeResource(
                     context.resources,
-                    R.drawable.markerblack
+                    R.drawable.result_ic_marker_black
                 )
 
 
@@ -96,10 +97,7 @@ public class MiddleLocationViewModel : ViewModel() {
 
     fun markMiddleLocation(tMapView: TMapView, context: Context) {
         val markerItemPoint =
-            TMapPoint(
-                totalLatitude / LocationSetData.data.size,
-                totalLongitude / LocationSetData.data.size
-            )
+            centerPoint
         val markerImage =
             BitmapFactory.decodeResource(
                 context.resources,
@@ -110,7 +108,7 @@ public class MiddleLocationViewModel : ViewModel() {
         val marker = MarkerOverlay(context, tMapView, "중간지점", "middlemarkerItem")
         var strId = "middlemarkerItem"
         marker.id = strId
-        marker.changeTextColor(context)
+        marker.changeTextRedColor(context)
         marker.icon = markerImage
         marker.setPosition(-0.05F, 1F)
         marker.tMapPoint = markerItemPoint
@@ -182,11 +180,7 @@ public class MiddleLocationViewModel : ViewModel() {
         when {
 
             (ratio == 5) -> {
-                changePoint = TMapPoint(
-                    (point1.latitude + point2.latitude) / 2,
-                    (point1.longitude + point2.longitude) / 2
-                )
-
+                changePoint = centerPoint
                 Log.e("0", "!!")
             }
 
@@ -270,7 +264,7 @@ public class MiddleLocationViewModel : ViewModel() {
         val markerImage =
             BitmapFactory.decodeResource(
                 context.resources,
-                R.drawable.group6
+                R.drawable.result_ic_maker_blue
             )
 
 
@@ -278,7 +272,7 @@ public class MiddleLocationViewModel : ViewModel() {
 
         var strId = "ratiomarkerItem"
         marker.id = strId
-        marker.changeTextColor(context)
+        marker.chagneTextBlueColor(context)
         marker.icon = markerImage
         marker.setPosition(-0.05F, 1F)
         marker.tMapPoint = changePoint
@@ -290,7 +284,7 @@ public class MiddleLocationViewModel : ViewModel() {
         tMapView.removeMarkerItem2("ratiomarkerItem")
     }
 
-    fun setBallonOverlayClickEvent(tMapView: TMapView) {
+    fun setBallonOverlayClickEvent(tMapView: TMapView, textView: TextView) {
         tMapView.setOnMarkerClickEvent(object : TMapView.OnCalloutMarker2ClickCallback {
             override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2) {
                 object : Thread() {
@@ -301,6 +295,9 @@ public class MiddleLocationViewModel : ViewModel() {
                             middleLocationAddress.postValue(getLocationAddress(point))
                             searchNearFacilityPoint = point
                             nearStationName.postValue(findNearSubway(point))
+                            textView.setTextColor(R.color.blue)
+                            textView.setText("비율변경지점 결과")
+
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }

@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         layoutParams.setMargins(changeIntToDP(16), changeIntToDP(20), changeIntToDP(16), 0)
         dynamicButton.layoutParams = layoutParams
         dynamicButton.text = buttonText
+        dynamicButton.textSize = 16F
         dynamicButton.setTextColor(Color.rgb(134, 134, 134))
         dynamicButton.setBackgroundResource(R.drawable.button_main_location_search)
         dynamicButton.id = viewmodel.dynamicCreateChooseNum
