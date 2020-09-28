@@ -122,24 +122,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setLocationName(i: Int, userChooseLocation: LocationData) {
-        if (binding.buttonview.findViewById<Button>(i).text != "위치를 입력해주세요") {
-            for (j in 0 until LocationSetData.data.size) {
-                if (binding.buttonview.findViewById<Button>(j) != null) {
-                    val removeData =
-                        binding.buttonview.findViewById<Button>(i).text.toString()
-                    if (LocationSetData.data[j].locationName == removeData) {
+        try {
+            if (binding.buttonview.findViewById<Button>(i).text != "위치를 입력해주세요") {
+                for (j in 0 until LocationSetData.data.size) {
+                    if (binding.buttonview.findViewById<Button>(j) != null) {
+                        val removeData =
+                            binding.buttonview.findViewById<Button>(i).text.toString()
+                        if (LocationSetData.data[j].locationName == removeData) {
 
-                        Log.e("LocationSetData Before", LocationSetData.data.toString())
-                        LocationSetData.data.removeAt(j)
-                        LocationSetData.data.add(j, userChooseLocation)
-                        Log.e("LocationSetData After", LocationSetData.data.toString())
+                            Log.e("LocationSetData Before", LocationSetData.data.toString())
+                            LocationSetData.data.removeAt(j)
+                            LocationSetData.data.add(j, userChooseLocation)
+                            Log.e("LocationSetData After", LocationSetData.data.toString())
+                        }
                     }
-                }
 
+                }
+            } else {
+                LocationSetData.data.add(userChooseLocation)
             }
-        } else {
-            LocationSetData.data.add(userChooseLocation)
+        } catch (e: Exception) {
+            Toast.makeText(this, "오류발생\n" + e.printStackTrace() ,Toast.LENGTH_LONG).show()
         }
+
     }
 
     override fun onDestroy() {
@@ -182,7 +187,6 @@ class MainActivity : AppCompatActivity() {
     fun closeButtonClick(view: View) {
         dialog.dismiss()
     }
-
 
 
 }

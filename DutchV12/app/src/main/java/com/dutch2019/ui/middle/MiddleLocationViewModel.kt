@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.util.Log
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dutch2019.data.LocationSetData
@@ -83,7 +84,7 @@ public class MiddleLocationViewModel : ViewModel() {
             var strId = "markerItem" + i
             marker.id = strId
             marker.icon = markerImage
-            marker.setPosition(-0.05F, 1F)
+            marker.setPosition(0.5F, 1F)
             marker.tMapPoint = markerItemPoint
 
             tMapView.setOnMarkerClickEvent(TMapView.OnCalloutMarker2ClickCallback { id, tMapMarkerItem2 ->
@@ -110,8 +111,10 @@ public class MiddleLocationViewModel : ViewModel() {
         marker.id = strId
         marker.changeTextRedColor(context)
         marker.icon = markerImage
-        marker.setPosition(-0.05F, 1F)
+        marker.setPosition(0.5F, 1F)
         marker.tMapPoint = markerItemPoint
+
+        Log.e("MARKERPOINTRED", markerItemPoint.toString())
         tMapView.addMarkerItem2(strId, marker)
 
     }
@@ -180,7 +183,10 @@ public class MiddleLocationViewModel : ViewModel() {
         when {
 
             (ratio == 5) -> {
-                changePoint = centerPoint
+                changePoint = TMapPoint(
+                    (point1.latitude + point2.latitude) / 2,
+                    (point1.longitude + point2.longitude) / 2
+                )
                 Log.e("0", "!!")
             }
 
@@ -274,8 +280,9 @@ public class MiddleLocationViewModel : ViewModel() {
         marker.id = strId
         marker.chagneTextBlueColor(context)
         marker.icon = markerImage
-        marker.setPosition(-0.05F, 1F)
+        marker.setPosition(0.5F, 1F)
         marker.tMapPoint = changePoint
+        Log.e("MARKERPOINTBLUE", changePoint.toString())
         tMapView.addMarkerItem2(strId, marker)
         marker.markerTouch
     }
@@ -284,28 +291,5 @@ public class MiddleLocationViewModel : ViewModel() {
         tMapView.removeMarkerItem2("ratiomarkerItem")
     }
 
-    fun setBallonOverlayClickEvent(tMapView: TMapView, textView: TextView) {
-        tMapView.setOnMarkerClickEvent(object : TMapView.OnCalloutMarker2ClickCallback {
-            override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2) {
-                object : Thread() {
-                    override fun run() {
-                        try {
-                            var point = p1.tMapPoint
-                            Log.e("!??!?", getLocationAddress(point))
-                            middleLocationAddress.postValue(getLocationAddress(point))
-                            searchNearFacilityPoint = point
-                            nearStationName.postValue(findNearSubway(point))
-                            textView.setTextColor(R.color.blue)
-                            textView.setText("비율변경지점 결과")
 
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-
-                    }
-                }.start()
-            }
-
-        })
-    }
 }

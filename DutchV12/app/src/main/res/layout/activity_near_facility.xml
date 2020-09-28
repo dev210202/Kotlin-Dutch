@@ -22,6 +22,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/notosans_regular"
+                android:includeFontPadding="false"
                 android:text="당신이 찾은 중간지점을 \n친구들과 공유하세요!"
                 android:textColor="@color/white"
                 android:textSize="24dp"
@@ -37,27 +39,28 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                 <Button
-                    android:textStyle="bold"
                     android:id="@+id/transbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/nearfacility_traffic_button"
+                    android:fontFamily="@font/notosans_medium"
                     android:gravity="fill"
+                    android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:text="대중교통"
                     android:textColor="@color/white"
                     android:textSize="14dp"></Button>
 
                 <Button
-
-                    android:textStyle="bold"
                     android:id="@+id/culturebutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/nearfacility_culture_button"
+                    android:fontFamily="@font/notosans_medium"
                     android:gravity="fill"
+                    android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:text="문화시설"
                     android:textColor="@color/white"
@@ -67,38 +70,38 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                 <Button
-
-                    android:textStyle="bold"
-                    android:paddingLeft="16dp"
-                    android:gravity="fill"
-                    android:text="음식점"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:layout_weight="1"
                     android:id="@+id/foodbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/nearfacility_restaurant_button"></Button>
+                    android:layout_weight="1"
+                    android:background="@drawable/nearfacility_restaurant_button"
+                    android:fontFamily="@font/notosans_medium"
+                    android:gravity="fill"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="16dp"
+                    android:text="음식점"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"></Button>
 
                 <Button
-
-                    android:textStyle="bold"
-                    android:paddingLeft="16dp"
-                    android:gravity="fill"
-                    android:text="카페"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:layout_weight="1"
                     android:id="@+id/cafebutton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/nearfacility_button"></Button>
+                    android:layout_weight="1"
+                    android:background="@drawable/nearfacility_button"
+                    android:fontFamily="@font/notosans_medium"
+                    android:gravity="fill"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="16dp"
+                    android:text="카페"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"></Button>
 
 
             </LinearLayout>

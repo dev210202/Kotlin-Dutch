@@ -28,7 +28,7 @@ class NearFacilityViewModel : ViewModel() {
             centerPoint,
             "지하철;버스;버스정류장;",
             3,
-            20
+            50
         ) { p0 ->
             locationArrayList = ArrayList<LocationData>()
             if (p0 != null) {
@@ -60,7 +60,7 @@ class NearFacilityViewModel : ViewModel() {
             centerPoint,
             "주요시설물;문화시설;영화관;놀거리;",
             3,
-            20
+            50
         ) { p0 ->
             locationArrayList = ArrayList<LocationData>()
             if (p0 != null) {
@@ -92,7 +92,7 @@ class NearFacilityViewModel : ViewModel() {
             centerPoint,
             "식음료;한식;중식;양식;",
             3,
-            20
+            50
         ) { p0 ->
             locationArrayList = ArrayList<LocationData>()
             if (p0 != null) {
@@ -124,7 +124,7 @@ class NearFacilityViewModel : ViewModel() {
             centerPoint,
             "카페",
             3,
-            20
+            50
         ) { p0 ->
             locationArrayList = ArrayList<LocationData>()
             if (p0 != null) {
@@ -166,7 +166,7 @@ class NearFacilityViewModel : ViewModel() {
             kakaoAddressResult,
             ContentObject.newBuilder(
                 name,
-                "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FcN141f%2FbtqyK9q3rqe%2FK8UNSjqsKMBIT32jLFL1r1%2Fimg.png",
+                "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Ft3sEu%2FbtqJKvIDbb0%2FNOg8Ozhw0IgWkpagWecdr1%2Fimg.png",
                 LinkObject.newBuilder()
                     .setWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
                     .setMobileWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
@@ -177,6 +177,7 @@ class NearFacilityViewModel : ViewModel() {
         ).setAddressTitle(name) // 위치 확인시 보여줄 제목칸에 선택한 주변시설의 명칭을 띄워줌
             .addButton(leftButtonObject) // 왼쪽버튼에 해당하는 ButtonObject를 추가
             .build()
+
 
         var serverCallbackArgs = mutableMapOf<String, String>()
         serverCallbackArgs.put("user_id", "current_user_id")

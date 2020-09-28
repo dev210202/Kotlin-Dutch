@@ -77,12 +77,12 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
         showCallout: Boolean
     ) {
         val x = mapView.getRotatedMapXForPoint(
-            tMapPoint.latitude - 0.1F,
+            tMapPoint.latitude,
             tMapPoint.longitude
         )
         val y = mapView.getRotatedMapYForPoint(
             tMapPoint.latitude,
-            tMapPoint.longitude + 1F
+            tMapPoint.longitude
         )
         canvas.save()
         canvas.rotate(
@@ -126,7 +126,7 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
             )
-            val nTempX = (x - balloonView.measuredWidth / 2) + 50
+            val nTempX = (x - balloonView.measuredWidth / 2)
             val nTempY = (y - marginY - balloonView.measuredHeight)
             canvas.translate(nTempX.toFloat(), nTempY.toFloat())
             balloonView.draw(canvas)

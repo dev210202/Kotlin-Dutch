@@ -1,9 +1,12 @@
 package com.dutch2019.ui.middle
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,6 +14,7 @@ import com.dutch2019.R
 import com.dutch2019.databinding.ActivityMiddleLocationBinding
 import com.dutch2019.ui.nearfacillity.NearFacilityActivity
 import com.dutch2019.ui.setting.SettingActivity
+import com.skt.Tmap.TMapMarkerItem2
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 import java.lang.Exception
@@ -91,13 +95,109 @@ class MiddleLocationActivity : AppCompatActivity() {
                 viewModel.setChangePoint(APoint, BPoint, ratio)
                 viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
 
-
-                            viewModel.setBallonOverlayClickEvent(tMapView, binding.middlelocationresultTextview)
+                setRatioText(binding.middlelocationresultTextview)
+                setBallonOverlayClickEvent(tMapView, binding.middlelocationresultTextview)
 
             }
         } else if (resultCode == RESET_OK) {
             viewModel.resetChangePoint(tMapView)
         }
     }
+
+    fun setRatioText(textView: TextView) {
+        object : Thread() {
+            override fun run() {
+                try {
+                    viewModel.middleLocationAddress.postValue(
+                        viewModel.getLocationAddress(
+                            viewModel.changePoint!!
+                        )
+                    )
+                    viewModel.searchNearFacilityPoint = viewModel.changePoint!!
+                    viewModel.nearStationName.postValue(viewModel.findNearSubway(viewModel.changePoint!!))
+                    textView.setTextColor(
+                        ContextCompat.getColor(
+                            baseContext,
+                            R.color.blue
+                        )
+                    )
+                    textView.text = "비율변경지점 결과"
+                    Log.e("changePoint", viewModel.changePoint.toString())
+                    Log.e("centerPoint", viewModel.centerPoint.toString())
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }.start()
+
+    }
+
+    fun setBallonOverlayClickEvent(tMapView: TMapView, textView: TextView) {
+        tMapView.setOnMarkerClickEvent(object : TMapView.OnCalloutMarker2ClickCallback {
+            override fun onCalloutMarker2ClickEvent(p0: String?, p1: TMapMarkerItem2) {
+                object : Thread() {
+                    override fun run() {
+                        try {
+                            if (p1.id == "ratiomarkerItem") {
+                                var point = p1.tMapPoint
+                                viewModel.middleLocationAddress.postValue(
+                                    viewModel.getLocationAddress(
+                                        point
+                                    )
+                                )
+                                viewModel.searchNearFacilityPoint = point
+                                viewModel.nearStationName.postValue(viewModel.findNearSubway(point))
+                                textView.setTextColor(
+                                    ContextCompat.getColor(
+                                        baseContext,
+                                        R.color.blue
+                                    )
+                                )
+                                textView.text = "비율변경지점 결과"
+                            } else if (p1.id == "middlemarkerItem") {
+                                var point = p1.tMapPoint
+                                viewModel.middleLocationAddress.postValue(
+                                    viewModel.getLocationAddress(
+                                        point
+                                    )
+                                )
+                                viewModel.searchNearFacilityPoint = point
+                                viewModel.nearStationName.postValue(viewModel.findNearSubway(point))
+                                textView.setTextColor(
+                                    ContextCompat.getColor(
+                                        baseContext,
+                                        R.color.orange
+                                    )
+                                )
+                                textView.text = "중간지점 결과"
+                            } else {
+                                var point = p1.tMapPoint
+                                viewModel.middleLocationAddress.postValue(
+                                    viewModel.getLocationAddress(
+                                        point
+                                    )
+                                )
+                                viewModel.searchNearFacilityPoint = point
+                                viewModel.nearStationName.postValue(viewModel.findNearSubway(point))
+                                textView.setTextColor(
+                                    ContextCompat.getColor(
+                                        baseContext,
+                                        R.color.black
+                                    )
+                                )
+                                textView.text = "검색지점 결과"
+                            }
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }.start()
+            }
+
+        })
+    }
+
 }
 

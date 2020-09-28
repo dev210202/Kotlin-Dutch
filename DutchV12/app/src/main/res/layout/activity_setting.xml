@@ -26,6 +26,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="38dp"
+                android:fontFamily="@font/notosans_regular"
+                android:includeFontPadding="false"
                 android:text="장소들 간 비율 설정"
                 android:textColor="@color/white"
                 android:textSize="24dp"
@@ -36,6 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/notosans_regular"
+                android:includeFontPadding="false"
                 android:lineSpacingExtra="4dp"
                 android:text="숫자가 높아질수록 해당 지점의 거리에 가까워집니다.\n예) A = 2, B = 8일 시, B쪽에 가까워짐"
                 android:textColor="@color/mid_grey"
@@ -52,24 +56,25 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5">
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/description_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/notosans_medium"
+                android:includeFontPadding="false"
                 android:text="선택된 거리간 비율"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
             <TextView
-                android:textColor="#ef4b33"
                 android:id="@+id/seekbarvalue_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,6 +82,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="5:5"
+                android:textColor="#ef4b33"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -95,13 +101,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/description_textview"></SeekBar>
 
             <TextView
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/notosans_medium"
+                android:includeFontPadding="false"
                 android:text="A"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/seekbar"></TextView>
 
@@ -111,6 +119,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:fontFamily="@font/notosans_medium"
+                android:includeFontPadding="false"
                 android:text="B"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +154,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-
                 android:id="@+id/ok_button"
                 style="@style/ButtonMiddleLocationSearch"
                 android:layout_width="wrap_content"
@@ -152,6 +161,8 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="3"
                 android:background="@drawable/button_middle_location_search"
+                android:fontFamily="@font/notosans_medium"
+                android:includeFontPadding="false"
                 android:text="설정 완료"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
