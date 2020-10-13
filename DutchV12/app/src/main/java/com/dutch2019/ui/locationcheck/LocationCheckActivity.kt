@@ -55,12 +55,12 @@ class LocationCheckActivity : AppCompatActivity() {
     private fun infoSetting() {
         val markerItemPoint = TMapPoint(locationInfo.latitude, locationInfo.longitude)
         val markerImage = BitmapFactory.decodeResource(this.resources,
-            R.drawable.markerblack
+            R.drawable.result_ic_marker_black
         )
         val markerItem = TMapMarkerItem()
         markerItem.icon = markerImage
         markerItem.tMapPoint = markerItemPoint
-        markerItem.setPosition(-0.05F, 1F)
+        markerItem.setPosition(0.5F, 1F)
         tMapView.setCenterPoint(locationInfo.longitude, locationInfo.latitude)
         tMapView.addMarkerItem("markerItem", markerItem)
 

@@ -127,11 +127,9 @@ class NearFacilityActivity : AppCompatActivity() {
                 var address = itemView.findViewById<TextView>(R.id.locationaddresstextview).text.toString()
                 try{
                     viewModel.shareLocation(name, address, location, this)
-
                 }catch (e : Exception){
                     Toast.makeText(this, "카카오톡 공유기능을 사용하실 수 없습니다. 카카오톡을 다운로드 받으셨는지 확인해주세요.", Toast.LENGTH_LONG).show()
                 }
-
             }
         }
     }

@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         dynamicButton.setTextColor(Color.rgb(134, 134, 134))
         dynamicButton.setBackgroundResource(R.drawable.button_main_location_search)
         dynamicButton.id = viewmodel.dynamicCreateChooseNum
-
         viewmodel.dynamicCreateChooseNum++
         dynamicButton.setOnClickListener {
             val intent = Intent(applicationContext, SearchLocationActivity::class.java)
@@ -142,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                 LocationSetData.data.add(userChooseLocation)
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "오류발생\n" + e.printStackTrace() ,Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "오류발생! 해당 메시지를 캡쳐해서 helios2sic@gmail.com으로 보내주시면 오류수정에 도움이됩니다!\n" + e.printStackTrace() ,Toast.LENGTH_LONG).show()
         }
 
     }
@@ -157,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         var a = time.time
         var format1 = SimpleDateFormat("yyyyMMdd")
 
-        if (format1.format(a).toInt() in 20201020..20201101) {
+        if (format1.format(a).toInt() in 20201009..20201101) {
 
             var sharedPreferences = getSharedPreferences("dontLook", Context.MODE_PRIVATE)
             if (sharedPreferences.getBoolean("boolean", false)) {

@@ -34,15 +34,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"></TextView>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="더치를 사용해주셔서 감사합니다.\n문의사항은 helios2sic@gmail.com으로 메일주세요."
 
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:textSize="15dp"
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"></TextView>
+
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="더치를 사용해주셔서 감사합니다.\n문의사항은 helios2sic@gmail.com으로 메일주세요."
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:layout_editor_absoluteX="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="사용한 오픈소스\nhttps://github.com/rosenpin/fading-text-view"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+    </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

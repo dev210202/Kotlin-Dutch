@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.nearfacillity.NearFacilityActivity" />
-        <activity android:name=".ui.middle.MiddleLocationActivity" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".ui.nearfacillity.NearFacilityActivity"  />
+        <activity android:name=".ui.middle.MiddleLocationActivity" android:configChanges="screenSize|orientation" android:screenOrientation="portrait"/>
         <activity android:name=".ui.locationcheck.LocationCheckActivity" />
         <activity android:name=".ui.search.SearchLocationActivity" />
         <activity android:name=".ui.main.MainActivity"

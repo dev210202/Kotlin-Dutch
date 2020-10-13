@@ -53,10 +53,10 @@ public class MiddleLocationViewModel : ViewModel() {
             3
         )
 
-        if (tMapPOIItems.isEmpty()) {
-            subwayName = "없음"
+        subwayName = if (tMapPOIItems.isEmpty()) {
+            "없음"
         } else {
-            subwayName = tMapPOIItems[0].poiName
+            tMapPOIItems[0].poiName
         }
 
         return subwayName
@@ -64,35 +64,32 @@ public class MiddleLocationViewModel : ViewModel() {
     }
 
     fun markSearchLoaction(tMapView: TMapView, context: Context) {
-        for (i in 0 until LocationSetData.data.size) {
-            val markerItemPoint =
-                TMapPoint(LocationSetData.data[i].latitude, LocationSetData.data[i].longitude)
+        if (LocationSetData.data.isNotEmpty()) {
+            for (i in 0 until LocationSetData.data.size) {
+                val markerItemPoint =
+                    TMapPoint(LocationSetData.data[i].latitude, LocationSetData.data[i].longitude)
 
-            val markerImage =
-                BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.result_ic_marker_black
+                val markerImage =
+                    BitmapFactory.decodeResource(
+                        context.resources,
+                        R.drawable.result_ic_marker_black
+                    )
+
+
+                val marker = MarkerOverlay(
+                    context,
+                    tMapView,
+                    LocationSetData.data[i].locationName,
+                    "marker2$i"
                 )
+                var strId = "markerItem$i"
+                marker.id = strId
+                marker.icon = markerImage
+                marker.setPosition(0.5F, 1F)
+                marker.tMapPoint = markerItemPoint
 
-
-            val marker = MarkerOverlay(
-                context,
-                tMapView,
-                LocationSetData.data[i].locationName,
-                "marker2" + i
-            )
-            var strId = "markerItem" + i
-            marker.id = strId
-            marker.icon = markerImage
-            marker.setPosition(0.5F, 1F)
-            marker.tMapPoint = markerItemPoint
-
-            tMapView.setOnMarkerClickEvent(TMapView.OnCalloutMarker2ClickCallback { id, tMapMarkerItem2 ->
-
-            })
-            tMapView.addMarkerItem2(strId, marker)
-
-
+                tMapView.addMarkerItem2(strId, marker)
+            }
         }
     }
 

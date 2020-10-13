@@ -23,7 +23,8 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:background="@drawable/button_main_location_search"
+            android:textColor="@color/white"
+            android:background="@drawable/button_middle_location_search"
             android:layout_gravity="bottom"
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -33,12 +34,11 @@
             android:text="다시보지 않기"></Button>
 
         <Button
-
-            android:background="@drawable/button_main_location_search"
+android:textColor="@color/white"
+            android:background="@color/black"
             android:layout_gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:onClick="closeButtonClick"
             android:text="닫기"></Button>

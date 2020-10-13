@@ -38,6 +38,7 @@ class MiddleLocationActivity : AppCompatActivity() {
 
         tMapView = TMapView(this)
         binding.middlemapview.addView(tMapView)
+        setBallonOverlayClickEvent(tMapView, binding.middlelocationresultTextview)
 
         binding.nearfacilitybutton.setOnClickListener {
             val intent = Intent(this, NearFacilityActivity::class.java)
@@ -96,11 +97,19 @@ class MiddleLocationActivity : AppCompatActivity() {
                 viewModel.setMarkRatioLocation(viewModel.changePoint!!, tMapView, this)
 
                 setRatioText(binding.middlelocationresultTextview)
-                setBallonOverlayClickEvent(tMapView, binding.middlelocationresultTextview)
 
             }
         } else if (resultCode == RESET_OK) {
+            binding.middlelocationresultTextview.text = "중간지점 결과"
+            binding.middlelocationresultTextview.setTextColor(
+                ContextCompat.getColor(
+                    baseContext,
+                    R.color.orange
+                )
+            )
             viewModel.resetChangePoint(tMapView)
+            binding.middleaddresstextview.text = viewModel.middleLocationAddress.value
+            binding.nearsubwaytextview.text = viewModel.nearStationName.value
         }
     }
 
@@ -124,7 +133,7 @@ class MiddleLocationActivity : AppCompatActivity() {
                     textView.text = "비율변경지점 결과"
                     Log.e("changePoint", viewModel.changePoint.toString())
                     Log.e("centerPoint", viewModel.centerPoint.toString())
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -141,8 +150,8 @@ class MiddleLocationActivity : AppCompatActivity() {
                             if (p1.id == "ratiomarkerItem") {
                                 var point = p1.tMapPoint
                                 viewModel.middleLocationAddress.postValue(
-                                    viewModel.getLocationAddress(
-                                        point
+                                     viewModel.getLocationAddress(
+                                            point
                                     )
                                 )
                                 viewModel.searchNearFacilityPoint = point

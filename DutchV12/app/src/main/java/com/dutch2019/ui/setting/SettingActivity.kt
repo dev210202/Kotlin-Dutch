@@ -77,4 +77,8 @@ class SettingActivity : AppCompatActivity() {
         finish()
     }
 
+    fun noButtonClicked(view: View){
+        dialog.dismiss()
+    }
+
 }
