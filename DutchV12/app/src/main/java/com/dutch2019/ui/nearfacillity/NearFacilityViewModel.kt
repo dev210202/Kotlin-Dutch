@@ -4,6 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dutch2019.data.DetailData
+import com.dutch2019.data.Info
+import com.dutch2019.data.LocationData
+import com.dutch2019.network.Service
+import com.google.gson.GsonBuilder
 import com.kakao.kakaolink.v2.KakaoLinkResponse
 import com.kakao.kakaolink.v2.KakaoLinkService
 import com.kakao.message.template.ButtonObject
@@ -15,13 +20,58 @@ import com.kakao.network.callback.ResponseCallback
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
-import com.dutch2019.data.LocationData
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class NearFacilityViewModel : ViewModel() {
     var locationList = MutableLiveData<ArrayList<LocationData>>()
     lateinit var locationArrayList: ArrayList<LocationData>
     var errorMessage = MutableLiveData<String>()
+
+
+    fun getDetailInfo(){
+
+        val gson = GsonBuilder().setLenient().create()
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://apis.openapi.sk.com/tmap/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        val service = retrofit.create(Service::class.java)
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        service.getDetailInfo("2789762").enqueue(object : Callback<DetailData> {
+            override fun onFailure(call: Call<DetailData>, t: Throwable) {
+                Log.e("data error", t.toString())
+            }
+
+            override fun onResponse(call: Call<DetailData>, response: Response<DetailData>) {
+
+                var value = response.body()
+                Log.e("data value " , value.toString())
+                // valu.~ 으로 값 가져오기
+            }
+
+        })
+    }
+
     fun searchNearTransport(centerPoint: TMapPoint) {
         val tMapData = TMapData()
         tMapData.findAroundNamePOI(
@@ -31,21 +81,13 @@ class NearFacilityViewModel : ViewModel() {
             50
         ) { p0 ->
             locationArrayList = ArrayList<LocationData>()
+            Log.e("!!!!", " " + p0.size)
             if (p0 != null) {
                 for (i in 0 until p0.size) {
                     val item = p0[i]
                     if (isItemDataOK(item)) {
-                        val address =
-                            item.upperAddrName + " " + item.middleAddrName + " " + item.lowerAddrName
-                        val locationData = LocationData(
-                            item.poiName,
-                            address,
-                            item.poiPoint.latitude,
-                            item.poiPoint.longitude
-                        )
 
-                        locationArrayList.add(locationData)
-                        // SearchData.data.add(locationData)
+                        locationArrayList.add(itemFilter(item))
                     }
 
                 }
@@ -202,6 +244,34 @@ class NearFacilityViewModel : ViewModel() {
     }
 
     fun isItemDataOK(item: TMapPOIItem): Boolean {
-        return item.poiName != null && item.upperAddrName != null && item.middleAddrName != null && item.lowerAddrName != null && item.poiPoint != null
+        return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
+
+    fun itemFilter(item: TMapPOIItem): LocationData {
+
+        var address = ""
+        if (item.upperAddrName != null) {
+            address += item.upperAddrName
+            Log.e("upperAddrNameN", item.upperAddrName)
+    }
+        if (item.middleAddrName != null) {
+            address += " " + item.middleAddrName
+            Log.e("middleAddrNameN", item.middleAddrName)
+        }
+        if (item.lowerAddrName != null) {
+            address += " " + item.lowerAddrName
+            Log.e("lowerAddrNameN", item.lowerAddrName)
+        }
+        val locationData = LocationData(
+            item.poiName,
+            address,
+            item.poiPoint.latitude,
+            item.poiPoint.longitude
+        )
+        Log.e("address!!!", address)
+        locationArrayList.add(locationData)
+        return locationData
+    }
+
+
 }

@@ -42,6 +42,8 @@ class MiddleLocationActivity : AppCompatActivity() {
 
         binding.nearfacilitybutton.setOnClickListener {
             val intent = Intent(this, NearFacilityActivity::class.java)
+            Log.e("centerLat", "" + viewModel.searchNearFacilityPoint.latitude)
+            Log.e("centerLon", "" + viewModel.searchNearFacilityPoint.longitude)
             intent.putExtra("centerLat", viewModel.searchNearFacilityPoint.latitude) // Point 수정필요
             intent.putExtra("centerLon", viewModel.searchNearFacilityPoint.longitude) // Point 수정필요
             startActivity(intent)
@@ -150,8 +152,8 @@ class MiddleLocationActivity : AppCompatActivity() {
                             if (p1.id == "ratiomarkerItem") {
                                 var point = p1.tMapPoint
                                 viewModel.middleLocationAddress.postValue(
-                                     viewModel.getLocationAddress(
-                                            point
+                                    viewModel.getLocationAddress(
+                                        point
                                     )
                                 )
                                 viewModel.searchNearFacilityPoint = point

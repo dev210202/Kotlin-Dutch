@@ -3,6 +3,7 @@ package com.dutch2019.ui.nearfacillity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.TextView
 import android.widget.Toast
@@ -30,7 +31,9 @@ class NearFacilityActivity : AppCompatActivity() {
             R.layout.activity_near_facility
         )
         viewModel = ViewModelProviders.of(this).get(NearFacilityViewModel::class.java)
+        viewModel.getDetailInfo()
         centerPoint = TMapPoint(intent.getDoubleExtra("centerLat",0.0),intent.getDoubleExtra("centerLon",0.0))
+        Log.e("centerPoint", "" + centerPoint.latitude + " " + centerPoint.longitude)
         var layoutManager =  LinearLayoutManager(this)
         binding.recyclerview.layoutManager = layoutManager
 

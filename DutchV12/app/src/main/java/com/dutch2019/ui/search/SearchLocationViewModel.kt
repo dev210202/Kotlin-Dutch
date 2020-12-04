@@ -12,14 +12,15 @@ class SearchLocationViewModel : ViewModel() {
     lateinit var input: String
     private lateinit var item: TMapPOIItem
     var locationList = MutableLiveData<ArrayList<LocationData>>()
-    var locationArrayList = ArrayList<LocationData>()
+    private lateinit var locationArrayList : ArrayList<LocationData>
     var isDataLoadFail = MutableLiveData<Boolean>()
 
     private lateinit var locationdata: LocationData
     fun searchLocationData() {
         val tMapData = TMapData()
 //        locationList = MutableLiveData<ArrayList<LocationData>>()
-
+        var address = ""
+        locationArrayList = ArrayList<LocationData>()
         if (input != "") {
 
             Log.e("Search Start", "1")
@@ -32,8 +33,19 @@ class SearchLocationViewModel : ViewModel() {
                         item = p0[i]
 
                         if (isItemDataOK(item)) {
-                            val address =
-                                item.upperAddrName + " " + item.middleAddrName + " " + item.lowerAddrName
+                            if(item.upperAddrName != null){
+                                address += item.upperAddrName
+                                Log.e("upperAddrName", item.upperAddrName)
+                            }
+                            if(item.middleAddrName != null){
+                                address += " " + item.middleAddrName
+                                Log.e("middleAddrName", item.middleAddrName)
+                            }
+                            if(item.lowerAddrName != null){
+                                address += " " + item.lowerAddrName
+                                Log.e("lowerAddrName", item.lowerAddrName)
+                            }
+
                             locationdata = LocationData(
                                 item.poiName,
                                 address,
@@ -42,6 +54,7 @@ class SearchLocationViewModel : ViewModel() {
                             )
                             locationArrayList.add(locationdata)
                             locationList.postValue(locationArrayList)
+                            address = ""
                         }
 
 
@@ -55,7 +68,8 @@ class SearchLocationViewModel : ViewModel() {
     }
 
     fun isItemDataOK(item: TMapPOIItem): Boolean {
-        return item.poiName != null && item.upperAddrName != null && item.middleAddrName != null && item.lowerAddrName != null && item.poiPoint != null
+       // return item.poiName != null && item.upperAddrName != null && item.middleAddrName != null && item.lowerAddrName != null && item.poiPoint != null
+        return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
 }
 
