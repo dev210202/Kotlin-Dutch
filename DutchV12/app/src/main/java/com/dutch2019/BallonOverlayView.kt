@@ -12,18 +12,15 @@ import android.widget.TextView
 
 class BalloonOverlayView(
     context: Context,
-    labelName: String?,
-    id: String?
+    labelName: String?
 ) :
     FrameLayout(context) {
     private val layout: LinearLayout
     private var title: TextView? = null
-    private var subTitle: TextView? = null
     private fun setupView(
         context: Context,
         parent: ViewGroup?,
-        labelName: String?,
-        id: String?
+        labelName: String?
     ) {
         val inflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -33,7 +30,7 @@ class BalloonOverlayView(
 
     }
 
-    fun setTitle(str: String?) {
+    private fun setTitle(str: String?) {
         title!!.text = str
     }
 
@@ -42,7 +39,7 @@ class BalloonOverlayView(
         setPadding(0, 0, 0, 10)
         layout = LinearLayout(context)
         layout.visibility = View.VISIBLE
-        setupView(context, layout, labelName, id)
+        setupView(context, layout, labelName)
         val params = LayoutParams(
             LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
         )

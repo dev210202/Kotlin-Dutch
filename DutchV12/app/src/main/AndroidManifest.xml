@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/dutch_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.setting.SettingActivity"></activity>
+        <activity android:name=".ui.ratio.RatioActivity"></activity>
         <activity android:name=".DeveloperInfoActivity" />
         <activity
             android:name=".SplashActivity"

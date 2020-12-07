@@ -1,23 +1,34 @@
 package org.first.dutch2019
 
-import android.util.Log
-import com.dutch2019.ui.middle.MiddleLocationViewModel
-import com.skt.Tmap.TMapPoint
+import com.dutch2019.ui.search.SearchLocationViewModel
+import com.skt.Tmap.TMapPOIItem
 
 import org.junit.Assert.*
 import org.junit.Test
 
 
 class ExampleUnitTest {
-
-    var viewModel = MiddleLocationViewModel()
+    var viewModel = SearchLocationViewModel()
 
     @Test
-    fun changePointTest() {
-        var point1 = TMapPoint(0.0, 0.0)
-        var point2 = TMapPoint(1.0,-1.0)
-        var expectPoint = TMapPoint(0.0, 0.0)
-        var changePoint = viewModel.setChangePoint(point1, point2, 1)
-        assertEquals(expectPoint, changePoint)
+    fun test() {
+        var address = "123"
+        var item = TMapPOIItem()
+        item.upperAddrName = "1"
+        item.middleAddrName = "2"
+        item.lowerAddrName = "3"
+        address = addressNameCheck(address, item)
+        assertEquals(address, "1234")
     }
+
+    fun addressNameCheck(address: String, item: TMapPOIItem): String {
+        var add = address
+
+        if (item.upperAddrName != null) {
+           add =  add.plus(item.upperAddrName)
+        }
+
+        return add
+    }
+
 }

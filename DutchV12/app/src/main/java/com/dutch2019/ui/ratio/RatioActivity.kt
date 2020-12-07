@@ -1,4 +1,4 @@
-package com.dutch2019.ui.setting
+package com.dutch2019.ui.ratio
 
 import android.app.Dialog
 import android.content.Intent
@@ -8,14 +8,12 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.dutch2019.adapter.RatioRecyclerAdapter
-import com.dutch2019.data.LocationSetData
+import com.dutch2019.model.LocationSetData
 import com.dutch2019.R
-import com.dutch2019.databinding.ActivitySettingBinding
+import com.dutch2019.databinding.ActivityRatioBinding
+class RatioActivity : AppCompatActivity() {
 
-class SettingActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivitySettingBinding
+    private lateinit var binding: ActivityRatioBinding
     lateinit var dialog: Dialog
     var SETTING_OK = 22
     var RESET_OK = 23
@@ -23,9 +21,10 @@ class SettingActivity : AppCompatActivity() {
     lateinit var adapter: RatioRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_setting)
-        adapter = RatioRecyclerAdapter(LocationSetData.data)
+        setContentView(R.layout.activity_ratio)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_ratio)
+        adapter =
+            RatioRecyclerAdapter(LocationSetData.data)
         dialog = Dialog(this)
         binding.ratioRecyclerview.adapter = adapter
 

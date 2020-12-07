@@ -3,17 +3,13 @@ package com.dutch2019.ui.middle
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.PointF
 import android.util.Log
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dutch2019.data.LocationSetData
+import com.dutch2019.model.LocationSetData
 import com.dutch2019.MarkerOverlay
 import com.dutch2019.R
 import com.skt.Tmap.*
-import java.util.ArrayList
 
 
 public class MiddleLocationViewModel : ViewModel() {

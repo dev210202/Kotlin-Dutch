@@ -17,13 +17,6 @@ class SplashActivity : Activity() {
         var newUiOptions = uiOptions
         val isImmersiveModeEnabled =
             uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
-        if (isImmersiveModeEnabled) {
-            Log.i("Is on?", "Turning immersive mode mode off. ")
-        } else {
-            Log.i("Is on?", "Turning immersive mode mode on.")
-        }
-        // 몰입 모드를 꼭 적용해야 한다면 아래의 3가지 속성을 모두 적용시켜야 합니다
-        //전체 화면을 구현하는 코드
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -32,7 +25,7 @@ class SplashActivity : Activity() {
         startLoading()
     }
 
-    private fun startLoading() { //2초동안 슬립하고 mainActivity로 향한다.
+    private fun startLoading() {
         val handler = Handler()
         handler.postDelayed({
             finish()

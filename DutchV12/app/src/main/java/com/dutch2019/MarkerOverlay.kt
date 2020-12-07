@@ -1,73 +1,45 @@
 package com.dutch2019
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.PointF
+import android.graphics.Rect
 import android.os.Handler
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View.MeasureSpec
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.skt.Tmap.TMapMarkerItem2
-import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
-import org.w3c.dom.Text
 
 
 class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: String) :
     TMapMarkerItem2() {
-    lateinit var balloonView: BalloonOverlayView
-    lateinit var dm: DisplayMetrics
+    private var balloonView: BalloonOverlayView
+    private var dm: DisplayMetrics = DisplayMetrics()
     var mAnimationCount = 0
-    var rect = Rect()
-    lateinit var mMapView: TMapView
+    private var rect = Rect()
+    var mMapView: TMapView = view
 
     init {
-        mMapView = view
-        dm = DisplayMetrics()
-        var wmgr = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val wmgr = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         wmgr.defaultDisplay.getMetrics(dm)
 
-        balloonView = BalloonOverlayView(context, labelName, id)
+        this.balloonView = BalloonOverlayView(context, labelName)
 
-        balloonView!!.measure(
+        balloonView.measure(
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         )
 
-        balloonView!!.layout(
+        balloonView.layout(
             0,
             0,
-            balloonView!!.getMeasuredWidth(),
-            balloonView!!.getMeasuredHeight()
+            balloonView.measuredWidth,
+            balloonView.measuredHeight
         )
 
-    }
-
-
-    override fun getIcon(): Bitmap {
-        return super.getIcon()
-    }
-
-    override fun setIcon(bitmap: Bitmap?) {
-        super.setIcon(bitmap)
-    }
-
-    override fun setTMapPoint(point: TMapPoint?) {
-        super.setTMapPoint(point)
-    }
-
-    override fun getTMapPoint(): TMapPoint {
-        return super.getTMapPoint()
-    }
-
-    override fun setPosition(dx: Float, dy: Float) {
-        super.setPosition(dx, dy)
-    }
-
-    override fun setCalloutRect(rect: Rect?) {
-        super.setCalloutRect(rect)
     }
 
 
@@ -92,25 +64,23 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
         )
         val xPos = positionX
         val yPos = positionY
-        val nPos_x: Int
-        val nPos_y: Int
-        var nMarkerIconWidth = 0
-        var nMarkerIconHeight = 0
-        var marginX = 0
-        var marginY = 0
-        nMarkerIconWidth = icon.width
-        nMarkerIconHeight = icon.height
-        nPos_x = (xPos * nMarkerIconWidth).toInt()
-        nPos_y = (yPos * nMarkerIconHeight).toInt()
-        marginX = if (nPos_x == 0) {
+        val nposX: Int
+        val nposY: Int
+        val marginX: Int
+        val marginY: Int
+        val nMarkerIconWidth: Int = icon.width
+        val nMarkerIconHeight: Int = icon.height
+        nposX = (xPos * nMarkerIconWidth).toInt()
+        nposY = (yPos * nMarkerIconHeight).toInt()
+        marginX = if (nposX == 0) {
             nMarkerIconWidth / 2
         } else {
-            nPos_x
+            nposX
         }
-        marginY = if (nPos_y == 0) {
+        marginY = if (nposY == 0) {
             nMarkerIconHeight / 2
         } else {
-            nPos_y
+            nposY
         }
         canvas.translate(x - marginX.toFloat(), y - marginY.toFloat())
         canvas.drawBitmap(icon, 0f, 0f, null)
@@ -138,7 +108,7 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
             rect.bottom = rect.top + balloonView.measuredHeight
 
 
-            setCalloutRect(rect)
+            calloutRect = rect
             canvas.restore()
         }
     }
@@ -156,7 +126,7 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
             override fun run() {
                 if (animationIcons.size > 0) {
                     if (mAnimationCount >= animationIcons.size) mAnimationCount = 0
-                    setIcon(animationIcons[mAnimationCount])
+                    icon = animationIcons[mAnimationCount]
                     mMapView.postInvalidate()
                     mAnimationCount++
                     mHandler!!.postDelayed(this, aniDuration.toLong())

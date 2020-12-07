@@ -1,4 +1,4 @@
-package com.dutch2019.adapter
+package com.dutch2019.ui.ratio
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,11 +7,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.data.LocationData
+import com.dutch2019.model.LocationData
 import com.dutch2019.R
 import com.skt.Tmap.TMapPoint
 import kotlinx.android.synthetic.main.ratio_recycler_item.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -19,8 +18,8 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
     RecyclerView.Adapter<RatioRecyclerAdapter.ViewHolder>() {
 
     var pointArrayList = ArrayList<TMapPoint>()
-    var APoint = TMapPoint(0.0, 0.0)
-    var BPoint = TMapPoint(0.0, 0.0)
+    var pointA = TMapPoint(0.0, 0.0)
+    var pointB = TMapPoint(0.0, 0.0)
     var isAChecked = false
     var isBChecked = false
 
@@ -34,11 +33,11 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        RatioRecyclerAdapter.ViewHolder(parent)
+        ViewHolder(parent)
 
     override fun getItemCount(): Int = dataArray.size
 
-    override fun onBindViewHolder(holder: RatioRecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.numberTextView.text = "" + (position + 1) + "번 위치"
         holder.locationTextView.text =
             dataArray[position].locationName
@@ -55,13 +54,13 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
                     } else {
                         holder.pointTextView.text = "B"
                         isBChecked = true
-                        BPoint =
+                        pointB =
                             TMapPoint(dataArray[position].latitude, dataArray[position].longitude)
                     }
                 } else {
                     holder.pointTextView.text = "A"
                     isAChecked = true
-                    APoint = TMapPoint(dataArray[position].latitude, dataArray[position].longitude)
+                    pointA = TMapPoint(dataArray[position].latitude, dataArray[position].longitude)
                 }
             } else {
                 if (holder.pointTextView.text == "A") {
@@ -75,19 +74,16 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
 
 
         }
-
     }
-
     fun getRatioPointArrayList(): ArrayList<TMapPoint> {
 
-        if(isAChecked && isBChecked){
-            pointArrayList.add(APoint)
-            pointArrayList.add(BPoint)
+        return if(isAChecked && isBChecked){
+            pointArrayList.add(pointA)
+            pointArrayList.add(pointB)
             Log.e("PointArray", pointArrayList.toString())
-            return pointArrayList
-        }
-        else{
-            return ArrayList<TMapPoint>()
+            pointArrayList
+        } else{
+            ArrayList<TMapPoint>()
         }
     }
 

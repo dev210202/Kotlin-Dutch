@@ -1,6 +1,4 @@
-package com.dutch2019.data
-
-import android.hardware.SensorAdditionalInfo
+package com.dutch2019.model
 
 data class Info(
 

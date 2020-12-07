@@ -1,10 +1,8 @@
 package com.dutch2019.network
 
-import com.dutch2019.data.DetailData
-import com.dutch2019.data.Info
+import com.dutch2019.model.DetailData
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface Service {

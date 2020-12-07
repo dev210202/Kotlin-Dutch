@@ -1,4 +1,4 @@
-package com.dutch2019.adapter
+package com.dutch2019.ui.nearfacillity
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.location_list_item.view.*
-import com.dutch2019.data.LocationData
+import com.dutch2019.model.LocationData
 import com.dutch2019.R
 
 class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :

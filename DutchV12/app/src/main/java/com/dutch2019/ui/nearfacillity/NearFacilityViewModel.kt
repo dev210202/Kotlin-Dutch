@@ -4,9 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dutch2019.data.DetailData
-import com.dutch2019.data.Info
-import com.dutch2019.data.LocationData
+import com.dutch2019.model.DetailData
+import com.dutch2019.model.LocationData
 import com.dutch2019.network.Service
 import com.google.gson.GsonBuilder
 import com.kakao.kakaolink.v2.KakaoLinkResponse
@@ -34,9 +33,10 @@ class NearFacilityViewModel : ViewModel() {
     var locationList = MutableLiveData<ArrayList<LocationData>>()
     lateinit var locationArrayList: ArrayList<LocationData>
     var errorMessage = MutableLiveData<String>()
+    var detailInfo = MutableLiveData<String>()
 
+    fun getDetailInfo(poiId: String) {
 
-    fun getDetailInfo(){
 
         val gson = GsonBuilder().setLenient().create()
 
@@ -49,7 +49,6 @@ class NearFacilityViewModel : ViewModel() {
             .build()
 
 
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://apis.openapi.sk.com/tmap/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -57,7 +56,7 @@ class NearFacilityViewModel : ViewModel() {
             .build()
         val service = retrofit.create(Service::class.java)
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        service.getDetailInfo("2789762").enqueue(object : Callback<DetailData> {
+        service.getDetailInfo(poiId).enqueue(object : Callback<DetailData> {
             override fun onFailure(call: Call<DetailData>, t: Throwable) {
                 Log.e("data error", t.toString())
             }
@@ -65,8 +64,11 @@ class NearFacilityViewModel : ViewModel() {
             override fun onResponse(call: Call<DetailData>, response: Response<DetailData>) {
 
                 var value = response.body()
-                Log.e("data value " , value.toString())
+                Log.e("data value ", value.toString())
                 // valu.~ 으로 값 가져오기
+                if (value != null) {
+                    detailInfo.value = value.poiDetailInfo.additionalInfo.toString()
+                }
             }
 
         })
@@ -253,7 +255,7 @@ class NearFacilityViewModel : ViewModel() {
         if (item.upperAddrName != null) {
             address += item.upperAddrName
             Log.e("upperAddrNameN", item.upperAddrName)
-    }
+        }
         if (item.middleAddrName != null) {
             address += " " + item.middleAddrName
             Log.e("middleAddrNameN", item.middleAddrName)

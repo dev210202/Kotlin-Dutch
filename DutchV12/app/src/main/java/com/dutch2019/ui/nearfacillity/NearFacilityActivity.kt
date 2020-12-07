@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skt.Tmap.TMapPoint
-import com.dutch2019.adapter.SearchRecyclerAdapter
-import com.dutch2019.data.LocationData
+import com.dutch2019.ui.search.SearchRecyclerAdapter
+import com.dutch2019.model.LocationData
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivityNearFacilityBinding
 
@@ -31,7 +31,7 @@ class NearFacilityActivity : AppCompatActivity() {
             R.layout.activity_near_facility
         )
         viewModel = ViewModelProviders.of(this).get(NearFacilityViewModel::class.java)
-        viewModel.getDetailInfo()
+
         centerPoint = TMapPoint(intent.getDoubleExtra("centerLat",0.0),intent.getDoubleExtra("centerLon",0.0))
         Log.e("centerPoint", "" + centerPoint.latitude + " " + centerPoint.longitude)
         var layoutManager =  LinearLayoutManager(this)
@@ -88,9 +88,15 @@ class NearFacilityActivity : AppCompatActivity() {
                 binding.recyclerview.adapter = newAdapter
             }
         viewModel.locationList.observe(this, nearRecyclerObserver)
+
+        val detailDataObserver : Observer<String> =
+            Observer {
+                binding.textView2.text = viewModel.detailInfo.value.toString()
+            }
+        viewModel.detailInfo.observe(this, detailDataObserver)
     }
 
-    fun buttonSelect(name: String) {
+    private fun buttonSelect(name: String) {
         when (name) {
             "trans" -> {
                 binding.transbutton.isSelected = true

@@ -1,47 +1,38 @@
 package com.dutch2019.ui.main
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.dutch2019.*
-import com.dutch2019.data.LocationData
-import com.dutch2019.data.LocationSetData
+import com.dutch2019.model.LocationData
+import com.dutch2019.model.LocationSetData
 import com.dutch2019.databinding.ActivityMainBinding
 import com.dutch2019.ui.middle.MiddleLocationActivity
 import com.dutch2019.ui.search.SearchLocationActivity
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewmodel: MainViewModel
-    private lateinit var dialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        LocationSetData.data.clear()
         binding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
         )
         viewmodel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        dialogShow()
 
         binding.logo.setOnClickListener {
             val intent = Intent(this, DeveloperInfoActivity::class.java)
@@ -108,8 +99,8 @@ class MainActivity : AppCompatActivity() {
                 data.getDoubleExtra("UserChooseLocationLatitude", 0.0),
                 data.getDoubleExtra("UserChooseLocationLongitude", 0.0)
             )
-            for (i in 0..viewmodel.dynamicButtonArray.lastIndex) {
-                if (requestCode == viewmodel.dynamicButtonArray[i]) {
+            viewmodel.dynamicButtonArray.forEach { i ->
+                if(requestCode == viewmodel.dynamicButtonArray[i]){
                     setLocationName(i, userChooseLocation)
 
                     binding.buttonview.findViewById<Button>(i).setTextColor(Color.rgb(47, 47, 47))
@@ -117,6 +108,7 @@ class MainActivity : AppCompatActivity() {
                         userChooseLocation.locationName
                 }
             }
+
         }
     }
 
@@ -145,47 +137,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
     override fun onDestroy() {
         super.onDestroy()
         LocationSetData.data.clear()
     }
-
-    fun dialogShow() {
-        var time = Calendar.getInstance()
-        var a = time.time
-        var format1 = SimpleDateFormat("yyyyMMdd")
-
-        if (format1.format(a).toInt() in 20201009..20201101) {
-
-            var sharedPreferences = getSharedPreferences("dontLook", Context.MODE_PRIVATE)
-            if (sharedPreferences.getBoolean("boolean", false)) {
-
-            } else {
-                dialog = Dialog(this)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.setContentView(R.layout.custom_dialog)
-                dialog.show();
-
-            }
-        }
-
-
-    }
-
-    fun dontLookButtonClick(view: View) {
-
-        var sharedPreferences = getSharedPreferences("dontLook", Context.MODE_PRIVATE)
-        var editor = sharedPreferences.edit()
-        editor.putBoolean("boolean", true)
-        editor.commit()
-        dialog.dismiss()
-    }
-
-    fun closeButtonClick(view: View) {
-        dialog.dismiss()
-    }
-
-
 }
