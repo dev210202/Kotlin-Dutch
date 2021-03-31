@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/middlemapview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_medium"
+                android:id="@+id/middlelocationresult_textview"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="14dp"
+                android:textColor="#e24b35"
+                android:text="중간지점 결과"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <TextView
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_medium"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="2dp"
+                android:id="@+id/middleaddresstextview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="서울특별시"
+                android:textColor="@color/black"
+                android:textSize="18sp"></TextView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:includeFontPadding="false"
+                    android:textColor="#8f8f8f"
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="22dp"
+                    android:text="근처 지하철 역 :"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                <TextView
+                    android:id="@+id/nearsubwaytextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="end"
+                    android:text=""
+                    android:textColor="#8f8f8f"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"></TextView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#2f2f2f"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/setting_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_settings_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageButton>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                 android:fontFamily="@font/notosans_medium"
+                android:id="@+id/nearfacilitybutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:text="주변시설 확인하기"
+                android:textColor="@color/white"
+                android:textSize="17sp"></Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
