@@ -2,14 +2,12 @@ package com.dutch2019.extension
 
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.adapter.ButtonRecyclerViewAdapter
-import com.dutch2019.base.BaseViewModel
+import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.ui.main.MainViewModel
+import com.dutch2019.adapter.SearchRecyclerAdapter
+import com.skt.Tmap.TMapTapi
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
@@ -20,4 +18,14 @@ fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<Loca
     (recyclerView.adapter as ButtonRecyclerViewAdapter).setLocationData(buttonData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 
+}
+
+@BindingAdapter(value = ["searchlocation"])
+fun searchLocation(recyclerView: RecyclerView, locationData: LiveData<ArrayList<LocationData>>){
+    if(recyclerView.adapter == null){
+        var adapter = SearchRecyclerAdapter()
+        recyclerView.adapter = adapter
+    }
+    (recyclerView.adapter as SearchRecyclerAdapter).setLocationDataList(locationData.value!!)
+    recyclerView.adapter?.notifyDataSetChanged()
 }

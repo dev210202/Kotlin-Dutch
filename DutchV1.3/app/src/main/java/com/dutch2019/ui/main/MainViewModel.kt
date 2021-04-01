@@ -25,13 +25,12 @@ class MainViewModel : BaseViewModel() {
 
 
     fun addDynamicButtonData() {
-        list.add(setDummyLocationData())
-        _dynamicButtonData.value = list
+        //list.add(setDummyLocationData())
+        _dynamicButtonData.value = _dynamicButtonData.value?.apply{
+            add(setDummyLocationData())
+        }
     }
 
-    fun removeDynamicButtonData(itemNum : Int){
-        list.remove(list.get(itemNum))
-    }
 
     private fun setDummyLocationData(): LocationInfo {
         return LocationInfo(

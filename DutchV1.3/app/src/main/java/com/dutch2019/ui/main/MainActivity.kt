@@ -40,8 +40,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         viewModel.dynamicButtonData.observe(
             this,
             Observer {
+                dynamicButtonList ->
                 if (binding.recyclerview?.adapter != null) {
-                    (binding.recyclerview?.adapter as ButtonRecyclerViewAdapter).setLocationData(it)
+                    (binding.recyclerview?.adapter as ButtonRecyclerViewAdapter).setLocationData(dynamicButtonList)
                 }
             })
     }

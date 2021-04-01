@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skt.Tmap.TMapPoint
-import com.dutch2019.ui.search.SearchRecyclerAdapter
+import com.dutch2019.adapter.SearchRecyclerAdapter
 import com.dutch2019.model.LocationData
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivityNearFacilityBinding
@@ -83,9 +83,9 @@ class NearFacilityActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this,errorObserver)
         val nearRecyclerObserver: Observer<ArrayList<LocationData>> =
             Observer {
-                val newAdapter =
-                    SearchRecyclerAdapter(viewModel.locationList)
-                binding.recyclerview.adapter = newAdapter
+//                val newAdapter =
+//                    SearchRecyclerAdapter(viewModel.locationList)
+//                binding.recyclerview.adapter = newAdapter
             }
         viewModel.locationList.observe(this, nearRecyclerObserver)
 
