@@ -1,16 +1,15 @@
 package com.dutch2019.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.location_list_item.view.*
 import com.dutch2019.model.LocationData
-import com.dutch2019.R
 import com.dutch2019.databinding.LocationListItemBinding
-import com.dutch2019.ui.middle.MiddleLocationActivity
+import com.dutch2019.ui.locationcheck.LocationCheckFragment
+import com.dutch2019.ui.search.SearchLocationFragmentDirections
 
 class SearchRecyclerAdapter() :
     RecyclerView.Adapter<SearchRecyclerAdapter.LocationDataViewHolder>() {
@@ -33,18 +32,22 @@ class SearchRecyclerAdapter() :
 
     override fun onBindViewHolder(holder: LocationDataViewHolder, position: Int) {
         holder.bind(locationDataList[position])
-        holder.rightArrowButton.setOnClickListener {
-            val intent = Intent(holder.itemView.context, MiddleLocationActivity::class.java)
-            holder.itemView.context.startActivity(intent)
+        holder.layout.setOnClickListener { view : View ->
+            view.findNavController().navigate(
+                SearchLocationFragmentDirections.actionSearchLocationFragmentToLocationCheckFragment(
+                    locationDataList[position]
+                )
+            )
         }
     }
 
     class LocationDataViewHolder(private val binding: LocationListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        var rightArrowButton = binding.rightArrowButton
-        fun bind(locationData : LocationData){
+        var layout = binding.linearLayout
+        fun bind(locationData: LocationData) {
             binding.locationdata = locationData
+
         }
     }
 

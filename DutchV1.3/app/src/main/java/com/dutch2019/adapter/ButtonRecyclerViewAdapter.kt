@@ -3,16 +3,10 @@ package com.dutch2019.adapter
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ButtonRecyclerItemBinding
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.ui.main.MainViewModel
-import com.dutch2019.ui.middle.MiddleLocationActivity
 import com.dutch2019.ui.search.SearchLocationActivity
 
 class ButtonRecyclerViewAdapter :

@@ -10,6 +10,7 @@ import com.dutch2019.model.LocationInfo
 
 public class LocationRepository {
 
+    // singleton으로 수정
     lateinit var locationInfoDao: LocationInfoDao
     lateinit var locationList: List<LocationInfo>
     lateinit var recentLocationList: List<LocationInfo>

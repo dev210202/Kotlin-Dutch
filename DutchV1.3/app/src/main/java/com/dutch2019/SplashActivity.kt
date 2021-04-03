@@ -12,7 +12,6 @@ class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        super.onCreate(savedInstanceState)
         val uiOptions = window.decorView.systemUiVisibility
         var newUiOptions = uiOptions
         val isImmersiveModeEnabled =
@@ -21,7 +20,6 @@ class SplashActivity : Activity() {
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         window.decorView.systemUiVisibility = newUiOptions
-        setContentView(R.layout.activity_splash)
         startLoading()
     }
 

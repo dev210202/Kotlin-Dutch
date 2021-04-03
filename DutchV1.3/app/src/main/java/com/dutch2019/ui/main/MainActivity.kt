@@ -1,30 +1,13 @@
 package com.dutch2019.ui.main
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Color
-import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.dutch2019.*
 import com.dutch2019.adapter.ButtonRecyclerViewAdapter
 import com.dutch2019.base.BaseActivity
-import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationSetData
 import com.dutch2019.databinding.ActivityMainBinding
-import com.dutch2019.db.AppDB
-import com.dutch2019.model.LocationInfo
 import com.dutch2019.repository.LocationRepository
-import com.dutch2019.ui.middle.MiddleLocationActivity
-import com.dutch2019.ui.search.SearchLocationActivity
 import kotlin.math.roundToInt
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(

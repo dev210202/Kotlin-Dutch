@@ -1,7 +1,6 @@
 package com.dutch2019.ui.search
 
 import android.location.Location
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,12 +23,17 @@ class SearchLocationViewModel : BaseViewModel() {
     }
 
     fun searchLocationData(input: String) {
+
+
         val tMapData = TMapData()
         if (input.isNotEmpty()) {
             tMapData.findAllPOI(input) { arrayList ->
                 setLocationData(arrayList).let { list ->
                     _locationList.postValue(list)
                 }
+//                _locationList.value = locationArrayList
+
+
             }
         }
     }
@@ -39,14 +43,15 @@ class SearchLocationViewModel : BaseViewModel() {
         val locationArrayList = ArrayList<LocationData>()
         var item: TMapPOIItem
         if (arrayList.isEmpty()) {
+            // 검색된 결과 없음
             isDataLoadFail.postValue(true)
         } else {
+            // 검색결과 존재
             arrayList.forEach { poiItem ->
                 var address = ""
                 item = poiItem
                 if (isItemDataExist(item)) {
                     address = setAddressName(address, item)
-                    Log.i("ADRESS", address)
                     locationArrayList.add(
                         LocationData(
                             item.poiName,
@@ -61,19 +66,20 @@ class SearchLocationViewModel : BaseViewModel() {
         return locationArrayList
     }
 
-    private fun isItemDataExist(item: TMapPOIItem): Boolean = (item.poiName != null && item.upperAddrName != null && item.poiPoint != null)
+    private fun isItemDataExist(item: TMapPOIItem): Boolean {
+        return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
+    }
 
     private fun setAddressName(input: String, item: TMapPOIItem): String {
         var address = input
-        if (item.upperAddrName.isNotEmpty()) {
-            address = address.plus(item.upperAddrName)
+        if (item.upperAddrName.isNotEmpty() && item.upperAddrName != null) {
             address += item.upperAddrName
         }
-        if (item.middleAddrName.isNotEmpty()) {
-            address = address.plus(" " + item.middleAddrName)
+        if(!item.middleAddrName.isNullOrEmpty()){
+            address += " " + item.middleAddrName
         }
-        if (item.lowerAddrName.isNotEmpty()) {
-            address = address.plus(" " + item.lowerAddrName)
+        if (!item.lowerAddrName.isNullOrEmpty()) {
+            address += " " + item.lowerAddrName
         }
         return address
     }

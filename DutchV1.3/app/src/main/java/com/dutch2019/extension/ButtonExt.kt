@@ -2,17 +2,15 @@ package com.dutch2019.extension
 
 import android.content.Intent
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.databinding.BindingAdapter
-import com.dutch2019.base.BaseViewModel
-import com.dutch2019.ui.main.MainViewModel
-import com.dutch2019.ui.search.SearchLocationActivity
+import com.dutch2019.model.LocationData
 
-@BindingAdapter(value = ["plusbuttonclick"])
-fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel){
-    imageButton.setOnClickListener {
-        (viewModel as MainViewModel).addDynamicButtonData()
-    }
+
+@BindingAdapter(value =["setlocationbuttonclick"])
+fun setLocationButtonCLick(button : Button, locationData: LocationData){
+    val CHOOSE_COMPLETE = 20
+    val intent = Intent()
+
 }
 
 

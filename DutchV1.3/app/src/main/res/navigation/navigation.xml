@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/searchLocationFragment">
+
+    <fragment
+        android:id="@+id/searchLocationFragment"
+        android:name="com.dutch2019.ui.search.SearchLocationFragment"
+        android:label="SearchLocationFragment"
+        tools:layout="@layout/fragment_search_location">
+        <action
+            android:id="@+id/action_searchLocationFragment_to_mainActivity"
+            app:destination="@id/mainActivity"
+            app:popUpTo="@id/navigation" >
+        </action>
+        <action
+            android:id="@+id/action_searchLocationFragment_to_locationCheckFragment"
+            app:destination="@id/locationCheckFragment">
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/locationCheckFragment"
+        android:name="com.dutch2019.ui.locationcheck.LocationCheckFragment"
+        android:label="LocationCheckFragment"
+        tools:layout="@layout/fragment_location_check">
+        <action
+            android:id="@+id/action_locationCheckFragment_to_searchLocationFragment"
+            app:popUpTo="@id/searchLocationFragment" />
+        <action
+            android:id="@+id/action_locationCheckFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+        <argument
+            android:name="locationData"
+            app:argType="com.dutch2019.model.LocationData" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.dutch2019.ui.main.MainActivity"
+        android:label="MainActivity"
+        tools:layout="@layout/activity_main" />
+</navigation>
