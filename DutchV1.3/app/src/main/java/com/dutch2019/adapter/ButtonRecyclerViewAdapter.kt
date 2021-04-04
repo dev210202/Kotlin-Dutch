@@ -4,10 +4,11 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ButtonRecyclerItemBinding
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.ui.search.SearchLocationActivity
+import com.dutch2019.ui.main.MainFragmentDirections
 
 class ButtonRecyclerViewAdapter :
     RecyclerView.Adapter<ButtonRecyclerViewAdapter.ButtonViewHolder>() {
@@ -30,8 +31,7 @@ class ButtonRecyclerViewAdapter :
 
     override fun onBindViewHolder(holder: ButtonViewHolder, position: Int) {
         holder.locationButton.setOnClickListener {
-            val intent = Intent(holder.locationButton.context, SearchLocationActivity::class.java)
-            holder.locationButton.context.startActivity(intent)
+            view -> view.findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchLocationFragment(locationInfoData[position]))
         }
         holder.minusButton.setOnClickListener {
             locationInfoData.removeAt(position)

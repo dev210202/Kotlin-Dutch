@@ -3,23 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/searchLocationFragment">
-
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.dutch2019.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_searchLocationFragment"
+            app:destination="@id/searchLocationFragment" />
+        <argument
+            android:name="locationInfo"
+            app:argType="com.dutch2019.model.LocationInfo" />
+    </fragment>
     <fragment
         android:id="@+id/searchLocationFragment"
         android:name="com.dutch2019.ui.search.SearchLocationFragment"
         android:label="SearchLocationFragment"
         tools:layout="@layout/fragment_search_location">
         <action
-            android:id="@+id/action_searchLocationFragment_to_mainActivity"
-            app:destination="@id/mainActivity"
-            app:popUpTo="@id/navigation" >
-        </action>
-        <action
             android:id="@+id/action_searchLocationFragment_to_locationCheckFragment"
-            app:destination="@id/locationCheckFragment">
-        </action>
-
+            app:destination="@id/locationCheckFragment"></action>
+        <action
+            android:id="@+id/action_searchLocationFragment_to_mainFragment"
+            app:popUpTo="@id/mainFragment" />
+        <argument
+            android:name="locationInfo"
+            app:argType="com.dutch2019.model.LocationInfo" />
     </fragment>
     <fragment
         android:id="@+id/locationCheckFragment"
@@ -29,16 +39,9 @@
         <action
             android:id="@+id/action_locationCheckFragment_to_searchLocationFragment"
             app:popUpTo="@id/searchLocationFragment" />
-        <action
-            android:id="@+id/action_locationCheckFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
         <argument
-            android:name="locationData"
-            app:argType="com.dutch2019.model.LocationData" />
+            android:name="locationinfo"
+            app:argType="com.dutch2019.model.LocationInfo" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.dutch2019.ui.main.MainActivity"
-        android:label="MainActivity"
-        tools:layout="@layout/activity_main" />
+
 </navigation>

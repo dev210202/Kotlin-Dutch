@@ -1,24 +1,22 @@
 package com.dutch2019.ui.search
 
-import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.model.LocationData
+import com.dutch2019.model.LocationInfo
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
-import com.skt.Tmap.TMapTapi
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchLocationViewModel : BaseViewModel() {
 
-    private val _locationList = MutableLiveData<ArrayList<LocationData>>()
-    val locationList: LiveData<ArrayList<LocationData>> get() = _locationList
+    private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
+    val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
     var isDataLoadFail = MutableLiveData<Boolean>()
+    var locationPosition : Int = 0
 
-    init {
+
+    fun init(){
         _locationList.value = ArrayList()
     }
 
@@ -38,22 +36,24 @@ class SearchLocationViewModel : BaseViewModel() {
         }
     }
 
-    private fun setLocationData(arrayList: ArrayList<TMapPOIItem>): ArrayList<LocationData> {
+    private fun setLocationData(arrayList: ArrayList<TMapPOIItem>): ArrayList<LocationInfo> {
 
-        val locationArrayList = ArrayList<LocationData>()
+        val locationArrayList = ArrayList<LocationInfo>()
         var item: TMapPOIItem
         if (arrayList.isEmpty()) {
             // 검색된 결과 없음
             isDataLoadFail.postValue(true)
         } else {
             // 검색결과 존재
-            arrayList.forEach { poiItem ->
+            for(i in 0 until arrayList.size) {
+                var poiItem = arrayList[i]
                 var address = ""
                 item = poiItem
                 if (isItemDataExist(item)) {
                     address = setAddressName(address, item)
                     locationArrayList.add(
-                        LocationData(
+                        LocationInfo(
+                            locationPosition,
                             item.poiName,
                             address,
                             item.poiPoint.latitude,

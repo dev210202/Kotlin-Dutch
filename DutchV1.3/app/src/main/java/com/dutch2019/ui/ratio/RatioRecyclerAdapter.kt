@@ -7,14 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.model.LocationData
 import com.dutch2019.R
+import com.dutch2019.model.LocationInfo
 import com.skt.Tmap.TMapPoint
 import kotlinx.android.synthetic.main.ratio_recycler_item.view.*
 import kotlin.collections.ArrayList
 
 
-class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
+class RatioRecyclerAdapter(var dataArray: ArrayList<LocationInfo>) :
     RecyclerView.Adapter<RatioRecyclerAdapter.ViewHolder>() {
 
     var pointArrayList = ArrayList<TMapPoint>()
@@ -40,7 +40,7 @@ class RatioRecyclerAdapter(var dataArray: ArrayList<LocationData>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.numberTextView.text = "" + (position + 1) + "번 위치"
         holder.locationTextView.text =
-            dataArray[position].locationName
+            dataArray[position].name
         val context = holder.itemView.context
         holder.checkBox?.setOnClickListener {
 

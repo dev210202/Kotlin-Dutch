@@ -21,7 +21,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var binding: B
         private set
     open val viewModel by lazy {
-        ViewModelProvider(this).get(viewModelClass)
+        ViewModelProvider(requireActivity().viewModelStore, ViewModelProvider.NewInstanceFactory()).get(viewModelClass)
     }
 
     override fun onCreateView(

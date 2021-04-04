@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.location_list_item.view.*
-import com.dutch2019.model.LocationData
 import com.dutch2019.R
+import com.dutch2019.model.LocationInfo
 
-class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :
+class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationInfo>>) :
     RecyclerView.Adapter<NearRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder constructor(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -27,9 +27,9 @@ class NearRecyclerAdapter(var dataList: LiveData<ArrayList<LocationData>>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         dataList.value!!.get(position).let { item ->
             with(holder) {
-                locationNameTextView.text = item.locationName
-                locationAddressTextView.text = item.locationAddress
-                Log.e("locationsetting", item.locationName + "\n" + item.locationAddress)
+                locationNameTextView.text = item.name
+                locationAddressTextView.text = item.adress
+                Log.e("locationsetting", item.name + "\n" + item.adress)
             }
         }
     }

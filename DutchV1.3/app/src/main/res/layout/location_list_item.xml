@@ -5,8 +5,8 @@
 
     <data>
             <variable
-                name="locationdata"
-                type="com.dutch2019.model.LocationData" />
+                name="locationinfo"
+                type="com.dutch2019.model.LocationInfo" />
     </data>
 
     <LinearLayout
@@ -53,7 +53,7 @@
                 android:fontFamily="@font/notosans_medium"
                 android:includeFontPadding="false"
                 android:singleLine="true"
-                android:text="@{locationdata.locationName}"
+                android:text="@{locationinfo.name}"
                 android:textColor="@color/black"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
@@ -71,7 +71,7 @@
                 android:layout_marginRight="50dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@{locationdata.locationAddress}"
+                android:text="@{locationinfo.adress}"
                 android:textSize="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

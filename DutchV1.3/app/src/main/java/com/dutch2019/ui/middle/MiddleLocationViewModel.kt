@@ -60,6 +60,7 @@ public class MiddleLocationViewModel : ViewModel() {
     }
 
     fun markSearchLoaction(tMapView: TMapView, context: Context) {
+        /*
         if (LocationSetData.data.isNotEmpty()) {
             for (i in 0 until LocationSetData.data.size) {
                 val markerItemPoint =
@@ -87,6 +88,7 @@ public class MiddleLocationViewModel : ViewModel() {
                 tMapView.addMarkerItem2(strId, marker)
             }
         }
+        */
     }
 
     fun markMiddleLocation(tMapView: TMapView, context: Context) {

@@ -1,37 +1,21 @@
 package com.dutch2019.ui.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.dutch2019.*
 import com.dutch2019.adapter.ButtonRecyclerViewAdapter
 import com.dutch2019.base.BaseActivity
 import com.dutch2019.model.LocationSetData
-import com.dutch2019.databinding.ActivityMainBinding
 import com.dutch2019.repository.LocationRepository
 import kotlin.math.roundToInt
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
-    R.layout.activity_main,
-    MainViewModel::class.java
-) {
-
-
-    var locationRepository = LocationRepository()
-
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.dynamicButtonData.observe(
-            this,
-            Observer {
-                dynamicButtonList ->
-                if (binding.recyclerview?.adapter != null) {
-                    (binding.recyclerview?.adapter as ButtonRecyclerViewAdapter).setLocationData(dynamicButtonList)
-                }
-            })
+        setContentView(R.layout.activity_main)
     }
-
-
-//        binding.logo.setOnClickListener {
+    //        binding.logo.setOnClickListener {
 //            val intent = Intent(this, DeveloperInfoActivity::class.java)
 //            startActivity(intent)
 //        }

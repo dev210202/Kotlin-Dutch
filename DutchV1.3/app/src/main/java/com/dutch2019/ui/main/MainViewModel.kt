@@ -1,45 +1,52 @@
 package com.dutch2019.ui.main
 
-import android.content.Intent
-import android.graphics.Color
-import android.location.Location
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.db.AppDB
 import com.dutch2019.model.LocationInfo
 
 class MainViewModel : BaseViewModel() {
     private val list = ArrayList<LocationInfo>()
 
-    private val _dynamicButtonData = MutableLiveData<ArrayList<LocationInfo>>()
+    private val _dynamicButtonData = MutableLiveData<ArrayList<LocationInfo>>(list)
     val dynamicButtonData: LiveData<ArrayList<LocationInfo>> get() = _dynamicButtonData
 
-    init {
-        _dynamicButtonData.value = list
-    }
+    private val _checkLocationInfo = MutableLiveData<LocationInfo>()
+    val checkLocationInfo: LiveData<LocationInfo> get() = _checkLocationInfo
+
+    //
+//    private val _inputLocationData = MutableLiveData<ArrayList<LocationData>>()
+//    val inputLocationData : LiveData<ArrayList<LocationData>> get() = _inputLocationData
 
 
-    fun addDynamicButtonData() {
-        //list.add(setDummyLocationData())
-        _dynamicButtonData.value = _dynamicButtonData.value?.apply{
-            add(setDummyLocationData())
+
+    fun addDynamicButtonData(locationInfo: LocationInfo) {
+        _dynamicButtonData.value = _dynamicButtonData.value?.apply {
+            add(locationInfo)
         }
     }
 
-
-    private fun setDummyLocationData(): LocationInfo {
-        return LocationInfo(
-            list.size,
-            "위치를 입력해주세요" + list.size,
-            "",
-            0.0,
-            0.0
-        )
+    fun replaceDynamicButtonData(locationPosition : Int, locationInfo: LocationInfo){
+        _dynamicButtonData.value?.set(locationPosition, locationInfo)
     }
 
+    fun addDummyLocationData() {
+
+        _dynamicButtonData.value = _dynamicButtonData.value?.apply {
+            add(
+                LocationInfo(
+                    list.size,
+                    "위치를 입력해주세요" + list.size,
+                    "",
+                    0.0,
+                    0.0
+                )
+            )
+        }
+    }
+
+    fun setCheckLocationInfo(locationInfo: LocationInfo) {
+        _checkLocationInfo.value = locationInfo
+    }
 }

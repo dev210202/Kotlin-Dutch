@@ -4,19 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.model.LocationData
 import com.dutch2019.databinding.LocationListItemBinding
-import com.dutch2019.ui.locationcheck.LocationCheckFragment
+import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.search.SearchLocationFragmentDirections
 
 class SearchRecyclerAdapter() :
     RecyclerView.Adapter<SearchRecyclerAdapter.LocationDataViewHolder>() {
 
-    private var locationDataList = ArrayList<LocationData>()
+    private var locationDataList = ArrayList<LocationInfo>()
 
-    fun setLocationDataList(list: ArrayList<LocationData>) {
+    fun setLocationDataList(list: ArrayList<LocationInfo>) {
         locationDataList = list
         notifyDataSetChanged()
     }
@@ -45,8 +43,8 @@ class SearchRecyclerAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
         var layout = binding.linearLayout
-        fun bind(locationData: LocationData) {
-            binding.locationdata = locationData
+        fun bind(locationInfo: LocationInfo) {
+            binding.locationinfo = locationInfo
 
         }
     }
