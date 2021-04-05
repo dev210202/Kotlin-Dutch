@@ -1,12 +1,17 @@
 package com.dutch2019.ui.main
 
-import android.util.Log
+import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dutch2019.R
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
+import com.skt.Tmap.TMapData
+import com.skt.Tmap.TMapPoint
+import com.skt.Tmap.TMapView
 
-class MainViewModel : BaseViewModel() {
+open class MainViewModel : BaseViewModel() {
     private val list = ArrayList<LocationInfo>()
 
     private val _dynamicButtonData = MutableLiveData<ArrayList<LocationInfo>>(list)
@@ -14,12 +19,6 @@ class MainViewModel : BaseViewModel() {
 
     private val _checkLocationInfo = MutableLiveData<LocationInfo>()
     val checkLocationInfo: LiveData<LocationInfo> get() = _checkLocationInfo
-
-    //
-//    private val _inputLocationData = MutableLiveData<ArrayList<LocationData>>()
-//    val inputLocationData : LiveData<ArrayList<LocationData>> get() = _inputLocationData
-
-
 
     fun addDynamicButtonData(locationInfo: LocationInfo) {
         _dynamicButtonData.value = _dynamicButtonData.value?.apply {
@@ -49,4 +48,8 @@ class MainViewModel : BaseViewModel() {
     fun setCheckLocationInfo(locationInfo: LocationInfo) {
         _checkLocationInfo.value = locationInfo
     }
+
+
+
+
 }

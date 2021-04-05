@@ -7,33 +7,44 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
+import com.dutch2019.model.LocationInfoList
 import com.dutch2019.ui.locationcheck.LocationCheckFragmentDirections
+import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
+import com.dutch2019.ui.middle.MiddleLocationFragment
 
 
-@BindingAdapter(value =["setlocationbuttonclick"])
-fun setLocationButtonCLick(button : Button, viewModel: BaseViewModel){
-    button.setOnClickListener {
-        view ->
-
-     //   (viewModel as MainViewModel).addDynamicButtonData(viewModel.checkLocationInfo.value!!)
-        (viewModel as MainViewModel).replaceDynamicButtonData(viewModel.checkLocationInfo.value!!.id, viewModel.checkLocationInfo.value!!)
+@BindingAdapter(value = ["setlocationbuttonclick"])
+fun setLocationButtonClick(button: Button, viewModel: BaseViewModel) {
+    button.setOnClickListener { view ->
+        (viewModel as MainViewModel).replaceDynamicButtonData(
+            viewModel.checkLocationInfo.value!!.id,
+            viewModel.checkLocationInfo.value!!
+        )
         (viewModel as MainViewModel).dynamicButtonData.value!!.forEach {
-            Log.i("BUTTONEXT DATA", it.name)
+            Log.i("BUTTONEXT id", "" + it.id)
+            Log.i("BUTTONEXT name", it.name)
+            Log.i("BUTTONEXT address", it.adress)
+            Log.i("BUTTONEXT lat", "" + it.latitude)
+            Log.i("BUTTONEXT lon", "" + it.longitude)
         }
         val navController = view.findNavController()
         navController.popBackStack()
         navController.popBackStack()
-//        view.findNavController().popBackStack()
-//        view.findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment(locationInfo))
-
     }
 }
 
+@BindingAdapter(value = ["searchmiddlelocationbuttonclick"])
+fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
+    var viewModel = (viewModel as MainViewModel)
 
-//@BindingAdapter(value = ["minusbuttonclick"])
-//fun minusButtonClick(button : Button, viewModel: BaseViewModel){
-//    button.setOnClickListener {
-//        (viewModel as MainViewModel).removeDynamicButtonData()
-//    }
-//}
+    val locationInfoList = LocationInfoList()
+    viewModel.dynamicButtonData.value!!.forEach { data ->
+        locationInfoList.add(data)
+    }
+    button.setOnClickListener { view ->
+        view.findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
+        )
+    }
+}

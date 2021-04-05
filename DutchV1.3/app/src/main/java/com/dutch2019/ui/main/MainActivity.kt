@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.dutch2019.*
 import com.dutch2019.adapter.ButtonRecyclerViewAdapter
 import com.dutch2019.base.BaseActivity
-import com.dutch2019.model.LocationSetData
 import com.dutch2019.repository.LocationRepository
 import kotlin.math.roundToInt
 
@@ -129,8 +128,4 @@ class MainActivity : AppCompatActivity() {
             }
 
         }*/
-    override fun onDestroy() {
-        super.onDestroy()
-        LocationSetData.data.clear()
-    }
 }

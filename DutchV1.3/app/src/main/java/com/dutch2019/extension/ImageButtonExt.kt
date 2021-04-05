@@ -8,12 +8,7 @@ import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.ui.search.SearchLocationViewModel
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
 
-@BindingAdapter(value = ["plusbuttonclick"])
-fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel){
-    imageButton.setOnClickListener {
-        (viewModel as MainViewModel).addDummyLocationData()
-    }
-}
+
 @BindingAdapter(value = ["searchbuttonclick"])
 fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 

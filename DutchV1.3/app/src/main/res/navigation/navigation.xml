@@ -15,6 +15,9 @@
         <argument
             android:name="locationInfo"
             app:argType="com.dutch2019.model.LocationInfo" />
+        <action
+            android:id="@+id/action_mainFragment_to_middleLocationFragment"
+            app:destination="@id/middleLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchLocationFragment"
@@ -42,6 +45,15 @@
         <argument
             android:name="locationinfo"
             app:argType="com.dutch2019.model.LocationInfo" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_middle_location"
+        android:id="@+id/middleLocationFragment"
+        android:name="com.dutch2019.ui.middle.MiddleLocationFragment"
+        android:label="MiddleLocationFragment" >
+        <argument
+            android:name="locationlist"
+            app:argType="com.dutch2019.model.LocationInfoList" />
     </fragment>
 
 </navigation>

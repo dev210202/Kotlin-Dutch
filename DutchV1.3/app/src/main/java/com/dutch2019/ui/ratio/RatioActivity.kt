@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.dutch2019.model.LocationSetData
 import com.dutch2019.R
 import com.dutch2019.databinding.ActivityRatioBinding
 class RatioActivity : AppCompatActivity() {
@@ -23,8 +22,8 @@ class RatioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ratio)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ratio)
-        adapter =
-            RatioRecyclerAdapter(LocationSetData.data)
+//        adapter =
+//            RatioRecyclerAdapter(LocationSetData.data)
         dialog = Dialog(this)
         binding.ratioRecyclerview.adapter = adapter
 
