@@ -8,10 +8,13 @@ import androidx.navigation.findNavController
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
+import com.dutch2019.model.LocationPoint
 import com.dutch2019.ui.locationcheck.LocationCheckFragmentDirections
 import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.ui.middle.MiddleLocationFragment
+import com.dutch2019.ui.middle.MiddleLocationFragmentDirections
+import com.dutch2019.ui.middle.MiddleLocationViewModel
 
 
 @BindingAdapter(value = ["setlocationbuttonclick"])
@@ -46,5 +49,16 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
         view.findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
         )
+    }
+}
+
+@BindingAdapter(value = ["nearfacilitybuttonclick"])
+fun nearFacilityButtonClick(button: Button, viewModel : BaseViewModel){
+    var viewModel = (viewModel as MiddleLocationViewModel)
+    var locationPoint = LocationPoint(0.0, 0.0)
+    locationPoint.latitude = viewModel.getCenterPoint().latitude
+    locationPoint.longitude = viewModel.getCenterPoint().longitude
+    button.setOnClickListener {view ->
+        view.findNavController().navigate(MiddleLocationFragmentDirections.actionMiddleLocationFragmentToNearFacilityFragment(locationPoint))
     }
 }

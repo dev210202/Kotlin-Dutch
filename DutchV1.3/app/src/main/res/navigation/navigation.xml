@@ -54,6 +54,18 @@
         <argument
             android:name="locationlist"
             app:argType="com.dutch2019.model.LocationInfoList" />
+        <action
+            android:id="@+id/action_middleLocationFragment_to_nearFacilityFragment"
+            app:destination="@id/nearFacilityFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_near_facility"
+        android:id="@+id/nearFacilityFragment"
+        android:name="com.dutch2019.ui.nearfacillity.NearFacilityFragment"
+        android:label="NearFacilityFragment" >
+        <argument
+            android:name="locationpoint"
+            app:argType="com.dutch2019.model.LocationPoint" />
     </fragment>
 
 </navigation>

@@ -26,22 +26,19 @@ fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
     var mainviewModel = viewModel as MiddleLocationViewModel
     var tMapView = TMapView(layout.context)
     layout.addView(tMapView)
-    lateinit var address: String
-    lateinit var stationName: String
-    object : Thread() {
-        override fun run() {
-            viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
-            address = viewModel.getLocationAddress(viewModel.getCenterPoint())
-            stationName = viewModel.findNearSubway(viewModel.getCenterPoint())
-//            postvalue는 백그라운드에서 실행불가 -> Rx사용해서 비동기처리로 해결해보자
-//            viewModel.setMiddleLocationAddress(address)
-//            viewModel.setNearSubway(stationName)
-            markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
-            markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())
-            setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
-            mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
-        }
-    }.start()
+
+
+//          서버값 가져오는 것들 rx or corutine처리
+    viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
+    var address = viewModel.getLocationAddress(viewModel.getCenterPoint())
+//    var stationName = viewModel.findNearSubway(viewModel.getCenterPoint()) 서버사용
+    viewModel.setMiddleLocationAddress(address)
+//    viewModel.setNearSubway(stationName)
+    markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
+    markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())
+    setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+    mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+
 
 }
 

@@ -109,6 +109,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        bind:plusbuttonclick="@{vm}"
                         android:id="@+id/plusbutton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

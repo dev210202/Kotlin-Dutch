@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.DetailData
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.network.Service
@@ -29,11 +30,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class NearFacilityViewModel : ViewModel() {
+class NearFacilityViewModel : BaseViewModel() {
+
+    var locationPoint = TMapPoint(0.0, 0.0)
+
     var locationList = MutableLiveData<ArrayList<LocationInfo>>()
     lateinit var locationArrayList: ArrayList<LocationInfo>
     var errorMessage = MutableLiveData<String>()
     var detailInfo = MutableLiveData<String>()
+
+    fun setLocaitonPoint(lat: Double, lon: Double) {
+        locationPoint.latitude = lat
+        locationPoint.longitude = lon
+    }
 
     fun getDetailInfo(poiId: String) {
 
