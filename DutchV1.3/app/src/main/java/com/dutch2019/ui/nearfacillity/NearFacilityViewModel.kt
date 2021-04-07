@@ -2,6 +2,7 @@ package com.dutch2019.ui.nearfacillity
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dutch2019.base.BaseViewModel
@@ -29,15 +30,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class NearFacilityViewModel : BaseViewModel() {
 
     var locationPoint = TMapPoint(0.0, 0.0)
-
-    var locationList = MutableLiveData<ArrayList<LocationInfo>>()
     lateinit var locationArrayList: ArrayList<LocationInfo>
+
+    val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
+    val locationList : LiveData<ArrayList<LocationInfo>> get() = _locationList
     var errorMessage = MutableLiveData<String>()
     var detailInfo = MutableLiveData<String>()
+
+    fun init(){
+        _locationList.value = ArrayList()
+    }
 
     fun setLocaitonPoint(lat: Double, lon: Double) {
         locationPoint.latitude = lat
@@ -83,11 +90,29 @@ class NearFacilityViewModel : BaseViewModel() {
         })
     }
 
-    fun searchNearTransport(centerPoint: TMapPoint) {
+    fun setNearFacilityCategory(input: String): String {
+
+        when (input) {
+            "대중교통" -> {
+                return "지하철;버스;버스정류장;"
+            }
+            "문화시설" -> {
+                return "주요시설물;문화시설;영화관;놀거리;"
+            }
+            "음식점" -> {
+                return "식음료;한식;중식;양식;"
+            }
+            "카페" -> {
+                return "카페"
+            }
+        }
+        return ""
+    }
+    fun searchNearFacility(centerPoint: TMapPoint, category : String){
         val tMapData = TMapData()
         tMapData.findAroundNamePOI(
             centerPoint,
-            "지하철;버스;버스정류장;",
+            category,
             3,
             50
         ) { p0 ->
@@ -98,116 +123,15 @@ class NearFacilityViewModel : BaseViewModel() {
                     val item = p0[i]
                     if (isItemDataOK(item)) {
 
-                        locationArrayList.add(itemFilter(item))
+                        locationArrayList.add(itemFilter(item, i))
                     }
 
                 }
-                locationList.postValue(locationArrayList)
+                _locationList.postValue(locationArrayList)
             }
         }
     }
 
-    fun searchNearCulture(centerPoint: TMapPoint) {
-        val tMapData = TMapData()
-        tMapData.findAroundNamePOI(
-            centerPoint,
-            "주요시설물;문화시설;영화관;놀거리;",
-            3,
-            50
-        ) { p0 ->
-            locationArrayList = ArrayList<LocationInfo>()
-            if (p0 != null) {
-                for (i in 0 until p0.size) {
-                    val item = p0[i]
-                    if (isItemDataOK(item)) {
-                        val address =
-                            item.upperAddrName + " " + item.middleAddrName + " " + item.lowerAddrName
-                        val locationData = LocationInfo(
-                            i,
-                            item.poiName,
-                            address,
-                            item.poiPoint.latitude,
-                            item.poiPoint.longitude
-
-                        )
-
-                        locationArrayList.add(locationData)
-                        // SearchData.data.add(locationData)
-                    }
-
-                }
-                locationList.postValue(locationArrayList)
-            }
-        }
-    }
-
-    fun searchNearFood(centerPoint: TMapPoint) {
-        val tMapData = TMapData()
-        tMapData.findAroundNamePOI(
-            centerPoint,
-            "식음료;한식;중식;양식;",
-            3,
-            50
-        ) { p0 ->
-            locationArrayList = ArrayList<LocationInfo>()
-            if (p0 != null) {
-                for (i in 0 until p0.size) {
-                    val item = p0[i]
-                    if (isItemDataOK(item)) {
-                        val address =
-                            item.upperAddrName + " " + item.middleAddrName + " " + item.lowerAddrName
-                        val locationData = LocationInfo(
-                            i,
-                            item.poiName,
-                            address,
-                            item.poiPoint.latitude,
-                            item.poiPoint.longitude
-                        )
-
-                        locationArrayList.add(locationData)
-                        // SearchData.data.add(locationData)
-                    }
-
-                }
-                locationList.postValue(locationArrayList)
-            }
-        }
-    }
-
-    fun searchNearCafe(centerPoint: TMapPoint) {
-        val tMapData = TMapData()
-        tMapData.findAroundNamePOI(
-            centerPoint,
-            "카페",
-            3,
-            50
-        ) { p0 ->
-            locationArrayList = ArrayList<LocationInfo>()
-            if (p0 != null) {
-                for (i in 0 until p0.size) {
-                    val item = p0[i]
-                    if (isItemDataOK(item)) {
-                        val address =
-                            item.upperAddrName + " " + item.middleAddrName + " " + item.lowerAddrName
-                        val locationData = LocationInfo(
-                            i,
-                            item.poiName,
-                            address,
-                            item.poiPoint.latitude,
-                            item.poiPoint.longitude
-                        )
-
-                        locationArrayList.add(locationData)
-                        // SearchData.data.add(locationData)
-                    }
-
-                }
-                locationList.postValue(locationArrayList)
-            } else {
-
-            }
-        }
-    }
 
     fun shareLocation(name: String, address: String, location: LocationInfo, context: Context) {
         val kakaoAddressResult = address.replace(" ", "%20")
@@ -262,7 +186,7 @@ class NearFacilityViewModel : BaseViewModel() {
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
 
-    fun itemFilter(item: TMapPOIItem): LocationInfo {
+    fun itemFilter(item: TMapPOIItem, i: Int): LocationInfo {
 
         var address = ""
         if (item.upperAddrName != null) {
@@ -278,7 +202,7 @@ class NearFacilityViewModel : BaseViewModel() {
             Log.e("lowerAddrNameN", item.lowerAddrName)
         }
         val locationData = LocationInfo(
-            0,
+            i,
             item.poiName,
             address,
             item.poiPoint.latitude,

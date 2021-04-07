@@ -1,20 +1,20 @@
 package com.dutch2019.extension
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.adapter.ButtonRecyclerViewAdapter
+import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.adapter.SearchRecyclerAdapter
+import com.dutch2019.adapter.NearRecyclerAdapter
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
     if (recyclerView.adapter == null) {
-        var adapter = ButtonRecyclerViewAdapter()
+        var adapter = ButtonRecyclerAdapter()
         recyclerView.adapter = adapter
     }
-    (recyclerView.adapter as ButtonRecyclerViewAdapter).setLocationData(buttonData.value!!)
+    (recyclerView.adapter as ButtonRecyclerAdapter).setLocationData(buttonData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }
 

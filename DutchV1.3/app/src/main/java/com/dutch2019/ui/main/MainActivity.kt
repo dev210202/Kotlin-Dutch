@@ -2,11 +2,7 @@ package com.dutch2019.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.dutch2019.*
-import com.dutch2019.adapter.ButtonRecyclerViewAdapter
-import com.dutch2019.base.BaseActivity
-import com.dutch2019.repository.LocationRepository
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {

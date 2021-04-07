@@ -30,9 +30,9 @@ fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
 
 //          서버값 가져오는 것들 rx or corutine처리
     viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
-    var address = viewModel.getLocationAddress(viewModel.getCenterPoint())
+//    var address = viewModel.getLocationAddress(viewModel.getCenterPoint())
 //    var stationName = viewModel.findNearSubway(viewModel.getCenterPoint()) 서버사용
-    viewModel.setMiddleLocationAddress(address)
+//    viewModel.setMiddleLocationAddress(address)
 //    viewModel.setNearSubway(stationName)
     markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
     markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())

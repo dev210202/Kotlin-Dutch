@@ -116,7 +116,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                nearfaciltybuttonclick="@{vm}"
+                searchnearfacilitybuttonclick="@{vm}"
                 android:fontFamily="@font/notosans_medium"
                 android:id="@+id/nearfacilitybutton"
                 android:layout_width="match_parent"

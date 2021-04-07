@@ -1,6 +1,5 @@
 package com.dutch2019.adapter
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,8 +9,8 @@ import com.dutch2019.databinding.ButtonRecyclerItemBinding
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.main.MainFragmentDirections
 
-class ButtonRecyclerViewAdapter :
-    RecyclerView.Adapter<ButtonRecyclerViewAdapter.ButtonViewHolder>() {
+class ButtonRecyclerAdapter :
+    RecyclerView.Adapter<ButtonRecyclerAdapter.ButtonViewHolder>() {
 
     var locationInfoData = ArrayList<LocationInfo>()
 
