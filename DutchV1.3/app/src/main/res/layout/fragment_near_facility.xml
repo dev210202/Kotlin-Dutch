@@ -121,7 +121,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            searchlocation="@{vm.locationList}"
+            nearfacility="@{vm.locationList}"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -45,5 +45,8 @@ class BalloonOverlayView(
         )
         params.gravity = Gravity.NO_GRAVITY
         addView(layout, params)
+        layout.setOnClickListener {
+
+        }
     }
 }

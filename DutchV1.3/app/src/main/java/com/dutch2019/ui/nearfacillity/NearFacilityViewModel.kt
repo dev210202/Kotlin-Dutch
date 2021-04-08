@@ -51,8 +51,7 @@ class NearFacilityViewModel : BaseViewModel() {
         locationPoint.longitude = lon
     }
 
-    fun getDetailInfo(poiId: String) {
-
+    fun getDetailInfo(poiId: Int) {
 
         val gson = GsonBuilder().setLenient().create()
 
@@ -72,7 +71,7 @@ class NearFacilityViewModel : BaseViewModel() {
             .build()
         val service = retrofit.create(Service::class.java)
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        service.getDetailInfo(poiId).enqueue(object : Callback<DetailData> {
+        service.getDetailInfo(poiId.toString()).enqueue(object : Callback<DetailData> {
             override fun onFailure(call: Call<DetailData>, t: Throwable) {
                 Log.e("data error", t.toString())
             }
@@ -83,6 +82,8 @@ class NearFacilityViewModel : BaseViewModel() {
                 Log.e("data value ", value.toString())
                 // valu.~ 으로 값 가져오기
                 if (value != null) {
+                    Log.e("!additionalInfo", value.poiDetailInfo.additionalInfo.toString())
+                    Log.e("!desc", value.poiDetailInfo.desc.toString())
                     detailInfo.value = value.poiDetailInfo.additionalInfo.toString()
                 }
             }
@@ -133,54 +134,7 @@ class NearFacilityViewModel : BaseViewModel() {
     }
 
 
-    fun shareLocation(name: String, address: String, location: LocationInfo, context: Context) {
-        val kakaoAddressResult = address.replace(" ", "%20")
-        Log.e("!!!", kakaoAddressResult)
-        var leftButtonObject = ButtonObject(
-            "앱으로 돌아가기", // 왼쪽 버튼의 표시될 텍스트를 설정
-            LinkObject.newBuilder()
-                .setWebUrl("https://map.kakao.com/link/map/" + kakaoAddressResult + "," + name) //
-                .setMobileWebUrl("https://map.kakao.com/link/map/" + kakaoAddressResult + "," + name)
-                .build()
-        )
-        var params = LocationTemplate.newBuilder(
-            kakaoAddressResult,
-            ContentObject.newBuilder(
-                name,
-                "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Ft3sEu%2FbtqJKvIDbb0%2FNOg8Ozhw0IgWkpagWecdr1%2Fimg.png",
-                LinkObject.newBuilder()
-                    .setWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
-                    .setMobileWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
-                    .build()
-            )
-                .setDescrption("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
-                .build()
-        ).setAddressTitle(name) // 위치 확인시 보여줄 제목칸에 선택한 주변시설의 명칭을 띄워줌
-            .addButton(leftButtonObject) // 왼쪽버튼에 해당하는 ButtonObject를 추가
-            .build()
 
-
-        var serverCallbackArgs = mutableMapOf<String, String>()
-        serverCallbackArgs.put("user_id", "current_user_id")
-        serverCallbackArgs.put("product_id", "shared_product_id")
-
-
-        KakaoLinkService.getInstance().sendDefault(context, params, serverCallbackArgs,
-            object : ResponseCallback<KakaoLinkResponse?>() {
-                override fun onFailure(errorResult: ErrorResult) {
-
-                    errorMessage.postValue(errorResult.toString())
-
-                }
-
-                override fun onSuccess(result: KakaoLinkResponse?) {
-                    // 템플릿 밸리데이션과 쿼터 체크가 성공적으로 끝남. 톡에서 정상적으로 보내졌는지 보장은 할 수 없다. 전송 성공 유무는 서버콜백 기능을 이용하여야 한다.
-                    Log.e("KAKAOTALK SUCCESS", "")
-                }
-            })
-
-
-    }
 
     fun isItemDataOK(item: TMapPOIItem): Boolean {
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
@@ -189,6 +143,8 @@ class NearFacilityViewModel : BaseViewModel() {
     fun itemFilter(item: TMapPOIItem, i: Int): LocationInfo {
 
         var address = ""
+        var id = Integer.valueOf(item.poiid)
+        Log.i("!@!id!@!@", ""+id)
         if (item.upperAddrName != null) {
             address += item.upperAddrName
             Log.e("upperAddrNameN", item.upperAddrName)
@@ -202,7 +158,7 @@ class NearFacilityViewModel : BaseViewModel() {
             Log.e("lowerAddrNameN", item.lowerAddrName)
         }
         val locationData = LocationInfo(
-            i,
+            id,
             item.poiName,
             address,
             item.poiPoint.latitude,

@@ -27,3 +27,12 @@ fun searchLocation(recyclerView: RecyclerView, locationData: LiveData<ArrayList<
     (recyclerView.adapter as SearchRecyclerAdapter).setLocationDataList(locationData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }
+@BindingAdapter(value = ["nearfacility"])
+fun nearFacility(recyclerView: RecyclerView, locationData: LiveData<ArrayList<LocationInfo>>){
+    if (recyclerView.adapter == null) {
+        var adapter = NearRecyclerAdapter()
+        recyclerView.adapter = adapter
+    }
+    (recyclerView.adapter as NearRecyclerAdapter).setLocationDataList(locationData.value!!)
+    recyclerView.adapter?.notifyDataSetChanged()
+}
