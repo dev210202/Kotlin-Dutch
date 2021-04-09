@@ -17,26 +17,26 @@ public class LocationRepository {
     lateinit var db: AppDB
     lateinit var recentDB: RecentLocationDB
 
-    fun setRecentDB(application: Application) {
+    suspend fun setRecentDB(application: Application) {
         recentDB = RecentLocationDB.getDatabase(application)!!
         locationInfoDao = recentDB.locationInfoDao()
         recentLocationList = locationInfoDao.getAll()
     }
 
-    fun setDB(application: Application) {
+    suspend fun setDB(application: Application) {
         db = AppDB.getDatabase(application)!!
         locationInfoDao = db.locationInfoDao()
         locationList = locationInfoDao.getAll()
     }
 
-    fun insertData(locationInfo: LocationInfo) {
+    suspend fun insertData(locationInfo: LocationInfo) {
         db.locationInfoDao().insert(locationInfo)
     }
-    fun insertRecentData(locationInfo: LocationInfo) {
+    suspend fun insertRecentData(locationInfo: LocationInfo) {
         recentDB.locationInfoDao().insert(locationInfo)
     }
 
-    fun deleteAll() {
+    suspend fun deleteAll() {
         db.locationInfoDao().deleteAll()
     }
 

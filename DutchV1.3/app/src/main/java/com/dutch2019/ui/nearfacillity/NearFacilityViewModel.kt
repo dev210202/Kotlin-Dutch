@@ -1,23 +1,13 @@
 package com.dutch2019.ui.nearfacillity
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.DetailData
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.network.Service
 import com.google.gson.GsonBuilder
-import com.kakao.kakaolink.v2.KakaoLinkResponse
-import com.kakao.kakaolink.v2.KakaoLinkService
-import com.kakao.message.template.ButtonObject
-import com.kakao.message.template.ContentObject
-import com.kakao.message.template.LinkObject
-import com.kakao.message.template.LocationTemplate
-import com.kakao.network.ErrorResult
-import com.kakao.network.callback.ResponseCallback
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
@@ -28,7 +18,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 

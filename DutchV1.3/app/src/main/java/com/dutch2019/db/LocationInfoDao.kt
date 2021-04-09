@@ -11,15 +11,15 @@ import com.dutch2019.model.LocationInfo
 interface LocationInfoDao {
 
     @Query("SELECT * FROM locationinfo")
-    fun getAll() : List<LocationInfo>
+    suspend fun getAll() : List<LocationInfo>
 
     @Insert
-    fun insert(info : LocationInfo)
+    suspend fun insert(info : LocationInfo)
 
     @Delete
-    fun delete(info : LocationInfo)
+    suspend fun delete(info : LocationInfo)
 
     @Query("DELETE FROM locationinfo")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

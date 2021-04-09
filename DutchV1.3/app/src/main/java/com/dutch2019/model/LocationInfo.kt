@@ -11,20 +11,21 @@ import java.io.Serializable
 @Entity
 data class LocationInfo(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int = 0,
+
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String = "위치를 설정해주세요",
     @ColumnInfo(name = "address")
-    var adress: String,
+    var address: String = "",
     @ColumnInfo(name = "lat")
-    var latitude: Double,
+    var latitude: Double = 0.0 ,
     @ColumnInfo(name = "lon")
-    var longitude: Double
+    var longitude: Double = 0.0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readString().toString(),
+        parcel.readString().toString(),
         parcel.readDouble(),
         parcel.readDouble()
     ) {
@@ -33,7 +34,7 @@ data class LocationInfo(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
-        parcel.writeString(adress)
+        parcel.writeString(address)
         parcel.writeDouble(latitude)
         parcel.writeDouble(longitude)
     }

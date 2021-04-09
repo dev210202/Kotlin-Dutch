@@ -28,13 +28,6 @@ fun setLocationButtonClick(button: Button, viewModel: BaseViewModel) {
             viewModel.checkLocationInfo.value!!.id,
             viewModel.checkLocationInfo.value!!
         )
-        (viewModel as MainViewModel).dynamicButtonData.value!!.forEach {
-            Log.i("BUTTONEXT id", "" + it.id)
-            Log.i("BUTTONEXT name", it.name)
-            Log.i("BUTTONEXT address", it.adress)
-            Log.i("BUTTONEXT lat", "" + it.latitude)
-            Log.i("BUTTONEXT lon", "" + it.longitude)
-        }
         val navController = view.findNavController()
         navController.popBackStack()
         navController.popBackStack()
@@ -47,9 +40,18 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
 
     val locationInfoList = LocationInfoList()
     viewModel.dynamicButtonData.value!!.forEach { data ->
-        locationInfoList.add(data)
+        if (data.name != "위치를 입력해주세요") {
+            locationInfoList.add(data)
+            Log.i("data ID", "" + data.id)
+
+        }
     }
     button.setOnClickListener { view ->
+        locationInfoList.forEach {
+            // room primary key 때문에 room에 넣을때는 0으로 세팅해야함
+            it.id = 0
+            viewModel.insertDataInDB(it)
+        }
         view.findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
         )
@@ -79,7 +81,8 @@ fun facilityButtonClick(button: Button, viewModel: BaseViewModel) {
         searchNearFacility(view, viewModel)
     }
 }
-private fun setButtonSelect(view : View){
+
+private fun setButtonSelect(view: View) {
     when (view) {
         view.rootView.transbutton -> {
             view.rootView.transbutton.isSelected = true
@@ -107,7 +110,8 @@ private fun setButtonSelect(view : View){
         }
     }
 }
-private fun searchNearFacility(view :View, viewModel: NearFacilityViewModel){
+
+private fun searchNearFacility(view: View, viewModel: NearFacilityViewModel) {
     var category = ""
     when (view) {
         view.rootView.transbutton -> {

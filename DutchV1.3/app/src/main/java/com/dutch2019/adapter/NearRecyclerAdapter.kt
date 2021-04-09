@@ -49,7 +49,7 @@ class NearRecyclerAdapter() :
         holder.layout.setOnClickListener {
             view ->
             var name = locationDataList[position].name
-            var address = locationDataList[position].adress
+            var address = locationDataList[position].address
             var locationInfo = locationDataList[position]
             shareLocation(name, address, locationInfo, view.context)
         }

@@ -45,7 +45,6 @@ class ButtonRecyclerAdapter :
         var locationButton = binding.locationButton
         fun bind(locationInfo: LocationInfo) {
 
-            Log.i("Location", locationInfo.name);
             binding.locationInfo = locationInfo
         }
     }

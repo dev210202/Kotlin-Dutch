@@ -1,18 +1,20 @@
 package com.dutch2019.ui.main
 
-import android.content.Context
-import android.graphics.BitmapFactory
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dutch2019.R
+import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
-import com.skt.Tmap.TMapData
-import com.skt.Tmap.TMapPoint
+import com.dutch2019.repository.LocationRepository
 import com.skt.Tmap.TMapView
+import kotlinx.coroutines.launch
 
 open class MainViewModel : BaseViewModel() {
     private val list = ArrayList<LocationInfo>()
+    private var id = 0
+
+    private var locationRepository = LocationRepository()
 
     private val _dynamicButtonData = MutableLiveData<ArrayList<LocationInfo>>(list)
     val dynamicButtonData: LiveData<ArrayList<LocationInfo>> get() = _dynamicButtonData
@@ -31,15 +33,10 @@ open class MainViewModel : BaseViewModel() {
     }
 
     fun addDummyLocationData() {
-
         _dynamicButtonData.value = _dynamicButtonData.value?.apply {
             add(
                 LocationInfo(
-                    list.size,
-                    "위치를 입력해주세요" + list.size,
-                    "",
-                    0.0,
-                    0.0
+                    list.size
                 )
             )
         }
@@ -49,7 +46,20 @@ open class MainViewModel : BaseViewModel() {
         _checkLocationInfo.value = locationInfo
     }
 
+    fun initDB(application : Application){
+        viewModelScope.launch {
+            locationRepository.setRecentDB(application)
+        }
+    }
 
+    fun insertDataInDB(locationInfo: LocationInfo){
+        viewModelScope.launch {
+            locationRepository.insertRecentData(locationInfo)
+        }
+    }
 
+    fun getRecentDataInDB(): List<LocationInfo> {
+        return locationRepository.getRecentLocationListData()
+    }
 
 }

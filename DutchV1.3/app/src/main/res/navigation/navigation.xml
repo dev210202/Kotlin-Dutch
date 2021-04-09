@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_mainFragment_to_middleLocationFragment"
             app:destination="@id/middleLocationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_recentFragment"
+            app:destination="@id/recentFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchLocationFragment"
@@ -47,10 +50,10 @@
             app:argType="com.dutch2019.model.LocationInfo" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_middle_location"
         android:id="@+id/middleLocationFragment"
         android:name="com.dutch2019.ui.middle.MiddleLocationFragment"
-        android:label="MiddleLocationFragment" >
+        android:label="MiddleLocationFragment"
+        tools:layout="@layout/fragment_middle_location">
         <argument
             android:name="locationlist"
             app:argType="com.dutch2019.model.LocationInfoList" />
@@ -59,13 +62,24 @@
             app:destination="@id/nearFacilityFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_near_facility"
         android:id="@+id/nearFacilityFragment"
         android:name="com.dutch2019.ui.nearfacillity.NearFacilityFragment"
-        android:label="NearFacilityFragment" >
+        android:label="NearFacilityFragment"
+        tools:layout="@layout/fragment_near_facility">
         <argument
             android:name="locationpoint"
             app:argType="com.dutch2019.model.LocationPoint" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.dutch2019.ui.recent.RecentFragment"
+        android:label="RecentFragment"
+        tools:layout="@layout/fragment_recent">
+
+        <argument
+            android:name="locationlist"
+            app:argType="com.dutch2019.model.LocationInfoList" />
+
     </fragment>
 
 </navigation>

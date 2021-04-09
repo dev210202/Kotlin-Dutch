@@ -74,7 +74,7 @@
                 android:layout_marginRight="50dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@{locationinfo.adress}"
+                android:text="@{locationinfo.address}"
                 android:textSize="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

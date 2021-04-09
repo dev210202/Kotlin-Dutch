@@ -7,6 +7,7 @@ import com.dutch2019.R
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
+import com.dutch2019.repository.LocationRepository
 
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
@@ -15,24 +16,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
 ) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        val navController = findNavController()
-//
-//        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<LocationInfo>("locationInfo")
-//            ?.observe(viewLifecycleOwner) {
-//                data ->
-//                Log.i("DATA NAV", data.name)
-//                viewModel.addDynamicButtonData(data)
-//            }
-
-//        var locationInfo = MainFragmentArgs.fromBundle(requireArguments()).let {
-//                data -> viewModel.addDynamicButtonData(data.locationInfo)
-//        }
-
+        viewModel.initDB(requireActivity().application)
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
             Observer { dynamicButtonList ->
                 dynamicButtonList.forEach {
                     Log.i("list", it.name)
+
+
                 }
                 if (binding.recyclerview?.adapter != null) {
                     (binding.recyclerview?.adapter as ButtonRecyclerAdapter).setLocationData(
