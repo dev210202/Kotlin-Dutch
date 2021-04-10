@@ -28,17 +28,17 @@ open class MainViewModel : BaseViewModel() {
         }
     }
 
-    fun replaceDynamicButtonData(locationPosition : Int, locationInfo: LocationInfo){
-        _dynamicButtonData.value?.set(locationPosition, locationInfo)
+    fun replaceDynamicButtonData(locationPosition: Int, locationInfo: LocationInfo) {
+        for (i in 0 until _dynamicButtonData.value?.size!!) {
+            if (_dynamicButtonData.value!![i].id == locationPosition) {
+                _dynamicButtonData.value!![i] = locationInfo
+            }
+        }
     }
 
     fun addDummyLocationData() {
         _dynamicButtonData.value = _dynamicButtonData.value?.apply {
-            add(
-                LocationInfo(
-                    list.size
-                )
-            )
+            add(LocationInfo(id++))
         }
     }
 
@@ -46,13 +46,13 @@ open class MainViewModel : BaseViewModel() {
         _checkLocationInfo.value = locationInfo
     }
 
-    fun initDB(application : Application){
+    fun initDB(application: Application) {
         viewModelScope.launch {
             locationRepository.setRecentDB(application)
         }
     }
 
-    fun insertDataInDB(locationInfo: LocationInfo){
+    fun insertDataInDB(locationInfo: LocationInfo) {
         viewModelScope.launch {
             locationRepository.insertRecentData(locationInfo)
         }

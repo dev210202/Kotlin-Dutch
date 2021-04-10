@@ -1,6 +1,7 @@
 package com.dutch2019.extension
 
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.adapter.ButtonRecyclerAdapter

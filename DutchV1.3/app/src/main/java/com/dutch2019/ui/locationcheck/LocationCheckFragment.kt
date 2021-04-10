@@ -15,16 +15,8 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding, MainVie
 ) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
          var locationInfo = LocationCheckFragmentArgs.fromBundle(requireArguments()).let {
                 data -> viewModel.setCheckLocationInfo(data.locationinfo)
-             viewModel.dynamicButtonData.value?.forEach {
-                 Log.i("LOCATION CHECK", it.name)
-             }
         }
-
-//            locationData.locationData
-//            (intent.getSerializableExtra("LocationData") as LocationData).let { data ->
-//            viewModel.setData(locationData.locationData)
     }
 }

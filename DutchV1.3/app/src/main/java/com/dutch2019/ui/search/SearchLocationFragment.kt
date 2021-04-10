@@ -22,16 +22,15 @@ class SearchLocationFragment : BaseFragment<FragmentSearchLocationBinding, Searc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.init()
-
-        var locationInfo = SearchLocationFragmentArgs.fromBundle(requireArguments()).let {
-                data -> viewModel.locationPosition = data.locationInfo.id
-            Log.i("ID", "" + data.locationInfo.id)
-        }
-
-
         val tmapAPI = TMapTapi(activity)
         tmapAPI.setSKTMapAuthentication("l7xx75e02f3eccaa4f56b3f269cb4a9f2b43")
+
+        viewModel.init()
+
+        var locationInfo = SearchLocationFragmentArgs.fromBundle(requireArguments()).let { data ->
+            viewModel.locationPosition = data.locationInfo.id
+        }
+
         viewModel.locationList.observe(this, Observer { list ->
             if (binding.recyclerview.adapter != null) {
                 (binding.recyclerview.adapter as SearchRecyclerAdapter).setLocationDataList(list)

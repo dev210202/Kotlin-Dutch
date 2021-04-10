@@ -20,21 +20,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
             Observer { dynamicButtonList ->
-                dynamicButtonList.forEach {
-                    Log.i("list", it.name)
-
-
-                }
                 if (binding.recyclerview?.adapter != null) {
                     (binding.recyclerview?.adapter as ButtonRecyclerAdapter).setLocationData(
                         dynamicButtonList
                     )
                 }
             })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("DESTORY","DESTROY")
     }
 }

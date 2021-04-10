@@ -3,10 +3,12 @@ package com.dutch2019.extension
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.dutch2019.R
+import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
@@ -39,22 +41,36 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
     var viewModel = (viewModel as MainViewModel)
 
     val locationInfoList = LocationInfoList()
-    viewModel.dynamicButtonData.value!!.forEach { data ->
-        if (data.name != "위치를 입력해주세요") {
-            locationInfoList.add(data)
-            Log.i("data ID", "" + data.id)
 
-        }
-    }
+
     button.setOnClickListener { view ->
+        var locationInfoData = (button.rootView.recyclerview.adapter as ButtonRecyclerAdapter).getLocationData()
+
+        locationInfoData.forEach { data ->
+
+            Log.i("locationInfoData", data.name)
+
+            if (data.name != "위치를 설정해주세요") {
+                locationInfoList.add(data)
+            }
+        }
+
+        var locationCount = 0
         locationInfoList.forEach {
             // room primary key 때문에 room에 넣을때는 0으로 세팅해야함
             it.id = 0
+            if(it.name != "위치를 설정해주세요") {
+                locationCount++
+            }
             viewModel.insertDataInDB(it)
         }
-        view.findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
-        )
+        if (locationCount > 1) {
+            view.findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
+            )
+        } else {
+            Toast.makeText(button.context, "위치를 2개 이상으로 설정해주세요!", Toast.LENGTH_LONG).show()
+        }
     }
 }
 

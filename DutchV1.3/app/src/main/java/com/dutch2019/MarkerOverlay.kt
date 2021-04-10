@@ -32,7 +32,6 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         )
-
         balloonView.layout(
             0,
             0,

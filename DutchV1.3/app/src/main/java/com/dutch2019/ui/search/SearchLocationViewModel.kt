@@ -15,13 +15,11 @@ class SearchLocationViewModel : BaseViewModel() {
     var isDataLoadFail = MutableLiveData<Boolean>()
     var locationPosition : Int = 0
 
-
     fun init(){
         _locationList.value = ArrayList()
     }
 
     fun searchLocationData(input: String) {
-
 
         val tMapData = TMapData()
         if (input.isNotEmpty()) {
@@ -29,9 +27,6 @@ class SearchLocationViewModel : BaseViewModel() {
                 setLocationData(arrayList).let { list ->
                     _locationList.postValue(list)
                 }
-//                _locationList.value = locationArrayList
-
-
             }
         }
     }
@@ -41,10 +36,8 @@ class SearchLocationViewModel : BaseViewModel() {
         val locationArrayList = ArrayList<LocationInfo>()
         var item: TMapPOIItem
         if (arrayList.isEmpty()) {
-            // 검색된 결과 없음
             isDataLoadFail.postValue(true)
         } else {
-            // 검색결과 존재
             for(i in 0 until arrayList.size) {
                 var poiItem = arrayList[i]
                 var address = ""

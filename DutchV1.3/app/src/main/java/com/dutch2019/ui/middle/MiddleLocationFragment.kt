@@ -25,10 +25,12 @@ class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, Middl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        var locationInfo = MiddleLocationFragmentArgs.fromBundle(requireArguments()).let {
-                data -> viewModel.setLocationList(data.locationlist)
+        var locationInfo = MiddleLocationFragmentArgs.fromBundle(requireArguments()).let { data ->
+            viewModel.setLocationList(data.locationlist)
         }
+        viewModel.middleLocationAddress.observe(this, Observer {
 
+            }
+        )
     }
 }

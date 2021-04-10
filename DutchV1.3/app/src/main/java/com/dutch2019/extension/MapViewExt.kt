@@ -19,6 +19,9 @@ import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 import kotlinx.android.synthetic.main.fragment_middle_location.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 @BindingAdapter(value = ["mapview"])
@@ -27,81 +30,22 @@ fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
     var tMapView = TMapView(layout.context)
     layout.addView(tMapView)
 
-
-//          서버값 가져오는 것들 rx or corutine처리
     viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
-//    var address = viewModel.getLocationAddress(viewModel.getCenterPoint())
-//    var stationName = viewModel.findNearSubway(viewModel.getCenterPoint()) 서버사용
-//    viewModel.setMiddleLocationAddress(address)
-//    viewModel.setNearSubway(stationName)
+
     markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
     markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())
-    setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+
+    CoroutineScope(Dispatchers.IO).launch{
+        setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+        viewModel.setLocationAddress(viewModel.getCenterPoint())
+        viewModel.setNearSubway(viewModel.getCenterPoint())
+    }
+
     mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
 
 
 }
 
-/*
-private fun setBallonOverlayClickEvent(tMapView: TMapView, textView: TextView) {
-    tMapView.setOnMarkerClickEvent { _, p1 ->
-        object : Thread() {
-            override fun run() {
-                val point = p1.tMapPoint
-                try {
-                    when (p1.id) {
-                        "ratiomarkerItem" -> {
-                            viewModel.middleLocationAddress.value =
-                                viewModel.getLocationAddress(point)
-                            viewModel.searchNearFacilityPoint = point
-                            viewModel.nearStationName.value = viewModel.findNearSubway(point)
-                            textView.setTextColor(
-                                ContextCompat.getColor(
-                                    baseContext,
-                                    R.color.blue
-                                )
-                            )
-                            textView.text = "비율변경지점 결과"
-                        }
-                        "middlemarkerItem" -> {
-                            viewModel.middleLocationAddress.value =
-                                viewModel.getLocationAddress(point)
-
-                            viewModel.searchNearFacilityPoint = point
-                            viewModel.nearStationName.value = viewModel.findNearSubway(point)
-                            textView.setTextColor(
-                                ContextCompat.getColor(
-                                    baseContext,
-                                    R.color.orange
-                                )
-                            )
-                            textView.text = "중간지점 결과"
-                        }
-                        else -> {
-                            viewModel.middleLocationAddress.value =
-                                viewModel.getLocationAddress(point)
-
-                            viewModel.searchNearFacilityPoint = point
-                            viewModel.nearStationName.value = viewModel.findNearSubway(point)
-                            textView.setTextColor(
-                                ContextCompat.getColor(
-                                    baseContext,
-                                    R.color.black
-                                )
-                            )
-                            textView.text = "검색지점 결과"
-                        }
-                    }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-            }
-        }.start()
-    }
-}
-*/
 fun markSearchLoaction(
     tMapView: TMapView,
     context: Context,
@@ -157,7 +101,7 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
 
 }
 
-fun setPolyLine(tMapView: TMapView, locationList: ArrayList<LocationInfo>, centerPoint: TMapPoint) {
+suspend fun setPolyLine(tMapView: TMapView, locationList: ArrayList<LocationInfo>, centerPoint: TMapPoint) {
     try {
         for (i in 0 until locationList.size) {
             val startPoint =
