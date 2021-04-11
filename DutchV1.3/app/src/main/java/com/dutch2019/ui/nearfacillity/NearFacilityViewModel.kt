@@ -26,12 +26,12 @@ class NearFacilityViewModel : BaseViewModel() {
     var locationPoint = TMapPoint(0.0, 0.0)
     lateinit var locationArrayList: ArrayList<LocationInfo>
 
-    val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
-    val locationList : LiveData<ArrayList<LocationInfo>> get() = _locationList
+    private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
+    val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
     var errorMessage = MutableLiveData<String>()
     var detailInfo = MutableLiveData<String>()
 
-    fun init(){
+    fun init() {
         _locationList.value = ArrayList()
     }
 
@@ -68,11 +68,7 @@ class NearFacilityViewModel : BaseViewModel() {
             override fun onResponse(call: Call<DetailData>, response: Response<DetailData>) {
 
                 var value = response.body()
-                Log.e("data value ", value.toString())
-                // valu.~ 으로 값 가져오기
                 if (value != null) {
-                    Log.e("!additionalInfo", value.poiDetailInfo.additionalInfo.toString())
-                    Log.e("!desc", value.poiDetailInfo.desc.toString())
                     detailInfo.value = value.poiDetailInfo.additionalInfo.toString()
                 }
             }
@@ -98,7 +94,8 @@ class NearFacilityViewModel : BaseViewModel() {
         }
         return ""
     }
-    fun searchNearFacility(centerPoint: TMapPoint, category : String){
+
+    fun searchNearFacility(centerPoint: TMapPoint, category: String) {
         val tMapData = TMapData()
         tMapData.findAroundNamePOI(
             centerPoint,
@@ -107,7 +104,6 @@ class NearFacilityViewModel : BaseViewModel() {
             50
         ) { p0 ->
             locationArrayList = ArrayList<LocationInfo>()
-            Log.e("!!!!", " " + p0.size)
             if (p0 != null) {
                 for (i in 0 until p0.size) {
                     val item = p0[i]
@@ -123,8 +119,6 @@ class NearFacilityViewModel : BaseViewModel() {
     }
 
 
-
-
     fun isItemDataOK(item: TMapPOIItem): Boolean {
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
@@ -133,18 +127,14 @@ class NearFacilityViewModel : BaseViewModel() {
 
         var address = ""
         var id = Integer.valueOf(item.poiid)
-        Log.i("!@!id!@!@", ""+id)
         if (item.upperAddrName != null) {
             address += item.upperAddrName
-            Log.e("upperAddrNameN", item.upperAddrName)
         }
         if (item.middleAddrName != null) {
             address += " " + item.middleAddrName
-            Log.e("middleAddrNameN", item.middleAddrName)
         }
         if (item.lowerAddrName != null) {
             address += " " + item.lowerAddrName
-            Log.e("lowerAddrNameN", item.lowerAddrName)
         }
         val locationData = LocationInfo(
             id,
@@ -153,10 +143,6 @@ class NearFacilityViewModel : BaseViewModel() {
             item.poiPoint.latitude,
             item.poiPoint.longitude
         )
-        Log.e("address!!!", address)
-        locationArrayList.add(locationData)
         return locationData
     }
-
-
 }

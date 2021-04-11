@@ -1,4 +1,4 @@
-package com.dutch2019.ui.ratio
+package com.dutch2019.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

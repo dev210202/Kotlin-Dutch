@@ -29,8 +29,10 @@ class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, Middl
             viewModel.setLocationList(data.locationlist)
         }
         viewModel.middleLocationAddress.observe(this, Observer {
-
-            }
-        )
+            binding.middleaddresstextview.text = it
+        })
+        viewModel.nearStationName.observe(this, Observer {
+            binding.nearsubwaytextview.text = it
+        })
     }
 }

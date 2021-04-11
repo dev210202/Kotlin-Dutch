@@ -9,9 +9,9 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.dutch2019.R
-import com.dutch2019.databinding.ActivityRatioBinding
+import com.dutch2019.adapter.RatioRecyclerAdapter
 class RatioActivity : AppCompatActivity() {
-
+/*
     private lateinit var binding: ActivityRatioBinding
     lateinit var dialog: Dialog
     var SETTING_OK = 22
@@ -78,5 +78,5 @@ class RatioActivity : AppCompatActivity() {
     fun noButtonClicked(view: View){
         dialog.dismiss()
     }
-
+*/
 }

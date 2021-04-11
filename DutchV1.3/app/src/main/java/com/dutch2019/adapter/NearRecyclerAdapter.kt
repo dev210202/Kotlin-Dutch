@@ -46,7 +46,7 @@ class NearRecyclerAdapter() :
 
     override fun onBindViewHolder(holder: NearViewHolder, position: Int) {
         holder.bind(locationDataList[position])
-        holder.layout.setOnClickListener {
+        holder.arrowButton.setOnClickListener {
             view ->
             var name = locationDataList[position].name
             var address = locationDataList[position].address
@@ -58,7 +58,7 @@ class NearRecyclerAdapter() :
     class NearViewHolder(private val binding: NearFacilityListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        var layout = binding.linearLayout
+        var arrowButton = binding.rightArrowButton
         fun bind(locationInfo: LocationInfo) {
             binding.locationinfo = locationInfo
         }

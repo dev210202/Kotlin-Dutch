@@ -30,6 +30,8 @@ fun setLocationButtonClick(button: Button, viewModel: BaseViewModel) {
             viewModel.checkLocationInfo.value!!.id,
             viewModel.checkLocationInfo.value!!
         )
+
+        Log.i("ButtonExt", "checkLocationInfo id" + viewModel.checkLocationInfo.value!!.id)
         val navController = view.findNavController()
         navController.popBackStack()
         navController.popBackStack()
@@ -44,27 +46,29 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
 
 
     button.setOnClickListener { view ->
-        var locationInfoData = (button.rootView.recyclerview.adapter as ButtonRecyclerAdapter).getLocationData()
-
-        locationInfoData.forEach { data ->
-
-            Log.i("locationInfoData", data.name)
-
-            if (data.name != "위치를 설정해주세요") {
-                locationInfoList.add(data)
+        var locationInfoData =
+            (button.rootView.recyclerview.adapter as ButtonRecyclerAdapter).getLocationData()
+        for (i in 0 until locationInfoData.size) {
+            if(locationInfoData[i].name != "위치를 설정해주세요") {
+                var locationInfo = locationInfoData[i]
+                locationInfoList.add(locationInfo)
             }
         }
 
-        var locationCount = 0
+        var insertList = LocationInfoList()
         locationInfoList.forEach {
-            // room primary key 때문에 room에 넣을때는 0으로 세팅해야함
-            it.id = 0
-            if(it.name != "위치를 설정해주세요") {
-                locationCount++
-            }
-            viewModel.insertDataInDB(it)
+                var locationInfo = LocationInfo()
+                locationInfo.id = 0
+                locationInfo.name = it.name
+                locationInfo.address = it.address
+                locationInfo.latitude = it.latitude
+                locationInfo.longitude = it.longitude
+                insertList.add(locationInfo)
         }
-        if (locationCount > 1) {
+        if (locationInfoList.size > 1) {
+            insertList.forEach {
+                viewModel.insertDataInDB(it)
+            }
             view.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
             )

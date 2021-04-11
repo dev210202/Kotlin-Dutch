@@ -1,5 +1,7 @@
 package com.dutch2019.extension
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +14,7 @@ import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.ui.search.SearchLocationViewModel
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
+import java.net.URI
 
 @BindingAdapter(value = ["plusbuttonclick"])
 fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
@@ -46,3 +49,8 @@ fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
     }
 }
 
+@BindingAdapter(value = ["searchinternet"])
+fun searchIntener(imageButton: ImageButton, name : String){
+    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name"))
+    imageButton.context.startActivity(intent)
+}

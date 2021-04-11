@@ -45,13 +45,12 @@
 
             <TextView
                 android:id="@+id/locationnametextview"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/notosans_medium"
                 android:includeFontPadding="false"
@@ -59,26 +58,39 @@
                 android:text="@{locationinfo.name}"
                 android:textColor="@color/black"
                 android:textSize="14dp"
-                app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
 
             <TextView
                 android:id="@+id/locationaddresstextview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_width="0dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@{locationinfo.address}"
                 android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+            <ImageButton
+                searchinternet="@{locationinfo.name}"
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_internet_24"
+                app:layout_constraintBottom_toBottomOf="@+id/rightArrowButton"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/locationnametextview" />
+                app:layout_constraintTop_toTopOf="@+id/rightArrowButton"></ImageButton>
+
+
             <ImageButton
                 android:id="@+id/rightArrowButton"
                 android:layout_width="wrap_content"
