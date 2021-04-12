@@ -10,16 +10,11 @@ import java.io.Serializable
 
 @Entity
 data class LocationInfo(
-    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
-    @ColumnInfo(name = "name")
     var name: String = "위치를 설정해주세요",
-    @ColumnInfo(name = "address")
     var address: String = "",
-    @ColumnInfo(name = "lat")
     var latitude: Double = 0.0 ,
-    @ColumnInfo(name = "lon")
     var longitude: Double = 0.0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

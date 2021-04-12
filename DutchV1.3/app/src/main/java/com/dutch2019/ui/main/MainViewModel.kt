@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
+import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.repository.LocationRepository
 import com.skt.Tmap.TMapView
@@ -52,14 +53,11 @@ open class MainViewModel : BaseViewModel() {
         }
     }
 
-    fun insertDataInDB(locationInfo: LocationInfo) {
+    fun insertDataInDB(locationData: LocationDataDB) {
         viewModelScope.launch {
-            locationRepository.insertRecentData(locationInfo)
+            locationRepository.insertRecentData(locationData)
         }
     }
 
-    fun getRecentDataInDB(): List<LocationInfo> {
-        return locationRepository.getRecentLocationListData()
-    }
 
 }

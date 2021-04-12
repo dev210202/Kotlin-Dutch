@@ -4,22 +4,23 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 
 
 @Dao
 interface LocationInfoDao {
 
-    @Query("SELECT * FROM locationinfo")
-    suspend fun getAll() : List<LocationInfo>
+    @Query("SELECT * FROM locationdatadb")
+    suspend fun getAll() : List<LocationDataDB>
 
     @Insert
-    suspend fun insert(info : LocationInfo)
+    suspend fun insert(info : LocationDataDB)
 
     @Delete
-    suspend fun delete(info : LocationInfo)
+    suspend fun delete(info : LocationDataDB)
 
-    @Query("DELETE FROM locationinfo")
+    @Query("DELETE FROM locationdatadb")
     suspend fun deleteAll()
 
 }

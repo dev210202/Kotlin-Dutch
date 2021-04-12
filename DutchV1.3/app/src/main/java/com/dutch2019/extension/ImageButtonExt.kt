@@ -24,16 +24,11 @@ fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 }
 
 @BindingAdapter(value = ["historybuttonclick"])
-fun historyButtonClikc(imageButton: ImageButton, viewModel: BaseViewModel){
+fun historyButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
     var viewModel = (viewModel as MainViewModel)
-    imageButton.setOnClickListener {
-        view ->
-        var list = viewModel.getRecentDataInDB()
-        var locationList = LocationInfoList()
-        list.forEach {
-            locationList.add(it)
-        }
-     view.findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecentFragment(locationList))
+    imageButton.setOnClickListener { view ->
+        view.findNavController()
+            .navigate(MainFragmentDirections.actionMainFragmentToRecentFragment())
     }
 }
 
@@ -50,7 +45,10 @@ fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 }
 
 @BindingAdapter(value = ["searchinternet"])
-fun searchIntener(imageButton: ImageButton, name : String){
-    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name"))
+fun searchIntener(imageButton: ImageButton, name: String) {
+    var intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
+    )
     imageButton.context.startActivity(intent)
 }

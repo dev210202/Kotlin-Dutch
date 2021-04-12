@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
+import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
 import com.dutch2019.model.LocationPoint
@@ -55,20 +56,10 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
             }
         }
 
-        var insertList = LocationInfoList()
-        locationInfoList.forEach {
-                var locationInfo = LocationInfo()
-                locationInfo.id = 0
-                locationInfo.name = it.name
-                locationInfo.address = it.address
-                locationInfo.latitude = it.latitude
-                locationInfo.longitude = it.longitude
-                insertList.add(locationInfo)
-        }
         if (locationInfoList.size > 1) {
-            insertList.forEach {
-                viewModel.insertDataInDB(it)
-            }
+            var locationDataDB = LocationDataDB()
+            locationDataDB.list = locationInfoList
+            viewModel.insertDataInDB(locationDataDB)
             view.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
             )

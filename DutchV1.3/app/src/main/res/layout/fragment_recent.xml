@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dutch2019.ui.search.SearchLocationViewModel" />
+            type="com.dutch2019.ui.recent.RecentViewModel" />
     </data>
 
     <LinearLayout

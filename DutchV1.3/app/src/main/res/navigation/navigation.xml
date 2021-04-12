@@ -76,10 +76,6 @@
         android:label="RecentFragment"
         tools:layout="@layout/fragment_recent">
 
-        <argument
-            android:name="locationlist"
-            app:argType="com.dutch2019.model.LocationInfoList" />
-
     </fragment>
 
 </navigation>

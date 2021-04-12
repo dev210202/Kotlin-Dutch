@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 
-@Database(entities = [LocationInfo::class], version=1)
+@Database(entities = [LocationDataDB::class], version=1)
+@TypeConverters(Converters::class)
 public abstract class RecentLocationDB : RoomDatabase() {
     abstract fun locationInfoDao(): LocationInfoDao
 
