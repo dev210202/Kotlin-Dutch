@@ -8,6 +8,8 @@ import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.adapter.SearchRecyclerAdapter
 import com.dutch2019.adapter.NearRecyclerAdapter
+import com.dutch2019.adapter.RecentRecyclerAdapter
+import com.dutch2019.model.LocationDataDB
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
@@ -35,5 +37,15 @@ fun nearFacility(recyclerView: RecyclerView, locationData: LiveData<ArrayList<Lo
         recyclerView.adapter = adapter
     }
     (recyclerView.adapter as NearRecyclerAdapter).setLocationDataList(locationData.value!!)
+    recyclerView.adapter?.notifyDataSetChanged()
+}
+
+@BindingAdapter(value = ["recent"])
+fun recent(recyclerView: RecyclerView, locationData : LiveData<List<LocationDataDB>>){
+    if(recyclerView.adapter == null){
+        var adapter = RecentRecyclerAdapter()
+        recyclerView.adapter = adapter
+    }
+    (recyclerView.adapter as RecentRecyclerAdapter).setLocationDataDB(locationData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }

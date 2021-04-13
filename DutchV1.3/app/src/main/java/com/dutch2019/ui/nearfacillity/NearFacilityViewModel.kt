@@ -31,7 +31,7 @@ class NearFacilityViewModel : BaseViewModel() {
     var errorMessage = MutableLiveData<String>()
     var detailInfo = MutableLiveData<String>()
 
-    fun init() {
+    fun initList() {
         _locationList.value = ArrayList()
     }
 

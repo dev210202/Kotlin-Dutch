@@ -22,8 +22,6 @@ class SearchLocationFragment : BaseFragment<FragmentSearchLocationBinding, Searc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val tmapAPI = TMapTapi(activity)
-        tmapAPI.setSKTMapAuthentication("l7xx75e02f3eccaa4f56b3f269cb4a9f2b43")
 
         viewModel.init()
 

@@ -23,7 +23,7 @@ class NearFacilityFragment : BaseFragment<FragmentNearFacilityBinding, NearFacil
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.init()
+        viewModel.initList()
 
         var locationInfo = NearFacilityFragmentArgs.fromBundle(requireArguments()).let { data ->
             viewModel.setLocaitonPoint(data.locationpoint.latitude, data.locationpoint.longitude)

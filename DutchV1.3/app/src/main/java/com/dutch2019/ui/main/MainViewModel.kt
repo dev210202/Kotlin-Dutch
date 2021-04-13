@@ -37,6 +37,10 @@ open class MainViewModel : BaseViewModel() {
         }
     }
 
+    fun clearDynamicButtonData(){
+        _dynamicButtonData.value?.clear()
+    }
+
     fun addDummyLocationData() {
         _dynamicButtonData.value = _dynamicButtonData.value?.apply {
             add(LocationInfo(id++))

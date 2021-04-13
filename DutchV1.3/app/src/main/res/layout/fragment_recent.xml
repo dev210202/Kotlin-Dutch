@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-
+            recent="@{vm.locationList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:background="@color/white"
             android:id="@+id/recyclerview"

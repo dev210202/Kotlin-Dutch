@@ -13,15 +13,20 @@
             android:id="@+id/action_mainFragment_to_searchLocationFragment"
             app:destination="@id/searchLocationFragment" />
         <argument
-            android:name="locationInfo"
-            app:argType="com.dutch2019.model.LocationInfo" />
-        <action
+            app:nullable="true"
+            android:name="locationdatadb"
+            android:defaultValue="@null"
+            app:argType="com.dutch2019.model.LocationDataDB" />
+
+
+         <action
             android:id="@+id/action_mainFragment_to_middleLocationFragment"
             app:destination="@id/middleLocationFragment" />
         <action
             android:id="@+id/action_mainFragment_to_recentFragment"
-            app:destination="@id/recentFragment" />
-    </fragment>
+            app:destination="@id/recentFragment" >
+            </action>
+        </fragment>
     <fragment
         android:id="@+id/searchLocationFragment"
         android:name="com.dutch2019.ui.search.SearchLocationFragment"
@@ -60,6 +65,9 @@
         <action
             android:id="@+id/action_middleLocationFragment_to_nearFacilityFragment"
             app:destination="@id/nearFacilityFragment" />
+        <action
+            android:id="@+id/action_middleLocationFragment_to_mainFragment"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/nearFacilityFragment"
@@ -69,6 +77,9 @@
         <argument
             android:name="locationpoint"
             app:argType="com.dutch2019.model.LocationPoint" />
+        <action
+            android:id="@+id/action_nearFacilityFragment_to_middleLocationFragment"
+            app:popUpTo="@id/middleLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentFragment"
@@ -76,6 +87,9 @@
         android:label="RecentFragment"
         tools:layout="@layout/fragment_recent">
 
-    </fragment>
+        <action
+            android:id="@+id/action_recentFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+       </fragment>
 
 </navigation>

@@ -1,13 +1,12 @@
 package com.dutch2019.ui.main
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.dutch2019.R
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
-import com.dutch2019.repository.LocationRepository
 
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
@@ -16,6 +15,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
 ) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        getSelectedLocationFromDB(this)
+
+
         viewModel.initDB(requireActivity().application)
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
@@ -26,5 +29,17 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
                     )
                 }
             })
+    }
+}
+
+fun getSelectedLocationFromDB(fragment: MainFragment){
+    var locationList = MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb
+    if (locationList != null) {
+        if (locationList.list.isNotEmpty()) {
+            locationList.list.forEach { data ->
+                fragment.viewModel.addDynamicButtonData(data)
+                MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb?.list = emptyList()
+            }
+        }
     }
 }
