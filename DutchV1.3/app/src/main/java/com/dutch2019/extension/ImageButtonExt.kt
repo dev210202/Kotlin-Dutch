@@ -12,6 +12,7 @@ import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
 import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
+import com.dutch2019.ui.recent.RecentFragmentDirections
 import com.dutch2019.ui.search.SearchLocationViewModel
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
 import java.net.URI
@@ -45,10 +46,17 @@ fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 }
 
 @BindingAdapter(value = ["searchinternet"])
-fun searchIntener(imageButton: ImageButton, name: String) {
+fun searchInternet(imageButton: ImageButton, name: String) {
     var intent = Intent(
         Intent.ACTION_VIEW,
         Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
     )
     imageButton.context.startActivity(intent)
+}
+
+@BindingAdapter(value = ["deleterecentlocation"])
+fun deleteRecentLocation(imageButton: ImageButton, viewModel : BaseViewModel){
+    imageButton.setOnClickListener {view ->
+       view.findNavController().navigate(RecentFragmentDirections.actionRecentFragmentToDeleteRecentFragment())
+    }
 }

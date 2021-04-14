@@ -90,6 +90,14 @@
         <action
             android:id="@+id/action_recentFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
-       </fragment>
+        <action
+            android:id="@+id/action_recentFragment_to_deleteRecentFragment"
+            app:destination="@id/deleteRecentFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_delete_recent"
+        android:id="@+id/deleteRecentFragment"
+        android:name="com.dutch2019.ui.deleterecent.DeleteRecentFragment"
+        android:label="DeleteRecentFragment"/>
 
 </navigation>
