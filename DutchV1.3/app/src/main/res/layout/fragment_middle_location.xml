@@ -107,8 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/orange"
-                android:gravity="center"
+                style="@style/BottomBackgroundOrange"
+                 android:gravity="center"
                 android:text="주변시설 확인하기"
                 android:textColor="@color/white"
                 android:textSize="17sp"></Button>

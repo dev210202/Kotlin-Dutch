@@ -29,4 +29,9 @@ class RecentViewModel : BaseViewModel() {
            _locationList.value = locationRepository.getLocationListData()
         }
     }
+    fun deleteLocationDB(list : List<LocationDataDB>){
+        viewModelScope.launch {
+            locationRepository.deleteLocationList(list)
+        }
+    }
 }

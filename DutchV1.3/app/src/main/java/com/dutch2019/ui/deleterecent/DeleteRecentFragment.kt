@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.DeleteRecnetRecyclerAdapter
 import com.dutch2019.adapter.RecentRecyclerAdapter
@@ -23,10 +24,31 @@ class DeleteRecentFragment : BaseFragment<FragmentDeleteRecentBinding, RecentVie
         viewModel.initList()
         viewModel.initDB(requireActivity().application)
         viewModel.getRecentLocationDB()
+
+
         viewModel.locationList.observe(this, Observer { list ->
             if (binding.recyclerview.adapter != null) {
                 (binding.recyclerview.adapter as DeleteRecnetRecyclerAdapter).setLocationDataDB(list)
             }
         })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding.chooseAllCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            (binding.recyclerview.adapter as DeleteRecnetRecyclerAdapter).selectAllCheckBox()
+            (binding.recyclerview.adapter as DeleteRecnetRecyclerAdapter).notifyDataSetChanged()
+        }
+
+        binding.completeButton.setOnClickListener {
+            view ->
+            var deleteList =
+                (binding.recyclerview.adapter as DeleteRecnetRecyclerAdapter).getDeleteList()
+            viewModel.deleteLocationDB(deleteList)
+            viewModel.getRecentLocationDB()
+            view.findNavController().popBackStack()
+        }
+
     }
 }

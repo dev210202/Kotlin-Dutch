@@ -31,4 +31,10 @@ public class LocationRepository {
     suspend fun getLocationListData(): List<LocationDataDB> {
         return locationInfoDao.getAll()
     }
+
+    suspend fun deleteLocationList(list : List<LocationDataDB>){
+        list.forEach {
+            recentDB.locationInfoDao().delete(it)
+        }
+    }
 }

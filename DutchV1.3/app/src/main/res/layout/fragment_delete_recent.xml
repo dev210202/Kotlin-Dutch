@@ -10,20 +10,45 @@
             type="com.dutch2019.ui.recent.RecentViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <CheckBox
+            android:id="@+id/choose_all_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></CheckBox>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체선택"
+            app:layout_constraintBottom_toBottomOf="@+id/choose_all_checkBox"
+            app:layout_constraintStart_toEndOf="@+id/choose_all_checkBox"
+            app:layout_constraintTop_toTopOf="@+id/choose_all_checkBox"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
-            deleterecent="@{vm.locationList}"
             android:id="@+id/recyclerview"
+            deleterecent="@{vm.locationList}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:background="@color/white"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/complete_button"
+            app:layout_constraintTop_toBottomOf="@+id/choose_all_checkBox"></androidx.recyclerview.widget.RecyclerView>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/complete_button"
+            style="@style/BottomBackgroundBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

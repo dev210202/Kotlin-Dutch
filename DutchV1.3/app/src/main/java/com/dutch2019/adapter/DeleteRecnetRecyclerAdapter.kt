@@ -13,11 +13,38 @@ class DeleteRecnetRecyclerAdapter :
     RecyclerView.Adapter<DeleteRecnetRecyclerAdapter.RecentViewHolder>() {
 
     private var locationDataDB = listOf<LocationDataDB>()
+    private var checkMap = HashMap<Int, Boolean>()
+    private var isAllSelectChecked = false;
 
     fun setLocationDataDB(list: List<LocationDataDB>) {
         locationDataDB = list
         notifyDataSetChanged()
     }
+
+    fun selectAllCheckBox() {
+        if (isAllSelectChecked) {
+            for (i in 0 until checkMap.size) {
+                checkMap.replace(i, false)
+            }
+            isAllSelectChecked = false
+        } else {
+            for (i in 0 until checkMap.size) {
+                checkMap.replace(i, true)
+            }
+            isAllSelectChecked = true
+        }
+    }
+
+    fun getDeleteList(): ArrayList<LocationDataDB> {
+        var deleteList = ArrayList<LocationDataDB>()
+        for(i in 0 until checkMap.size){
+            if(checkMap[i]!!){ // 체크되어있으면
+                deleteList.add(locationDataDB[i])
+            }
+        }
+        return deleteList
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
@@ -28,21 +55,14 @@ class DeleteRecnetRecyclerAdapter :
     override fun getItemCount(): Int = locationDataDB.size
 
     override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
-        holder.bind(locationDataDB[position])
-        holder.rightArrowButton.setOnClickListener { view ->
-            view.findNavController()
-                .navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB[position]))
-        }
-        holder.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-//            buttonView.isChecked = !isChecked
-        }
+        holder.bind(locationDataDB[position], position)
+
     }
 
-    class RecentViewHolder(private val binding: DeleteRecentListItemBinding) :
+    inner class RecentViewHolder(private val binding: DeleteRecentListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var rightArrowButton = binding.rightArrowButton
         var checkbox = binding.checkBox
-        fun bind(locationData: LocationDataDB) {
+        fun bind(locationData: LocationDataDB, position: Int) {
             binding.locationdata = locationData
             var adapter = RecentDetailRecyclerAdapter()
             binding.recyclerview.adapter = adapter
@@ -50,6 +70,16 @@ class DeleteRecnetRecyclerAdapter :
                 locationData.list
             )
             binding.recyclerview.adapter?.notifyDataSetChanged()
+
+            if (position >= checkMap.size) {
+                checkMap[position] = isAllSelectChecked
+            }
+            checkbox.isChecked = checkMap[position]!!
+            checkbox.setOnClickListener {
+                checkMap[position] = checkbox.isChecked
+            }
+
+
         }
     }
 }
