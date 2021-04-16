@@ -2,15 +2,12 @@ package com.dutch2019.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.DeleteRecentListItemBinding
-import com.dutch2019.databinding.RecentListItemBinding
 import com.dutch2019.model.LocationDataDB
-import com.dutch2019.ui.recent.RecentFragmentDirections
 
-class DeleteRecnetRecyclerAdapter :
-    RecyclerView.Adapter<DeleteRecnetRecyclerAdapter.RecentViewHolder>() {
+class DeleteRecentRecyclerAdapter :
+    RecyclerView.Adapter<DeleteRecentRecyclerAdapter.RecentViewHolder>() {
 
     private var locationDataDB = listOf<LocationDataDB>()
     private var checkMap = HashMap<Int, Boolean>()
@@ -64,9 +61,9 @@ class DeleteRecnetRecyclerAdapter :
         var checkbox = binding.checkBox
         fun bind(locationData: LocationDataDB, position: Int) {
             binding.locationdata = locationData
-            var adapter = RecentDetailRecyclerAdapter()
+            var adapter = DeleteRecentDetailRecyclerAdapter()
             binding.recyclerview.adapter = adapter
-            (binding.recyclerview.adapter as RecentDetailRecyclerAdapter).setLocationDataDB(
+            (binding.recyclerview.adapter as DeleteRecentDetailRecyclerAdapter).setLocationDataDB(
                 locationData.list
             )
             binding.recyclerview.adapter?.notifyDataSetChanged()

@@ -1,6 +1,7 @@
 package com.dutch2019.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -28,15 +29,21 @@ class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentV
 
     override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
         holder.bind(locationDataDB[position])
-        holder.rightArrowButton.setOnClickListener {
-            view ->
-        view.findNavController().navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB[position]))
+        holder.rightArrowButton.setOnClickListener { view ->
+            view.findNavController()
+                .navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB[position]))
+        }
+        holder.locationImage.setOnClickListener { view ->
+            view.findNavController()
+                .navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB[position]))
         }
     }
 
     class RecentViewHolder(private val binding: RecentListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var rightArrowButton = binding.rightArrowButton
+        var recyclerView = binding.recyclerview
+        var locationImage = binding.locationImage
         fun bind(locationData: LocationDataDB) {
             binding.locationdata = locationData
 
@@ -48,4 +55,6 @@ class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentV
             binding.recyclerview.adapter?.notifyDataSetChanged()
         }
     }
+
+
 }

@@ -27,7 +27,9 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, RecentViewModel>(
         viewModel.locationList.observe(this, Observer { list ->
             if (binding.recyclerview.adapter != null) {
                 (binding.recyclerview.adapter as RecentRecyclerAdapter).setLocationDataDB(list)
+                (binding.recyclerview.adapter as RecentRecyclerAdapter).notifyDataSetChanged()
             }
         })
     }
+
 }

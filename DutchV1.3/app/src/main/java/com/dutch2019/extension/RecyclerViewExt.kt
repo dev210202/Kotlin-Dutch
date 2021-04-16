@@ -1,7 +1,7 @@
 package com.dutch2019.extension
 
+import android.util.Log
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.adapter.*
@@ -10,6 +10,9 @@ import com.dutch2019.model.LocationDataDB
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
+    buttonData.value?.forEach {
+        Log.i("recyclerviewext createbutton", it.name)
+    }
     if (recyclerView.adapter == null) {
         var adapter = ButtonRecyclerAdapter()
         recyclerView.adapter = adapter
@@ -51,9 +54,9 @@ fun recent(recyclerView: RecyclerView, locationData: LiveData<List<LocationDataD
 @BindingAdapter(value = ["deleterecent"])
 fun deleteRecent(recyclerView: RecyclerView, locationData: LiveData<List<LocationDataDB>>) {
     if (recyclerView.adapter == null) {
-        var adapter = DeleteRecnetRecyclerAdapter()
+        var adapter = DeleteRecentRecyclerAdapter()
         recyclerView.adapter = adapter
     }
-    (recyclerView.adapter as DeleteRecnetRecyclerAdapter).setLocationDataDB(locationData.value!!)
+    (recyclerView.adapter as DeleteRecentRecyclerAdapter).setLocationDataDB(locationData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }

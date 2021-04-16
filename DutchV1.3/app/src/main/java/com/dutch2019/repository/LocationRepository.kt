@@ -1,6 +1,7 @@
 package com.dutch2019.repository
 
 import android.app.Application
+import android.util.Log
 import com.dutch2019.db.LocationInfoDao
 import com.dutch2019.db.RecentLocationDB
 import com.dutch2019.model.LocationDataDB
@@ -34,6 +35,9 @@ public class LocationRepository {
 
     suspend fun deleteLocationList(list : List<LocationDataDB>){
         list.forEach {
+            it.list.forEach {
+                Log.i("locationrepository", it.name)
+            }
             recentDB.locationInfoDao().delete(it)
         }
     }
