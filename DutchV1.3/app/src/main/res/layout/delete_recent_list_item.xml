@@ -37,14 +37,10 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_height="1dp"
+            android:background="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

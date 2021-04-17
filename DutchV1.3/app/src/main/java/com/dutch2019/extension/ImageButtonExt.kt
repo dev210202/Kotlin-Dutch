@@ -35,28 +35,27 @@ fun historyButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 
 @BindingAdapter(value = ["searchbuttonclick"])
 fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
-
     imageButton.setOnClickListener {
         val inputText = imageButton.rootView.inputedittext.text.toString()
-        Log.i("INPUTTEXT", inputText)
         (viewModel as SearchLocationViewModel).searchLocationData(inputText)
-
-
     }
 }
 
 @BindingAdapter(value = ["searchinternet"])
 fun searchInternet(imageButton: ImageButton, name: String) {
-    var intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
-    )
-    imageButton.context.startActivity(intent)
+    imageButton.setOnClickListener {
+        var intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
+        )
+        imageButton.context.startActivity(intent)
+    }
 }
 
 @BindingAdapter(value = ["deleterecentlocation"])
-fun deleteRecentLocation(imageButton: ImageButton, viewModel : BaseViewModel){
-    imageButton.setOnClickListener {view ->
-       view.findNavController().navigate(RecentFragmentDirections.actionRecentFragmentToDeleteRecentFragment())
+fun deleteRecentLocation(imageButton: ImageButton, viewModel: BaseViewModel) {
+    imageButton.setOnClickListener { view ->
+        view.findNavController()
+            .navigate(RecentFragmentDirections.actionRecentFragmentToDeleteRecentFragment())
     }
 }

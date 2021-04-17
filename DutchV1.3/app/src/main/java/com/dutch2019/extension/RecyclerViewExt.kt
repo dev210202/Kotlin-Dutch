@@ -10,9 +10,6 @@ import com.dutch2019.model.LocationDataDB
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
-    buttonData.value?.forEach {
-        Log.i("recyclerviewext createbutton", it.name)
-    }
     if (recyclerView.adapter == null) {
         var adapter = ButtonRecyclerAdapter()
         recyclerView.adapter = adapter
@@ -59,4 +56,26 @@ fun deleteRecent(recyclerView: RecyclerView, locationData: LiveData<List<Locatio
     }
     (recyclerView.adapter as DeleteRecentRecyclerAdapter).setLocationDataDB(locationData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
+}
+
+fun setRecyclerView(recyclerName : String){
+    lateinit var
+    when (recyclerName) {
+        "createButton" -> {
+
+        }
+        "searchLocation" -> {
+
+        }
+        "nearFacility" -> {
+
+        }
+        "recent" -> {
+
+        }
+        "deleteRecent" -> {
+
+        }
+    }
+
 }

@@ -7,13 +7,7 @@
                 <shape
                     android:shape="rectangle" android:padding = "10dp">
                     <solid android:color="@color/light_grey"></solid>
-                    <corners
-
-                        android:bottomLeftRadius="16dp"
-                        android:bottomRightRadius="16dp"
-                        android:topLeftRadius="16dp"
-                        android:topRightRadius="16dp"></corners>
-                </shape>
+                   </shape>
             </item>
         </layer-list>
     </item>

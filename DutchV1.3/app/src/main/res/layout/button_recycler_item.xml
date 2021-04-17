@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:id="@+id/location_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -25,12 +25,12 @@
             app:layout_constraintTop_toTopOf="parent"></Button>
 
         <Button
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:id="@+id/minus_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_main_location_search"
-            android:text="-"
+            android:background="@drawable/ic_baseline_remove_24"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"></Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
