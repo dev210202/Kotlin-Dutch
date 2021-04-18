@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class RecentViewModel : BaseViewModel() {
 
-    private var locationRepository = LocationRepository()
+    private var locationRepository = LocationRepository.getInstance()
 
     private val _locationList = MutableLiveData<List<LocationDataDB>>()
      val locationList: LiveData<List<LocationDataDB>> get() = _locationList

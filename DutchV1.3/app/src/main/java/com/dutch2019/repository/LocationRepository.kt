@@ -14,12 +14,22 @@ public class LocationRepository {
     lateinit var recentLocationList: List<LocationDataDB>
     lateinit var recentDB: RecentLocationDB
 
+    companion object{
+        @Volatile private var instance: LocationRepository? = null
+
+        @JvmStatic fun getInstance(): LocationRepository =
+            instance ?: synchronized(this) {
+                instance ?: LocationRepository().also {
+                    instance = it
+                }
+            }
+    }
+
     suspend fun setRecentDB(application: Application) {
         recentDB = RecentLocationDB.getDatabase(application)!!
         locationInfoDao = recentDB.locationInfoDao()
         recentLocationList = locationInfoDao.getAll()
     }
-
 
     suspend fun insertRecentData(locationData: LocationDataDB) {
         recentDB.locationInfoDao().insert(locationData)
@@ -35,9 +45,6 @@ public class LocationRepository {
 
     suspend fun deleteLocationList(list : List<LocationDataDB>){
         list.forEach {
-            it.list.forEach {
-                Log.i("locationrepository", it.name)
-            }
             recentDB.locationInfoDao().delete(it)
         }
     }

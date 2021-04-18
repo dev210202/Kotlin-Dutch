@@ -3,6 +3,7 @@ package com.dutch2019.extension
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
