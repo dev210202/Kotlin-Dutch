@@ -1,6 +1,7 @@
 package com.dutch2019
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -45,8 +46,5 @@ class BalloonOverlayView(
         )
         params.gravity = Gravity.NO_GRAVITY
         addView(layout, params)
-        layout.setOnClickListener {
-
-        }
     }
 }

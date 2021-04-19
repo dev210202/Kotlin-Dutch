@@ -6,6 +6,7 @@ import android.graphics.PointF
 import android.graphics.Rect
 import android.os.Handler
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View.MeasureSpec
 import android.view.WindowManager
 import android.widget.TextView
@@ -38,7 +39,6 @@ class MarkerOverlay(context: Context, view: TMapView, labelName: String, id: Str
             balloonView.measuredWidth,
             balloonView.measuredHeight
         )
-
     }
 
 

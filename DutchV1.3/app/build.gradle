@@ -88,5 +88,5 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-
+    implementation 'com.google.android.gms:play-services-ads:18.0.0'
 }

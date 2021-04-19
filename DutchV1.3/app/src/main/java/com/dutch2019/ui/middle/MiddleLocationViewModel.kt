@@ -11,6 +11,7 @@ import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 
 public class MiddleLocationViewModel : BaseViewModel() {
@@ -60,7 +61,11 @@ public class MiddleLocationViewModel : BaseViewModel() {
 
 
         CoroutineScope(Dispatchers.IO).launch {
-            locationAddress = tMapData.convertGpsToAddress(point.latitude, point.longitude)
+            locationAddress = try {
+                tMapData.convertGpsToAddress(point.latitude, point.longitude)
+            } catch (e : Exception){
+                "상세주소가 없습니다."
+            }
             async(Dispatchers.Main) {
                 _middleLocationAddress.value = locationAddress
             }
