@@ -8,6 +8,7 @@ import com.dutch2019.R
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
+import com.google.android.gms.ads.MobileAds
 
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
@@ -19,7 +20,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
 
         getSelectedLocationFromDB(this)
 
-
         viewModel.initDB(requireActivity().application)
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
@@ -28,12 +28,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
                     (binding.recyclerview?.adapter as ButtonRecyclerAdapter).setLocationData(
                         dynamicButtonList
                     )
-
-                    dynamicButtonList.forEach {
-                        it ->
-                        Log.i("mainfragment dynamicButtonList", it.name)
-                    }
-
                 }
             })
     }
@@ -43,13 +37,10 @@ fun getSelectedLocationFromDB(fragment: MainFragment){
     var locationList = MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb
     if (locationList != null) {
         if (locationList.list.isNotEmpty()) {
-
             fragment.viewModel.clearDynamicButtonData()
             locationList.list.forEach { data ->
-                Log.i("mainfragemnt getselected", data.name)
                 fragment.viewModel.addDynamicButtonData(data)
             }
-
             MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb?.list = emptyList()
         }
     }

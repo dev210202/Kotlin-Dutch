@@ -1,13 +1,11 @@
 package com.dutch2019.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.RecentListItemBinding
 import com.dutch2019.model.LocationDataDB
-import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.recent.RecentFragmentDirections
 
 class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentViewHolder>() {
@@ -42,12 +40,11 @@ class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentV
     class RecentViewHolder(private val binding: RecentListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var rightArrowButton = binding.rightArrowButton
-        var recyclerView = binding.recyclerview
         var locationImage = binding.locationImage
         fun bind(locationData: LocationDataDB) {
             binding.locationdata = locationData
 
-            var adapter = RecentDetailRecyclerAdapter()
+            val adapter = RecentDetailRecyclerAdapter()
             binding.recyclerview.adapter = adapter
             (binding.recyclerview.adapter as RecentDetailRecyclerAdapter).setLocationDataDB(
                 locationData.list

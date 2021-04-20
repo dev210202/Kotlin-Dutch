@@ -48,5 +48,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id"/>
     </application>
-
+<queries>
+    <package android:name="com.kakao.talk"></package>
+</queries>
 </manifest>

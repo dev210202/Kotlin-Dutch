@@ -9,7 +9,7 @@ import com.dutch2019.databinding.LocationListItemBinding
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.search.SearchLocationFragmentDirections
 
-class SearchRecyclerAdapter() :
+class SearchRecyclerAdapter :
     RecyclerView.Adapter<SearchRecyclerAdapter.LocationDataViewHolder>() {
 
     private var locationDataList = ArrayList<LocationInfo>()
@@ -26,7 +26,6 @@ class SearchRecyclerAdapter() :
     }
 
     override fun getItemCount(): Int = locationDataList.size
-
 
     override fun onBindViewHolder(holder: LocationDataViewHolder, position: Int) {
         holder.bind(locationDataList[position])
@@ -45,7 +44,6 @@ class SearchRecyclerAdapter() :
         var layout = binding.linearLayout
         fun bind(locationInfo: LocationInfo) {
             binding.locationinfo = locationInfo
-
         }
     }
 

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.RecentDetailListItemBinding
-import com.dutch2019.databinding.RecentListItemBinding
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.recent.RecentFragmentDirections
@@ -31,7 +30,7 @@ class RecentDetailRecyclerAdapter :
     override fun onBindViewHolder(holder: RecentDetailViewHolder, position: Int) {
         holder.bind(locationInfoList[position])
         holder.layout.setOnClickListener { view ->
-            var locationDataDB = LocationDataDB()
+            val locationDataDB = LocationDataDB()
             locationDataDB.list = locationInfoList
             view.findNavController()
                 .navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB))

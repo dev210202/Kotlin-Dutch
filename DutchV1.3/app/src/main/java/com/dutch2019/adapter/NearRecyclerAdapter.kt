@@ -17,10 +17,7 @@ import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.search.SearchLocationFragmentDirections
 import com.kakao.kakaolink.v2.KakaoLinkResponse
 import com.kakao.kakaolink.v2.KakaoLinkService
-import com.kakao.message.template.ButtonObject
-import com.kakao.message.template.ContentObject
-import com.kakao.message.template.LinkObject
-import com.kakao.message.template.LocationTemplate
+import com.kakao.message.template.*
 import com.kakao.network.ErrorResult
 import com.kakao.network.callback.ResponseCallback
 
@@ -46,12 +43,12 @@ class NearRecyclerAdapter() :
 
     override fun onBindViewHolder(holder: NearViewHolder, position: Int) {
         holder.bind(locationDataList[position])
-        holder.arrowButton.setOnClickListener {
-            view ->
-            var name = locationDataList[position].name
-            var address = locationDataList[position].address
-            var locationInfo = locationDataList[position]
-            shareLocation(name, address, locationInfo, view.context)
+        holder.arrowButton.setOnClickListener { view ->
+            val name = locationDataList[position].name
+            val address = locationDataList[position].address
+            val locationInfo = locationDataList[position]
+           // shareLocation(name, address, locationInfo, view.context)
+            shareKakao(name, address, locationInfo, view.context)
         }
     }
 
@@ -63,6 +60,50 @@ class NearRecyclerAdapter() :
             binding.locationinfo = locationInfo
         }
     }
+}
+
+fun shareKakao(name: String, address: String, location: LocationInfo, context: Context) {
+
+    val kakaoAddressResult = address.replace(" ", "%20")
+    val params = FeedTemplate.newBuilder(
+        ContentObject.newBuilder(
+            name,
+            "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Ft3sEu%2FbtqJKvIDbb0%2FNOg8Ozhw0IgWkpagWecdr1%2Fimg.png",
+            LinkObject.newBuilder()
+                .setWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
+                .setMobileWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
+                .build()
+        ).setDescrption("중간지점을 확인해보세요!").build()
+    )
+        .addButton(
+            ButtonObject(
+                "위치 보기", // 왼쪽 버튼의 표시될 텍스트를 설정
+                LinkObject.newBuilder()
+                    .setWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
+                    .setMobileWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
+                    .build()
+            )
+        )
+        .build()
+
+    var serverCallbackArgs = mutableMapOf<String, String>()
+    serverCallbackArgs.put("user_id", "current_user_id")
+    serverCallbackArgs.put("product_id", "shared_product_id")
+
+    KakaoLinkService.getInstance().sendDefault(context, params, serverCallbackArgs,
+        object : ResponseCallback<KakaoLinkResponse?>() {
+            override fun onFailure(errorResult: ErrorResult) {
+                Log.e("ERROR", "!!")
+            }
+
+            override fun onSuccess(result: KakaoLinkResponse?) {
+                // 템플릿 밸리데이션과 쿼터 체크가 성공적으로 끝남. 톡에서 정상적으로 보내졌는지 보장은 할 수 없다. 전송 성공 유무는 서버콜백 기능을 이용하여야 한다.
+                Log.e("KAKAOTALK SUCCESS", "")
+            }
+        })
+
+
+
 }
 
 fun shareLocation(name: String, address: String, location: LocationInfo, context: Context) {

@@ -15,10 +15,11 @@ class RecentViewModel : BaseViewModel() {
     private var locationRepository = LocationRepository.getInstance()
 
     private val _locationList = MutableLiveData<List<LocationDataDB>>()
-     val locationList: LiveData<List<LocationDataDB>> get() = _locationList
+    val locationList: LiveData<List<LocationDataDB>> get() = _locationList
     fun initList() {
         _locationList.value = listOf()
     }
+
     fun initDB(application: Application) {
         viewModelScope.launch {
             locationRepository.setRecentDB(application)
@@ -27,13 +28,20 @@ class RecentViewModel : BaseViewModel() {
 
     fun getRecentLocationDB() {
         viewModelScope.launch {
-           _locationList.value = locationRepository.getLocationListData()
+            _locationList.value = locationRepository.getLocationListData()
         }
     }
-    fun deleteLocationDB(list : List<LocationDataDB>){
+
+    fun deleteLocationDB(list: List<LocationDataDB>) {
         viewModelScope.launch {
             locationRepository.deleteLocationList(list)
             getRecentLocationDB()
+        }
+    }
+
+    fun deleteAllLocationDB() {
+        viewModelScope.launch {
+            locationRepository.deleteAll()
         }
     }
 }

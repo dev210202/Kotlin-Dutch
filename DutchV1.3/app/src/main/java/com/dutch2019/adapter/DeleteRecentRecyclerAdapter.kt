@@ -11,7 +11,7 @@ class DeleteRecentRecyclerAdapter :
 
     private var locationDataDB = listOf<LocationDataDB>()
     private var checkMap = HashMap<Int, Boolean>()
-    private var isAllSelectChecked = false;
+    private var isAllSelectChecked = false
 
     fun setLocationDataDB(list: List<LocationDataDB>) {
         locationDataDB = list
@@ -19,29 +19,30 @@ class DeleteRecentRecyclerAdapter :
     }
 
     fun selectAllCheckBox() {
-        if (isAllSelectChecked) {
+        isAllSelectChecked = if (isAllSelectChecked) {
             for (i in 0 until checkMap.size) {
                 checkMap.replace(i, false)
             }
-            isAllSelectChecked = false
+            false
         } else {
             for (i in 0 until checkMap.size) {
                 checkMap.replace(i, true)
             }
-            isAllSelectChecked = true
+            true
         }
     }
 
     fun getDeleteList(): ArrayList<LocationDataDB> {
-        var deleteList = ArrayList<LocationDataDB>()
+        val deleteList = ArrayList<LocationDataDB>()
         for(i in 0 until checkMap.size){
-            if(checkMap[i]!!){ // 체크되어있으면
+            if(checkMap[i]!!){
                 deleteList.add(locationDataDB[i])
             }
         }
         return deleteList
     }
 
+    fun isAllSelectChecked() : Boolean = isAllSelectChecked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
@@ -58,10 +59,10 @@ class DeleteRecentRecyclerAdapter :
 
     inner class RecentViewHolder(private val binding: DeleteRecentListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var checkbox = binding.checkBox
+        private var checkbox = binding.checkBox
         fun bind(locationData: LocationDataDB, position: Int) {
             binding.locationdata = locationData
-            var adapter = DeleteRecentDetailRecyclerAdapter()
+            val adapter = DeleteRecentDetailRecyclerAdapter()
             binding.recyclerview.adapter = adapter
             (binding.recyclerview.adapter as DeleteRecentDetailRecyclerAdapter).setLocationDataDB(
                 locationData.list
