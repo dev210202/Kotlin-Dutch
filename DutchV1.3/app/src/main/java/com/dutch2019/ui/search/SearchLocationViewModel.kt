@@ -20,7 +20,6 @@ class SearchLocationViewModel : BaseViewModel() {
     }
 
     fun searchLocationData(input: String) {
-
         val tMapData = TMapData()
         if (input.isNotEmpty()) {
             tMapData.findAllPOI(input) { arrayList ->
@@ -36,10 +35,11 @@ class SearchLocationViewModel : BaseViewModel() {
         val locationArrayList = ArrayList<LocationInfo>()
         var item: TMapPOIItem
         if (arrayList.isEmpty()) {
+            toastValue.postValue("검색된 위치가 없습니다.")
             isDataLoadFail.postValue(true)
         } else {
             for(i in 0 until arrayList.size) {
-                var poiItem = arrayList[i]
+                val poiItem = arrayList[i]
                 var address = ""
                 item = poiItem
                 if (isItemDataExist(item)) {

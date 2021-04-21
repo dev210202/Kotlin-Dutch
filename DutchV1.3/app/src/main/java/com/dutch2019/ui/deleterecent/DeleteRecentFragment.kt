@@ -1,15 +1,12 @@
 package com.dutch2019.ui.deleterecent
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentDeleteRecentBinding
 import com.dutch2019.ui.recent.RecentViewModel
-import com.kakao.message.template.FeedTemplate
 
 class DeleteRecentFragment : BaseFragment<FragmentDeleteRecentBinding, RecentViewModel>(
     R.layout.fragment_delete_recent,

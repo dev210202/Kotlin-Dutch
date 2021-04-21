@@ -40,7 +40,6 @@ class SearchRecyclerAdapter :
 
     class LocationDataViewHolder(private val binding: LocationListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         var layout = binding.linearLayout
         fun bind(locationInfo: LocationInfo) {
             binding.locationinfo = locationInfo

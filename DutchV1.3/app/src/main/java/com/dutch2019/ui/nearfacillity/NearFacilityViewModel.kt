@@ -1,35 +1,22 @@
 package com.dutch2019.ui.nearfacillity
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.model.DetailData
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.network.Service
-import com.google.gson.GsonBuilder
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class NearFacilityViewModel : BaseViewModel() {
 
     var locationPoint = TMapPoint(0.0, 0.0)
-    lateinit var locationArrayList: ArrayList<LocationInfo>
+    private lateinit var locationArrayList: ArrayList<LocationInfo>
 
     private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
-    var errorMessage = MutableLiveData<String>()
-    var detailInfo = MutableLiveData<String>()
+//    var errorMessage = MutableLiveData<String>()
+//    var detailInfo = MutableLiveData<String>()
 
     fun initList() {
         _locationList.value = ArrayList()
@@ -39,7 +26,7 @@ class NearFacilityViewModel : BaseViewModel() {
         locationPoint.latitude = lat
         locationPoint.longitude = lon
     }
-
+/*
     fun getDetailInfo(poiId: Int) {
 
         val gson = GsonBuilder().setLenient().create()
@@ -67,15 +54,15 @@ class NearFacilityViewModel : BaseViewModel() {
 
             override fun onResponse(call: Call<DetailData>, response: Response<DetailData>) {
 
-                var value = response.body()
+                val value = response.body()
                 if (value != null) {
-                    detailInfo.value = value.poiDetailInfo.additionalInfo.toString()
+                    detailInfo.value = value.poiDetailInfo.additionalInfo
                 }
             }
 
         })
     }
-
+*/
     fun setNearFacilityCategory(input: String): String {
 
         when (input) {
@@ -103,13 +90,13 @@ class NearFacilityViewModel : BaseViewModel() {
             3,
             50
         ) { p0 ->
-            locationArrayList = ArrayList<LocationInfo>()
+            locationArrayList = ArrayList()
             if (p0 != null) {
                 for (i in 0 until p0.size) {
                     val item = p0[i]
                     if (isItemDataOK(item)) {
 
-                        locationArrayList.add(itemFilter(item, i))
+                        locationArrayList.add(itemFilter(item))
                     }
 
                 }
@@ -119,14 +106,14 @@ class NearFacilityViewModel : BaseViewModel() {
     }
 
 
-    fun isItemDataOK(item: TMapPOIItem): Boolean {
+    private fun isItemDataOK(item: TMapPOIItem): Boolean {
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
 
-    fun itemFilter(item: TMapPOIItem, i: Int): LocationInfo {
+    private fun itemFilter(item: TMapPOIItem): LocationInfo {
 
         var address = ""
-        var id = Integer.valueOf(item.poiid)
+        val id = Integer.valueOf(item.poiid)
         if (item.upperAddrName != null) {
             address += item.upperAddrName
         }
@@ -136,13 +123,12 @@ class NearFacilityViewModel : BaseViewModel() {
         if (item.lowerAddrName != null) {
             address += " " + item.lowerAddrName
         }
-        val locationData = LocationInfo(
+        return LocationInfo(
             id,
             item.poiName,
             address,
             item.poiPoint.latitude,
             item.poiPoint.longitude
         )
-        return locationData
     }
 }

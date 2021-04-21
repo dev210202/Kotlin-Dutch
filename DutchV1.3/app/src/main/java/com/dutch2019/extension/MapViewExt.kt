@@ -23,21 +23,21 @@ import java.lang.Exception
 
 @BindingAdapter(value = ["mapview"])
 fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
-    var mainviewModel = viewModel as MiddleLocationViewModel
-    var tMapView = TMapView(layout.context)
+    val mainViewModel = viewModel as MiddleLocationViewModel
+    val tMapView = TMapView(layout.context)
     layout.addView(tMapView)
 
-    viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
+    mainViewModel.setCenterPoint(mainViewModel.calculateCenterPoint(mainViewModel.getLocationList()))
 
-    markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
-    markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())
+    markSearchLoaction(tMapView, layout.context, mainViewModel.getLocationList())
+    markMiddleLocation(tMapView, layout.context, mainViewModel.getCenterPoint())
     setBallonOverlayClickEvent(tMapView, viewModel)
     CoroutineScope(Dispatchers.IO).launch {
-        setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
-        viewModel.setLocationAddress(viewModel.getCenterPoint())
-        viewModel.setNearSubway(viewModel.getCenterPoint())
+        setPolyLine(tMapView, mainViewModel.getLocationList(), mainViewModel.getCenterPoint())
+        mainViewModel.setLocationAddress(mainViewModel.getCenterPoint())
+        mainViewModel.setNearSubway(mainViewModel.getCenterPoint())
     }
-    mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+    mapAutoZoom(tMapView, mainViewModel.getLocationList(), mainViewModel.getCenterPoint())
 }
 
 fun markSearchLoaction(
@@ -57,14 +57,13 @@ fun markSearchLoaction(
                     R.drawable.result_ic_marker_black
                 )
 
-
             val marker = MarkerOverlay(
                 context,
                 tMapView,
                 locationList[i].name,
                 "marker2$i"
             )
-            var strId = locationList[i].name
+            val strId = locationList[i].name
             marker.id = strId
             marker.icon = markerImage
             marker.setPosition(0.5F, 1F)
@@ -83,17 +82,16 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
             R.drawable.group6
         )
     val marker = MarkerOverlay(context, tMapView, "중간지점", "middlemarkerItem")
-    var strId = "중간지점"
+    val strId = "중간지점"
     marker.id = strId
     marker.changeTextRedColor(context)
     marker.icon = markerImage
     marker.setPosition(0.5F, 1F)
     marker.tMapPoint = centerPoint
     tMapView.addMarkerItem2(strId, marker)
-
 }
 
-suspend fun setPolyLine(
+fun setPolyLine(
     tMapView: TMapView,
     locationList: ArrayList<LocationInfo>,
     centerPoint: TMapPoint
@@ -121,9 +119,6 @@ fun mapAutoZoom(tMapView: TMapView, locationList: ArrayList<LocationInfo>, cente
     try {
         for (i in 0 until locationList.size) {
             if (locationList.isNotEmpty()) {
-                Log.e("dataLat", locationList[i].latitude.toString())
-                Log.e("dataLon", locationList[i].longitude.toString())
-                Log.e("dataCenter", centerPoint.toString())
                 if (locationList[i].latitude >= leftTopLat) {
                     leftTopLat = locationList[i].latitude
                 }
@@ -140,15 +135,10 @@ fun mapAutoZoom(tMapView: TMapView, locationList: ArrayList<LocationInfo>, cente
             }
 
         }
-
         val leftTopPoint = TMapPoint(leftTopLat, leftTopLon)
         val rightBottomPoint = TMapPoint(rightBottomLat, rightBottomLon)
-
         tMapView.setCenterPoint(centerPoint.longitude, centerPoint.latitude)
         tMapView.zoomToTMapPoint(leftTopPoint, rightBottomPoint)
-        Log.e("leftTopPoint", leftTopPoint.toString())
-        Log.e("rightBottomPoint", rightBottomPoint.toString())
-        Log.e("ZOOM", "done")
     } catch (e: Exception) {
         e.printStackTrace()
         tMapView.setCenterPoint(centerPoint.longitude, centerPoint.latitude)
@@ -157,8 +147,8 @@ fun mapAutoZoom(tMapView: TMapView, locationList: ArrayList<LocationInfo>, cente
 }
 
 fun setBallonOverlayClickEvent(tMapView: TMapView, viewModel: BaseViewModel) {
-    tMapView.setOnMarkerClickEvent { p0, p1 ->
-        var point = p1.tMapPoint
+    tMapView.setOnMarkerClickEvent { _, p1 ->
+        val point = p1.tMapPoint
         (viewModel as MiddleLocationViewModel).setCenterPoint(point)
         viewModel.setLocationAddress(viewModel.getCenterPoint())
         viewModel.setNearSubway(viewModel.getCenterPoint())
@@ -176,7 +166,7 @@ fun setBallonOverlayClickEvent(tMapView: TMapView, viewModel: BaseViewModel) {
 
 }
 
-
+/*
 fun setMarkRatioLocation(tMapView: TMapView, context: Context, changePoint: TMapPoint) {
     val markerImage =
         BitmapFactory.decodeResource(
@@ -187,7 +177,7 @@ fun setMarkRatioLocation(tMapView: TMapView, context: Context, changePoint: TMap
 
     val marker = MarkerOverlay(context, tMapView, "비율변경지점", "ratioMarkerItem")
 
-    var strId = "ratiomarkerItem"
+    val strId = "ratiomarkerItem"
     marker.id = strId
     marker.chagneTextBlueColor(context)
     marker.icon = markerImage
@@ -197,3 +187,4 @@ fun setMarkRatioLocation(tMapView: TMapView, context: Context, changePoint: TMap
     tMapView.addMarkerItem2(strId, marker)
     marker.markerTouch
 }
+*/

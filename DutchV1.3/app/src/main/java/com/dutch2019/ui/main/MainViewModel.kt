@@ -8,7 +8,6 @@ import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.repository.LocationRepository
-import com.skt.Tmap.TMapView
 import kotlinx.coroutines.launch
 
 open class MainViewModel : BaseViewModel() {

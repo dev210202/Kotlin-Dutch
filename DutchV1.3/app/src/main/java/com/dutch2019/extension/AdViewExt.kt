@@ -6,13 +6,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 
-
-
-
 @BindingAdapter(value = ["adview"])
 fun adView(adView : AdView, viewModel: BaseViewModel){
     MobileAds.initialize(adView.context)
-    var adRequest = AdRequest.Builder().build()
+    val adRequest = AdRequest.Builder().build()
     adView.loadAd(adRequest)
-
 }

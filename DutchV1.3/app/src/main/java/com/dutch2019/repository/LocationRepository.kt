@@ -1,23 +1,23 @@
 package com.dutch2019.repository
 
 import android.app.Application
-import android.util.Log
 import com.dutch2019.db.LocationInfoDao
 import com.dutch2019.db.RecentLocationDB
 import com.dutch2019.model.LocationDataDB
 
-public class LocationRepository {
+class LocationRepository {
 
-    // singleton으로 수정
-    lateinit var locationInfoDao: LocationInfoDao
+    private lateinit var locationInfoDao: LocationInfoDao
     lateinit var locationList: List<LocationDataDB>
-    lateinit var recentLocationList: List<LocationDataDB>
-    lateinit var recentDB: RecentLocationDB
+    private lateinit var recentLocationList: List<LocationDataDB>
+    private lateinit var recentDB: RecentLocationDB
 
-    companion object{
-        @Volatile private var instance: LocationRepository? = null
+    companion object {
+        @Volatile
+        private var instance: LocationRepository? = null
 
-        @JvmStatic fun getInstance(): LocationRepository =
+        @JvmStatic
+        fun getInstance(): LocationRepository =
             instance ?: synchronized(this) {
                 instance ?: LocationRepository().also {
                     instance = it
@@ -43,7 +43,7 @@ public class LocationRepository {
         return locationInfoDao.getAll()
     }
 
-    suspend fun deleteLocationList(list : List<LocationDataDB>){
+    suspend fun deleteLocationList(list: List<LocationDataDB>) {
         list.forEach {
             recentDB.locationInfoDao().delete(it)
         }

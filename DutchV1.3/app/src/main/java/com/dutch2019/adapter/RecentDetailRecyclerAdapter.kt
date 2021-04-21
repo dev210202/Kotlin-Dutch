@@ -34,8 +34,6 @@ class RecentDetailRecyclerAdapter :
             locationDataDB.list = locationInfoList
             view.findNavController()
                 .navigate(RecentFragmentDirections.actionRecentFragmentToMainFragment(locationDataDB))
-
-
         }
     }
 

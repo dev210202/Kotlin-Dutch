@@ -33,7 +33,7 @@ fun mapSetting(mapLayout: LinearLayout, locationInfo: LocationInfo) {
         tMapPoint = markerItemPoint
         setPosition(0.5F, 1F)
     }
-    var tMapView = TMapView(mapLayout.context).apply {
+    val tMapView = TMapView(mapLayout.context).apply {
         setSKTMapApiKey("l7xx75e02f3eccaa4f56b3f269cb4a9f2b43")
         setCenterPoint(locationInfo.longitude, locationInfo.latitude)
         addMarkerItem("markerItem", markerItem)

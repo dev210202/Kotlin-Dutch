@@ -24,8 +24,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
             Observer { dynamicButtonList ->
-                if (binding.recyclerview?.adapter != null) {
-                    (binding.recyclerview?.adapter as ButtonRecyclerAdapter).setLocationData(
+                if (binding.recyclerview.adapter != null) {
+                    (binding.recyclerview.adapter as ButtonRecyclerAdapter).setLocationData(
                         dynamicButtonList
                     )
                 }
@@ -34,7 +34,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
 }
 
 fun getSelectedLocationFromDB(fragment: MainFragment){
-    var locationList = MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb
+    val locationList = MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb
     if (locationList != null) {
         if (locationList.list.isNotEmpty()) {
             fragment.viewModel.clearDynamicButtonData()

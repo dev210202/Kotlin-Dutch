@@ -27,7 +27,6 @@ fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 
 @BindingAdapter(value = ["historybuttonclick"])
 fun historyButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
-    var viewModel = (viewModel as MainViewModel)
     imageButton.setOnClickListener { view ->
         view.findNavController()
             .navigate(MainFragmentDirections.actionMainFragmentToRecentFragment())
@@ -45,7 +44,7 @@ fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
 @BindingAdapter(value = ["searchinternet"])
 fun searchInternet(imageButton: ImageButton, name: String) {
     imageButton.setOnClickListener {
-        var intent = Intent(
+        val intent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
         )

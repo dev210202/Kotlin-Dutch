@@ -25,7 +25,6 @@ class DeleteRecentDetailRecyclerAdapter :  RecyclerView.Adapter<DeleteRecentDeta
 
     override fun onBindViewHolder(holder: DeleteRecentDetailViewHolder, position: Int) {
         holder.bind(locationInfoList[position])
-
     }
 
     class DeleteRecentDetailViewHolder(private val binding: DeleteRecentDetailListItemBinding) :

@@ -1,25 +1,22 @@
 package com.dutch2019.ui.middle
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapView
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
-public class MiddleLocationViewModel : BaseViewModel() {
+class MiddleLocationViewModel : BaseViewModel() {
 
     private var locationlist = ArrayList<LocationInfo>()
 
     private var centerPoint = TMapPoint(0.0, 0.0)
-    private var centerAddress = ""
 
     private val _middleLocationAddress = MutableLiveData<String>()
     val middleLocationAddress: LiveData<String> get() = _middleLocationAddress
@@ -57,7 +54,7 @@ public class MiddleLocationViewModel : BaseViewModel() {
 
     fun setLocationAddress(point: TMapPoint) {
         val tMapData = TMapData()
-        var locationAddress = ""
+        var locationAddress: String
 
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -75,10 +72,10 @@ public class MiddleLocationViewModel : BaseViewModel() {
     fun setNearSubway(point: TMapPoint){
 
         val stationData = TMapData()
-        var subwayName = ""
+        var subwayName: String
 
         CoroutineScope(Dispatchers.IO).launch {
-            var tMapPOIItems = stationData.findAroundNamePOI(
+            val tMapPOIItems = stationData.findAroundNamePOI(
                 point,
                 "지하철",
                 20,
@@ -95,10 +92,10 @@ public class MiddleLocationViewModel : BaseViewModel() {
             }
         }
     }
-
+/*
     fun resetChangePoint(tMapView: TMapView) {
         tMapView.removeMarkerItem2("ratiomarkerItem")
     }
-
+*/
 
 }

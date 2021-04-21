@@ -1,7 +1,6 @@
 package com.dutch2019.model
 
 data class Info(
-
     var id: String,
     var viewId: String,
     var name: String,
@@ -52,6 +51,4 @@ data class Info(
     var updateDt :String,
     var totalCnt : String,
     var evChagers : String
-
-
 )

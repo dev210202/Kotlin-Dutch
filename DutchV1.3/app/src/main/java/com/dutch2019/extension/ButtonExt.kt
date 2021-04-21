@@ -1,30 +1,23 @@
 package com.dutch2019.extension
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.dutch2019.R
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationDataDB
-import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
 import com.dutch2019.model.LocationPoint
-import com.dutch2019.ui.locationcheck.LocationCheckFragmentDirections
 import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
-import com.dutch2019.ui.middle.MiddleLocationFragment
 import com.dutch2019.ui.middle.MiddleLocationFragmentDirections
 import com.dutch2019.ui.middle.MiddleLocationViewModel
 import com.dutch2019.ui.nearfacillity.NearFacilityViewModel
 import com.dutch2019.ui.recent.RecentViewModel
 import kotlinx.android.synthetic.main.fragment_near_facility.view.*
-
 
 @BindingAdapter(value = ["setlocationbuttonclick"])
 fun setLocationButtonClick(button: Button, viewModel: BaseViewModel) {
@@ -41,25 +34,25 @@ fun setLocationButtonClick(button: Button, viewModel: BaseViewModel) {
 
 @BindingAdapter(value = ["searchmiddlelocationbuttonclick"])
 fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
-    var viewModel = (viewModel as MainViewModel)
+    val vm = (viewModel as MainViewModel)
 
     val locationInfoList = LocationInfoList()
 
 
     button.setOnClickListener { view ->
-        var locationInfoData =
+        val locationInfoData =
             (button.rootView.recyclerview.adapter as ButtonRecyclerAdapter).getLocationData()
         for (i in 0 until locationInfoData.size) {
             if (locationInfoData[i].name != "위치를 설정해주세요") {
-                var locationInfo = locationInfoData[i]
+                val locationInfo = locationInfoData[i]
                 locationInfoList.add(locationInfo)
             }
         }
 
         if (locationInfoList.size > 1) {
-            var locationDataDB = LocationDataDB()
+            val locationDataDB = LocationDataDB()
             locationDataDB.list = locationInfoList
-            viewModel.insertDataInDB(locationDataDB)
+            vm.insertDataInDB(locationDataDB)
             view.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToMiddleLocationFragment(locationInfoList)
             )
@@ -71,10 +64,10 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
 
 @BindingAdapter(value = ["searchnearfacilitybuttonclick"])
 fun searchNearFacilityButtonClick(button: Button, viewModel: BaseViewModel) {
-    var viewModel = (viewModel as MiddleLocationViewModel)
-    var locationPoint = LocationPoint(0.0, 0.0)
-    locationPoint.latitude = viewModel.getCenterPoint().latitude
-    locationPoint.longitude = viewModel.getCenterPoint().longitude
+    val vm = (viewModel as MiddleLocationViewModel)
+    val locationPoint = LocationPoint(0.0, 0.0)
+    locationPoint.latitude = vm.getCenterPoint().latitude
+    locationPoint.longitude = vm.getCenterPoint().longitude
     button.setOnClickListener { view ->
         view.findNavController().navigate(
             MiddleLocationFragmentDirections.actionMiddleLocationFragmentToNearFacilityFragment(
@@ -86,22 +79,22 @@ fun searchNearFacilityButtonClick(button: Button, viewModel: BaseViewModel) {
 
 @BindingAdapter(value = ["facilitybuttonclick"])
 fun facilityButtonClick(button: Button, viewModel: BaseViewModel) {
-    var viewModel = (viewModel as NearFacilityViewModel)
+    val vm = (viewModel as NearFacilityViewModel)
     button.setOnClickListener { view ->
         setButtonSelect(view)
-        searchNearFacility(view, viewModel)
+        searchNearFacility(view, vm)
     }
 }
 
 @BindingAdapter(value = ["deletecomplete"])
 fun deleteComplete(button: Button, viewModel: BaseViewModel) {
-    var viewModel = (viewModel as RecentViewModel)
-    var adapter = (button.rootView.recyclerview.adapter as DeleteRecentRecyclerAdapter)
+    val vm = (viewModel as RecentViewModel)
+    val adapter = (button.rootView.recyclerview.adapter as DeleteRecentRecyclerAdapter)
     button.setOnClickListener { view ->
-        if (adapter.isAllSelectChecked()) {
-            viewModel.deleteAllLocationDB()
+        if (adapter.isClickedSelectAllCheckBox()) {
+            vm.deleteAllLocationDB()
         } else {
-            viewModel.deleteLocationDB(adapter.getDeleteList())
+            vm.deleteLocationDB(adapter.getDeleteList())
         }
         view.findNavController().popBackStack()
     }

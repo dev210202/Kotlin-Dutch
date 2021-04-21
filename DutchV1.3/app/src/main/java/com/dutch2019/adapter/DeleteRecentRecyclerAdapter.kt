@@ -19,7 +19,7 @@ class DeleteRecentRecyclerAdapter :
     }
 
     fun selectAllCheckBox() {
-        isAllSelectChecked = if (isAllSelectChecked) {
+        isAllSelectChecked = if (isClickedSelectAllCheckBox()) {
             for (i in 0 until checkMap.size) {
                 checkMap.replace(i, false)
             }
@@ -42,7 +42,7 @@ class DeleteRecentRecyclerAdapter :
         return deleteList
     }
 
-    fun isAllSelectChecked() : Boolean = isAllSelectChecked
+    fun isClickedSelectAllCheckBox() : Boolean = isAllSelectChecked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
@@ -54,7 +54,6 @@ class DeleteRecentRecyclerAdapter :
 
     override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
         holder.bind(locationDataDB[position], position)
-
     }
 
     inner class RecentViewHolder(private val binding: DeleteRecentListItemBinding) :
@@ -76,8 +75,6 @@ class DeleteRecentRecyclerAdapter :
             checkbox.setOnClickListener {
                 checkMap[position] = checkbox.isChecked
             }
-
-
         }
     }
 }

@@ -2,9 +2,8 @@ package com.dutch2019.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dutch2019.*
+import com.dutch2019.R
 import com.skt.Tmap.TMapTapi
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
