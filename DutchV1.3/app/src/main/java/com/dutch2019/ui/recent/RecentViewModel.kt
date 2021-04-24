@@ -41,6 +41,7 @@ class RecentViewModel : BaseViewModel() {
     fun deleteAllLocationDB() {
         viewModelScope.launch {
             locationRepository.deleteAll()
+            getRecentLocationDB()
         }
     }
 }

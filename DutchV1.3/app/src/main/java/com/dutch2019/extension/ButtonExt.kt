@@ -89,9 +89,12 @@ fun facilityButtonClick(button: Button, viewModel: BaseViewModel) {
 @BindingAdapter(value = ["deletecomplete"])
 fun deleteComplete(button: Button, viewModel: BaseViewModel) {
     val vm = (viewModel as RecentViewModel)
-    val adapter = (button.rootView.recyclerview.adapter as DeleteRecentRecyclerAdapter)
+    var adapter = button.rootView.recyclerview.adapter
+    if(button.rootView.recyclerview.adapter == null){
+        adapter = DeleteRecentRecyclerAdapter()
+    }
     button.setOnClickListener { view ->
-        if (adapter.isClickedSelectAllCheckBox()) {
+        if ((adapter as DeleteRecentRecyclerAdapter).isClickedSelectAllCheckBox()) {
             vm.deleteAllLocationDB()
         } else {
             vm.deleteLocationDB(adapter.getDeleteList())

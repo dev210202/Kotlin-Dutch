@@ -73,7 +73,7 @@ fun shareKakao(name: String, address: String, location: LocationInfo, context: C
                 .setWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
                 .setMobileWebUrl("https://map.kakao.com/link/map/$kakaoAddressResult," + location.latitude + "," + location.longitude)
                 .build()
-        ).setDescrption("중간지점을 확인해보세요!").build()
+        ).setDescrption("중간지점을 확인해보세요!\n주소 : $address").build()
     )
         .addButton(
             ButtonObject(
@@ -105,7 +105,7 @@ fun shareKakao(name: String, address: String, location: LocationInfo, context: C
 
 
 }
-
+/*
 fun shareLocation(name: String, address: String, location: LocationInfo, context: Context) {
     val kakaoAddressResult = address.replace(" ", "%20")
     Log.e("!!!", kakaoAddressResult)
@@ -152,3 +152,5 @@ fun shareLocation(name: String, address: String, location: LocationInfo, context
 
 
 }
+
+ */
