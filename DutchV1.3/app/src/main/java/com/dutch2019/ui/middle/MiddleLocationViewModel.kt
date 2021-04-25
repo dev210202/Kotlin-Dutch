@@ -82,7 +82,7 @@ class MiddleLocationViewModel : BaseViewModel() {
                 3
             )
             subwayName = if (tMapPOIItems.isEmpty()) {
-                "없음"
+                "근처 지하철이 없습니다."
             } else {
                 tMapPOIItems[0].poiName
             }

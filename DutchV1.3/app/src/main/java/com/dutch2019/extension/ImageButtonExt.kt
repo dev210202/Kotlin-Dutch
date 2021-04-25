@@ -46,7 +46,7 @@ fun searchInternet(imageButton: ImageButton, name: String) {
     imageButton.setOnClickListener {
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
+            Uri.parse("https://m.search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=$name")
         )
         imageButton.context.startActivity(intent)
     }
