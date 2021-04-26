@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.adapter.*
+import com.dutch2019.factory.RecyclerAdapterFactory
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
 
@@ -44,22 +45,6 @@ fun deleteRecent(recyclerView: RecyclerView, locationData: LiveData<List<Locatio
 
 fun setRecyclerView(recyclerView: RecyclerView, recyclerName: String) {
     if (recyclerView.adapter == null) {
-        when (recyclerName) {
-            "createButton" -> {
-                recyclerView.adapter = ButtonRecyclerAdapter()
-            }
-            "searchLocation" -> {
-                recyclerView.adapter = SearchRecyclerAdapter()
-            }
-            "nearFacility" -> {
-                recyclerView.adapter = NearRecyclerAdapter()
-            }
-            "recent" -> {
-                recyclerView.adapter = RecentRecyclerAdapter()
-            }
-            "deleteRecent" -> {
-                recyclerView.adapter = DeleteRecentRecyclerAdapter()
-            }
-        }
+        recyclerView.adapter = RecyclerAdapterFactory().createAdapter(recyclerName)
     }
 }
