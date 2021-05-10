@@ -1,15 +1,28 @@
 package com.dutch2019.ui.middle
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
+import com.dutch2019.model.RouteTimeData
+import com.dutch2019.model.StartEndPointData
+import com.dutch2019.network.Service
+import com.google.gson.GsonBuilder
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class MiddleLocationViewModel : BaseViewModel() {
@@ -23,6 +36,41 @@ class MiddleLocationViewModel : BaseViewModel() {
 
     private val _nearStationName = MutableLiveData<String>()
     val nearStationName: LiveData<String> get() = _nearStationName
+
+    fun getMiddleRouteTime(){
+        val gson = GsonBuilder().setLenient().create()
+
+        val loggingInterceptor = HttpLoggingInterceptor()
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://apis.openapi.sk.com/tmap/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        val service = retrofit.create(Service::class.java)
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        var startEndPointData = StartEndPointData(centerPoint.longitude, centerPoint.latitude, locationlist[0].longitude, locationlist[0].latitude)
+        service.getRouteTime(startEndPointData).enqueue(object : retrofit2.Callback<RouteTimeData>{
+            override fun onFailure(call: Call<RouteTimeData>, t: Throwable) {
+                Log.e("data error", t.toString())
+            }
+
+            override fun onResponse(call: Call<RouteTimeData>, response: Response<RouteTimeData>) {
+                val value = response.body()
+                if (value != null) {
+                    Log.i("MIDDLEROUTE", value.features.properties.toString())
+                }
+            }
+
+        })
+    }
 
     fun setLocationList(list: ArrayList<LocationInfo>) {
         locationlist = list

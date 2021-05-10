@@ -38,6 +38,8 @@ fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
         mainViewModel.setNearSubway(mainViewModel.getCenterPoint())
     }
     mapAutoZoom(tMapView, mainViewModel.getLocationList(), mainViewModel.getCenterPoint())
+
+    viewModel.getMiddleRouteTime()
 }
 
 fun markSearchLoaction(

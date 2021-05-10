@@ -23,5 +23,6 @@ class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, Middl
         viewModel.nearStationName.observe(this, Observer {
             binding.nearsubwaytextview.text = it
         })
+
     }
 }

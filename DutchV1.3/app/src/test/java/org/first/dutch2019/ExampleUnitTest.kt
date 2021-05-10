@@ -1,5 +1,6 @@
 package org.first.dutch2019
 
+import com.dutch2019.ui.middle.MiddleLocationViewModel
 import com.dutch2019.ui.search.SearchLocationViewModel
 import com.skt.Tmap.TMapPOIItem
 
@@ -8,17 +9,11 @@ import org.junit.Test
 
 
 class ExampleUnitTest {
-    var viewModel = SearchLocationViewModel()
+    var viewModel = MiddleLocationViewModel()
 
     @Test
     fun test() {
-        var address = "123"
-        var item = TMapPOIItem()
-        item.upperAddrName = "1"
-        item.middleAddrName = "2"
-        item.lowerAddrName = "3"
-        address = addressNameCheck(address, item)
-        assertEquals(address, "1234")
+        viewModel.getMiddleRouteTime()
     }
 
     fun addressNameCheck(address: String, item: TMapPOIItem): String {
