@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import androidx.room.Delete
 import com.dutch2019.adapter.ButtonRecyclerAdapter
 import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
@@ -94,11 +95,12 @@ fun deleteComplete(button: Button, viewModel: BaseViewModel) {
         adapter = DeleteRecentRecyclerAdapter()
     }
     button.setOnClickListener { view ->
-        if ((adapter as DeleteRecentRecyclerAdapter).isClickedSelectAllCheckBox()) {
-            vm.deleteAllLocationDB()
-        } else {
-            vm.deleteLocationDB(adapter.getDeleteList())
-        }
+//        if ((adapter as DeleteRecentRecyclerAdapter).isClickedSelectAllCheckBox()) {
+//            vm.deleteAllLocationDB()
+//        } else {
+//            vm.deleteLocationDB(adapter.getDeleteList())
+//        }
+        vm.deleteLocationDB((adapter as DeleteRecentRecyclerAdapter).getDeleteList())
         view.findNavController().popBackStack()
     }
 }

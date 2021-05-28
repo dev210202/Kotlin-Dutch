@@ -33,4 +33,6 @@ class DeleteRecentDetailRecyclerAdapter :  RecyclerView.Adapter<DeleteRecentDeta
             binding.locationInfo = locationInfo
         }
     }
+
+
 }

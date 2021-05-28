@@ -42,7 +42,7 @@ class DeleteRecentRecyclerAdapter :
         return deleteList
     }
 
-    fun isClickedSelectAllCheckBox() : Boolean = isAllSelectChecked
+    private fun isClickedSelectAllCheckBox() : Boolean = isAllSelectChecked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =

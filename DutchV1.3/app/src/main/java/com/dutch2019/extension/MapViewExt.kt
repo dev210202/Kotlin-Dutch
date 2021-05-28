@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.Observable
 import com.dutch2019.MarkerOverlay
 import com.dutch2019.R
 import com.dutch2019.base.BaseViewModel
@@ -23,23 +24,31 @@ import java.lang.Exception
 
 @BindingAdapter(value = ["mapview"])
 fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
-    val mainViewModel = viewModel as MiddleLocationViewModel
+    val viewModel = viewModel as MiddleLocationViewModel
     val tMapView = TMapView(layout.context)
     layout.addView(tMapView)
 
-    mainViewModel.setCenterPoint(mainViewModel.calculateCenterPoint(mainViewModel.getLocationList()))
+    viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
 
-    markSearchLoaction(tMapView, layout.context, mainViewModel.getLocationList())
-    markMiddleLocation(tMapView, layout.context, mainViewModel.getCenterPoint())
+    // centerpoint가 확정되고나서 작업들이 진행되니까 rx로 순차적으로 처리하는 방식을 적용하면 좋을것같다.
+
+    markSearchLoaction(tMapView, layout.context, viewModel.getLocationList())
+    markMiddleLocation(tMapView, layout.context, viewModel.getCenterPoint())
     setBallonOverlayClickEvent(tMapView, viewModel)
     CoroutineScope(Dispatchers.IO).launch {
-        setPolyLine(tMapView, mainViewModel.getLocationList(), mainViewModel.getCenterPoint())
-        mainViewModel.setLocationAddress(mainViewModel.getCenterPoint())
-        mainViewModel.setNearSubway(mainViewModel.getCenterPoint())
+        //  setPolyLine(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+        //  -> t map api 일일 할당량이 1000인데 소요시간과 경로탐색을 2번하게되서 더 필요없어보이는 자동차 경로 그리기를 제외.
+        viewModel.setLocationAddress(viewModel.getCenterPoint())
+        viewModel.setNearSubway(viewModel.getCenterPoint())
     }
-    mapAutoZoom(tMapView, mainViewModel.getLocationList(), mainViewModel.getCenterPoint())
+    mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
 
-    viewModel.getMiddleRouteTime()
+//    var locationList = viewModel.getLocationList()
+//
+//    locationList.forEach {
+//        locationInfo ->
+//        viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), locationInfo)
+//    }
 }
 
 fun markSearchLoaction(
@@ -148,21 +157,24 @@ fun mapAutoZoom(tMapView: TMapView, locationList: ArrayList<LocationInfo>, cente
 
 }
 
-fun setBallonOverlayClickEvent(tMapView: TMapView, viewModel: BaseViewModel) {
+fun setBallonOverlayClickEvent(tMapView: TMapView, baseViewModel: BaseViewModel) {
+    var viewModel = baseViewModel as MiddleLocationViewModel
     tMapView.setOnMarkerClickEvent { _, p1 ->
         val point = p1.tMapPoint
-        (viewModel as MiddleLocationViewModel).setCenterPoint(point)
-        viewModel.setLocationAddress(viewModel.getCenterPoint())
-        viewModel.setNearSubway(viewModel.getCenterPoint())
+     //   (viewModel as MiddleLocationViewModel).setCenterPoint(point)
+        viewModel.setLocationAddress(point)
+        viewModel.setNearSubway(point)
         tMapView.rootView.middlelocationresult_textview.text = p1.id
         if (p1.id == "중간지점") {
             tMapView.rootView.middlelocationresult_textview.setTextColor(
                 ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
             )
+            viewModel.resetRouteTime()
         } else {
             tMapView.rootView.middlelocationresult_textview.setTextColor(
                 ContextCompat.getColor(tMapView.rootView.context, R.color.black)
             )
+            viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
         }
     }
 

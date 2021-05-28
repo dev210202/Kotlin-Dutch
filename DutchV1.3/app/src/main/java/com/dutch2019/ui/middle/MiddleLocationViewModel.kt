@@ -37,7 +37,10 @@ class MiddleLocationViewModel : BaseViewModel() {
     private val _nearStationName = MutableLiveData<String>()
     val nearStationName: LiveData<String> get() = _nearStationName
 
-    fun getMiddleRouteTime(){
+    private val _totalRouteTime = MutableLiveData<String>()
+    val totalRouteTime: LiveData<String> get() = _totalRouteTime
+
+    fun getMiddleRouteTime(centerPoint: TMapPoint, latitude : Double, longitude : Double) {
         val gson = GsonBuilder().setLenient().create()
 
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -56,8 +59,13 @@ class MiddleLocationViewModel : BaseViewModel() {
             .build()
         val service = retrofit.create(Service::class.java)
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        var startEndPointData = StartEndPointData(centerPoint.longitude, centerPoint.latitude, locationlist[0].longitude, locationlist[0].latitude)
-        service.getRouteTime(startEndPointData).enqueue(object : retrofit2.Callback<RouteTimeData>{
+        var startEndPointData = StartEndPointData(
+            centerPoint.longitude,
+            centerPoint.latitude,
+            longitude,
+            latitude
+        )
+        service.getRouteTime(startEndPointData).enqueue(object : retrofit2.Callback<RouteTimeData> {
             override fun onFailure(call: Call<RouteTimeData>, t: Throwable) {
                 Log.e("data error", t.toString())
             }
@@ -65,7 +73,9 @@ class MiddleLocationViewModel : BaseViewModel() {
             override fun onResponse(call: Call<RouteTimeData>, response: Response<RouteTimeData>) {
                 val value = response.body()
                 if (value != null) {
-                    Log.i("MIDDLEROUTE", value.features.properties.toString())
+                    var totalSecond = value.features[0].properties.totalTime
+                    _totalRouteTime.postValue(convertTime(totalSecond))
+                    Log.i("MIDDLEROUTE convertTime", convertTime(totalSecond))
                 }
             }
 
@@ -108,7 +118,7 @@ class MiddleLocationViewModel : BaseViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             locationAddress = try {
                 tMapData.convertGpsToAddress(point.latitude, point.longitude)
-            } catch (e : Exception){
+            } catch (e: Exception) {
                 "상세주소가 없습니다."
             }
             async(Dispatchers.Main) {
@@ -117,7 +127,7 @@ class MiddleLocationViewModel : BaseViewModel() {
         }
     }
 
-    fun setNearSubway(point: TMapPoint){
+    fun setNearSubway(point: TMapPoint) {
 
         val stationData = TMapData()
         var subwayName: String
@@ -140,10 +150,32 @@ class MiddleLocationViewModel : BaseViewModel() {
             }
         }
     }
-/*
-    fun resetChangePoint(tMapView: TMapView) {
-        tMapView.removeMarkerItem2("ratiomarkerItem")
-    }
-*/
 
+    /*
+        fun resetChangePoint(tMapView: TMapView) {
+            tMapView.removeMarkerItem2("ratiomarkerItem")
+        }
+    */
+    private fun convertTime(time: String): String {
+        var result = ""
+        var totalTime = time.toInt()
+        if (totalTime >= 3600) {
+            var hour = totalTime / 3600
+            totalTime %= 3600
+            result = hour.toString() + "시간"
+        }
+        if (totalTime >= 60) {
+            var minute = totalTime / 60
+            totalTime %= 60
+            result += minute.toString() + "분"
+        }
+        if(totalTime > 0){
+            result += totalTime.toString() + "초"
+        }
+        return result
+    }
+
+    fun resetRouteTime(){
+        _totalRouteTime.postValue(" ")
+    }
 }

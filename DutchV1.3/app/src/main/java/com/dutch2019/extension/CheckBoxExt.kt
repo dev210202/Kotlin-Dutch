@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.fragment_delete_recent.view.*
 @BindingAdapter(value = ["selectallcheckbox"])
 fun selectAllCheckBox(checkBox: CheckBox, viewModel: BaseViewModel) {
     checkBox.rootView.recyclerview.adapter = DeleteRecentRecyclerAdapter()
-    checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+    checkBox.setOnCheckedChangeListener { _, _ ->
         (checkBox.rootView.recyclerview.adapter as DeleteRecentRecyclerAdapter).selectAllCheckBox()
         (checkBox.rootView.recyclerview.adapter as DeleteRecentRecyclerAdapter).notifyDataSetChanged()
     }

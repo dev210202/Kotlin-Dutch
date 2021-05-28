@@ -27,7 +27,9 @@ class RecentViewModel : BaseViewModel() {
 
     fun getRecentLocationDB() {
         viewModelScope.launch {
-            _locationList.value = locationRepository.getLocationListData()
+            var list = locationRepository.getLocationListData()
+            var reverseList = reverseList(list)
+            _locationList.value = reverseList
         }
     }
 
@@ -43,5 +45,16 @@ class RecentViewModel : BaseViewModel() {
             locationRepository.deleteAll()
             getRecentLocationDB()
         }
+    }
+
+    // 최근 검색한 위치가 최상단으로 올라오게하려면 리스트를 반대로 뒤집어야함
+    private fun reverseList(list: List<LocationDataDB>): List<LocationDataDB> {
+        var newList = arrayListOf<LocationDataDB>()
+
+        for (i in list.size -1 downTo 0) {
+            var listValue = list[i]
+            newList.add(list[i])
+        }
+        return newList
     }
 }

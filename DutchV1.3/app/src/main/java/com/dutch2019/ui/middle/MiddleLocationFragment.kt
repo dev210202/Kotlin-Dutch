@@ -23,6 +23,8 @@ class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, Middl
         viewModel.nearStationName.observe(this, Observer {
             binding.nearsubwaytextview.text = it
         })
-
+        viewModel.totalRouteTime.observe(this, Observer {
+            binding.routetitmeTextview.text = it
+        })
     }
 }

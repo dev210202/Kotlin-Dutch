@@ -6,6 +6,7 @@ import com.dutch2019.R
 import com.dutch2019.adapter.RecentRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentRecentBinding
+import com.dutch2019.model.LocationDataDB
 
 class RecentFragment : BaseFragment<FragmentRecentBinding, RecentViewModel>(
     R.layout.fragment_recent,
@@ -24,5 +25,4 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, RecentViewModel>(
             }
         })
     }
-
 }
