@@ -34,7 +34,9 @@ class NearFacilityFragment : BaseFragment<FragmentNearFacilityBinding, NearFacil
                 (binding.recyclerview.adapter as NearRecyclerAdapter).setLocationDataList(list)
             }
         })
-
+        viewModel.detailInfo.observe(this, Observer { info ->
+            Log.i("DETAIL INFO data", info)
+        })
 
     }
 }

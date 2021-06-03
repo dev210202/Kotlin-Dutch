@@ -1,12 +1,21 @@
 package com.dutch2019.ui.nearfacillity
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
+import com.dutch2019.network.Service
+import com.dutch2019.repository.APIRepository
+import com.google.gson.GsonBuilder
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class NearFacilityViewModel : BaseViewModel() {
 
@@ -15,9 +24,11 @@ class NearFacilityViewModel : BaseViewModel() {
 
     private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
-//    var errorMessage = MutableLiveData<String>()
-//    var detailInfo = MutableLiveData<String>()
 
+    //    var errorMessage = MutableLiveData<String>()
+    private val _detailInfo = MutableLiveData<String>()
+    val detailInfo : LiveData<String> get() = _detailInfo
+    private val apiRepository = APIRepository.getInstance()
     fun initList() {
         _locationList.value = ArrayList()
     }
@@ -26,43 +37,15 @@ class NearFacilityViewModel : BaseViewModel() {
         locationPoint.latitude = lat
         locationPoint.longitude = lon
     }
-/*
+
     fun getDetailInfo(poiId: Int) {
-
-        val gson = GsonBuilder().setLenient().create()
-
-        val loggingInterceptor = HttpLoggingInterceptor()
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .build()
-
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://apis.openapi.sk.com/tmap/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-        val service = retrofit.create(Service::class.java)
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        service.getDetailInfo(poiId.toString()).enqueue(object : Callback<DetailData> {
-            override fun onFailure(call: Call<DetailData>, t: Throwable) {
-                Log.e("data error", t.toString())
-            }
-
-            override fun onResponse(call: Call<DetailData>, response: Response<DetailData>) {
-
-                val value = response.body()
-                if (value != null) {
-                    detailInfo.value = value.poiDetailInfo.additionalInfo
-                }
-            }
-
-        })
+        compositeDisposable.add(apiRepository.getDetailInfo(poiId).subscribe({
+            data -> _detailInfo.postValue("부가정보: "+ data.poiDetailInfo.additionalInfo + " 소개내용 : " + data.poiDetailInfo.desc)
+        }, {
+            error -> Log.e("getDetailInfo error", error.message.toString())
+        }))
     }
-*/
+
     fun setNearFacilityCategory(input: String): String {
 
         when (input) {

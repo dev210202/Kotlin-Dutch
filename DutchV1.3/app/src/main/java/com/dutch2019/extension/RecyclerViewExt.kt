@@ -7,11 +7,12 @@ import com.dutch2019.adapter.*
 import com.dutch2019.factory.RecyclerAdapterFactory
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
+import com.dutch2019.model.LocationInfoList
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
     setRecyclerView(recyclerView, "createButton")
-    (recyclerView.adapter as ButtonRecyclerAdapter).setLocationData(buttonData.value!!)
+    (recyclerView.adapter as DynamicButtonRecyclerAdapter).setLocationData(buttonData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }
 
@@ -19,6 +20,13 @@ fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<Loca
 fun searchLocation(recyclerView: RecyclerView, locationData: LiveData<ArrayList<LocationInfo>>) {
     setRecyclerView(recyclerView, "searchLocation")
     (recyclerView.adapter as SearchRecyclerAdapter).setLocationDataList(locationData.value!!)
+    recyclerView.adapter?.notifyDataSetChanged()
+}
+
+@BindingAdapter(value = ["ratio"])
+fun ratio(recyclerView: RecyclerView, locationInfoList : LocationInfoList){
+    setRecyclerView(recyclerView, "ratio")
+    (recyclerView.adapter as RatioRecyclerAdapter).setLocationListData(locationInfoList)
     recyclerView.adapter?.notifyDataSetChanged()
 }
 

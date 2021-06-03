@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.databinding.ButtonRecyclerItemBinding
+import com.dutch2019.databinding.ItemDynamicbuttonBinding
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.main.MainFragmentDirections
 
-class ButtonRecyclerAdapter :
-    RecyclerView.Adapter<ButtonRecyclerAdapter.ButtonViewHolder>() {
+class DynamicButtonRecyclerAdapter :
+    RecyclerView.Adapter<DynamicButtonRecyclerAdapter.ButtonViewHolder>() {
 
     private var locationInfoData = ArrayList<LocationInfo>()
 
@@ -24,7 +24,7 @@ class ButtonRecyclerAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonViewHolder {
         val binding =
-            ButtonRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemDynamicbuttonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ButtonViewHolder(binding)
     }
 
@@ -44,7 +44,7 @@ class ButtonRecyclerAdapter :
         holder.bind(locationInfoData[position])
     }
 
-    class ButtonViewHolder(private val binding: ButtonRecyclerItemBinding) :
+    class ButtonViewHolder(private val binding: ItemDynamicbuttonBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var minusButton = binding.minusButton
         var locationButton = binding.locationButton

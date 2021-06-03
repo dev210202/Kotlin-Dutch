@@ -13,6 +13,8 @@ import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
 import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
+import com.dutch2019.ui.middle.MiddleLocationFragmentDirections
+import com.dutch2019.ui.middle.MiddleLocationViewModel
 import com.dutch2019.ui.recent.RecentFragmentDirections
 import com.dutch2019.ui.search.SearchLocationViewModel
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
@@ -38,6 +40,29 @@ fun searchButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
     imageButton.setOnClickListener {
         val inputText = imageButton.rootView.inputedittext.text.toString()
         (viewModel as SearchLocationViewModel).searchLocationData(inputText)
+    }
+}
+
+@BindingAdapter(value = ["ratiobuttonclick"])
+fun ratioButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
+    imageButton.setOnClickListener { view ->
+        var locationInfoList = LocationInfoList()
+        (viewModel as MiddleLocationViewModel).getLocationList().forEach { locationInfo ->
+            locationInfoList.add(locationInfo)
+        }
+        view.findNavController().navigate(
+            MiddleLocationFragmentDirections.actionMiddleLocationFragmentToRatioFragment(
+                locationInfoList
+            )
+        )
+    }
+}
+
+
+@BindingAdapter(value = ["detaiiInfo"])
+fun detailInfo(imageButton: ImageButton, locationInfo: LocationInfo) {
+    imageButton.setOnClickListener {
+
     }
 }
 

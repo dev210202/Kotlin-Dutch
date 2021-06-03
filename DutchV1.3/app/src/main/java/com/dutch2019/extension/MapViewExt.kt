@@ -164,14 +164,14 @@ fun setBallonOverlayClickEvent(tMapView: TMapView, baseViewModel: BaseViewModel)
      //   (viewModel as MiddleLocationViewModel).setCenterPoint(point)
         viewModel.setLocationAddress(point)
         viewModel.setNearSubway(point)
-        tMapView.rootView.middlelocationresult_textview.text = p1.id
+        tMapView.rootView.textview_middle_result.text = p1.id
         if (p1.id == "중간지점") {
-            tMapView.rootView.middlelocationresult_textview.setTextColor(
+            tMapView.rootView.textview_middle_result.setTextColor(
                 ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
             )
             viewModel.resetRouteTime()
         } else {
-            tMapView.rootView.middlelocationresult_textview.setTextColor(
+            tMapView.rootView.textview_middle_result.setTextColor(
                 ContextCompat.getColor(tMapView.rootView.context, R.color.black)
             )
             viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)

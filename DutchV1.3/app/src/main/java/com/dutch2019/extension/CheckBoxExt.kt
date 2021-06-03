@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.adapter.RecentDetailRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
+import com.dutch2019.model.LocationInfo
 import kotlinx.android.synthetic.main.fragment_delete_recent.view.*
 
 @BindingAdapter(value = ["selectallcheckbox"])

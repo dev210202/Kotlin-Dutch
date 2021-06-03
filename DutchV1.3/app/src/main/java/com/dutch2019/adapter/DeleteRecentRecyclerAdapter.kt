@@ -3,7 +3,7 @@ package com.dutch2019.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.databinding.DeleteRecentListItemBinding
+import com.dutch2019.databinding.ItemDeleteRecentBinding
 import com.dutch2019.model.LocationDataDB
 
 class DeleteRecentRecyclerAdapter :
@@ -46,7 +46,7 @@ class DeleteRecentRecyclerAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
-            DeleteRecentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemDeleteRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecentViewHolder(binding)
     }
 
@@ -56,7 +56,7 @@ class DeleteRecentRecyclerAdapter :
         holder.bind(locationDataDB[position], position)
     }
 
-    inner class RecentViewHolder(private val binding: DeleteRecentListItemBinding) :
+    inner class RecentViewHolder(private val binding: ItemDeleteRecentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private var checkbox = binding.checkBox
         fun bind(locationData: LocationDataDB, position: Int) {

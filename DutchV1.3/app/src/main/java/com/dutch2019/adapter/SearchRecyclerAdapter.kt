@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.getSystemService
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.databinding.LocationListItemBinding
+import com.dutch2019.databinding.ItemSearchBinding
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.search.SearchLocationFragmentDirections
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
@@ -25,7 +25,7 @@ class SearchRecyclerAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationDataViewHolder {
         val binding =
-            LocationListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LocationDataViewHolder(binding)
     }
 
@@ -45,7 +45,7 @@ class SearchRecyclerAdapter :
         }
     }
 
-    class LocationDataViewHolder(private val binding: LocationListItemBinding) :
+    class LocationDataViewHolder(private val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         var layout = binding.linearLayout

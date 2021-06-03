@@ -5,13 +5,16 @@ import com.dutch2019.adapter.*
 
 public class RecyclerAdapterFactory : AdapterFactory() {
     override fun createAdapter(name: String): RecyclerView.Adapter<*> {
-        lateinit var adapter : RecyclerView.Adapter<*>
+        lateinit var adapter: RecyclerView.Adapter<*>
         when (name) {
             "createButton" -> {
-                adapter = ButtonRecyclerAdapter()
+                adapter = DynamicButtonRecyclerAdapter()
             }
             "searchLocation" -> {
                 adapter = SearchRecyclerAdapter()
+            }
+            "ratio" -> {
+                adapter = RatioRecyclerAdapter()
             }
             "nearFacility" -> {
                 adapter = NearRecyclerAdapter()

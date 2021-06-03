@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.dutch2019.ui.ratio.RatioViewModel" />
     </data>
 
     <LinearLayout
@@ -15,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2.5"
+            android:layout_weight="2"
             android:background="@color/black">
 
             <TextView
@@ -47,7 +49,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-
+            ratio="@{vm.locationInfoList}"
             android:id="@+id/ratio_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -56,16 +58,15 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
+            android:layout_height="0dp"
+            android:layout_weight="1.2">
 
             <TextView
                 android:id="@+id/description_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/notosans_medium"
                 android:includeFontPadding="false"
                 android:text="선택된 거리간 비율"
@@ -86,6 +87,7 @@
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
             <SeekBar
+                seekbarclick="@{vm}"
                 android:id="@+id/seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,9 +129,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:layout_weight="0.8"
             android:id="@+id/buttonlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="#2f2f2f"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -154,9 +157,9 @@
 
             <Button
                 android:id="@+id/ok_button"
-                style="@style/ButtonMiddleLocationSearch"
+
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:layout_weight="3"
                 android:background="@drawable/button_middle_location_search"

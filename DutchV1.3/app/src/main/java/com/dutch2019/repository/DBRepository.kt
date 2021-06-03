@@ -5,7 +5,7 @@ import com.dutch2019.db.LocationInfoDao
 import com.dutch2019.db.RecentLocationDB
 import com.dutch2019.model.LocationDataDB
 
-class LocationRepository {
+class DBRepository : Repository() {
 
     private lateinit var locationInfoDao: LocationInfoDao
     lateinit var locationList: List<LocationDataDB>
@@ -14,12 +14,12 @@ class LocationRepository {
 
     companion object {
         @Volatile
-        private var instance: LocationRepository? = null
+        private var instance: DBRepository? = null
 
         @JvmStatic
-        fun getInstance(): LocationRepository =
+        fun getInstance(): DBRepository =
             instance ?: synchronized(this) {
-                instance ?: LocationRepository().also {
+                instance ?: DBRepository().also {
                     instance = it
                 }
             }

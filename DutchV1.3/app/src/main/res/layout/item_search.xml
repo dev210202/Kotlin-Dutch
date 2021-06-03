@@ -25,68 +25,42 @@
 
 
             <ImageView
-
+                style="@style/search_marker"
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="9dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/locate_ic_marker" />
+                app:srcCompat="@drawable/all_redmarker_24" />
 
 
             <TextView
+                style="@style/search_locationnametextview"
                 android:id="@+id/locationnametextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/notosans_medium"
-                android:includeFontPadding="false"
-                android:singleLine="true"
                 android:text="@{locationinfo.name}"
-                android:textColor="@color/black"
-                android:textSize="14dp"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/search_locationaddresstextview"
                 android:id="@+id/locationaddresstextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
-                android:ellipsize="end"
-                android:singleLine="true"
+
                 android:text="@{locationinfo.address}"
-                android:textSize="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/rightArrowButton"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/locationnametextview" />
 
             <ImageView
+                style="@style/search_rightarrowbutton"
                 android:id="@+id/rightArrowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="21dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginBottom="21dp"
-                android:background="@color/transparent"
-                android:src="@drawable/location_ic_arrow_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +68,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_grey"
+                android:background="@color/layout_backgroundcontour_grey_light"
                 app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

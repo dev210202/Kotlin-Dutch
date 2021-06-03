@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationDataDB
-import com.dutch2019.repository.LocationRepository
+import com.dutch2019.repository.DBRepository
 import kotlinx.coroutines.launch
 
 class RecentViewModel : BaseViewModel() {
 
-    private var locationRepository = LocationRepository.getInstance()
+    private var locationRepository = DBRepository.getInstance()
 
     private val _locationList = MutableLiveData<List<LocationDataDB>>()
     val locationList: LiveData<List<LocationDataDB>> get() = _locationList

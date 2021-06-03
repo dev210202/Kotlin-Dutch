@@ -5,8 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
-import androidx.room.Delete
-import com.dutch2019.adapter.ButtonRecyclerAdapter
+import com.dutch2019.adapter.DynamicButtonRecyclerAdapter
 import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationDataDB
@@ -42,7 +41,7 @@ fun searchMiddleLocationButtonClick(button: Button, viewModel: BaseViewModel) {
 
     button.setOnClickListener { view ->
         val locationInfoData =
-            (button.rootView.recyclerview.adapter as ButtonRecyclerAdapter).getLocationData()
+            (button.rootView.recyclerview.adapter as DynamicButtonRecyclerAdapter).getLocationData()
         for (i in 0 until locationInfoData.size) {
             if (locationInfoData[i].name != "위치를 설정해주세요") {
                 val locationInfo = locationInfoData[i]
@@ -95,11 +94,6 @@ fun deleteComplete(button: Button, viewModel: BaseViewModel) {
         adapter = DeleteRecentRecyclerAdapter()
     }
     button.setOnClickListener { view ->
-//        if ((adapter as DeleteRecentRecyclerAdapter).isClickedSelectAllCheckBox()) {
-//            vm.deleteAllLocationDB()
-//        } else {
-//            vm.deleteLocationDB(adapter.getDeleteList())
-//        }
         vm.deleteLocationDB((adapter as DeleteRecentRecyclerAdapter).getDeleteList())
         view.findNavController().popBackStack()
     }

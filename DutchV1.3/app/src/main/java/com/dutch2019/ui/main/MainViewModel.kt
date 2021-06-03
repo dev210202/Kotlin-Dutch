@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.repository.LocationRepository
+import com.dutch2019.repository.DBRepository
 import kotlinx.coroutines.launch
 
 open class MainViewModel : BaseViewModel() {
     private val list = ArrayList<LocationInfo>()
     private var id = 0
 
-    private var locationRepository = LocationRepository()
+    private var locationRepository = DBRepository()
 
     private val _dynamicButtonData = MutableLiveData<ArrayList<LocationInfo>>(list)
     val dynamicButtonData: LiveData<ArrayList<LocationInfo>> get() = _dynamicButtonData

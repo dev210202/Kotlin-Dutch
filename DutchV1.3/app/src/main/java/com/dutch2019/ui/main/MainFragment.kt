@@ -1,14 +1,11 @@
 package com.dutch2019.ui.main
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.dutch2019.R
-import com.dutch2019.adapter.ButtonRecyclerAdapter
+import com.dutch2019.adapter.DynamicButtonRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
-import com.google.android.gms.ads.MobileAds
 
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
@@ -18,14 +15,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        getSelectedLocationFromDB(this)
+        checkSelectedLocationFromDB(this)
 
         viewModel.initDB(requireActivity().application)
         viewModel.dynamicButtonData.observe(
             viewLifecycleOwner,
             Observer { dynamicButtonList ->
                 if (binding.recyclerview.adapter != null) {
-                    (binding.recyclerview.adapter as ButtonRecyclerAdapter).setLocationData(
+                    (binding.recyclerview.adapter as DynamicButtonRecyclerAdapter).setLocationData(
                         dynamicButtonList
                     )
                 }
@@ -33,7 +30,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(
     }
 }
 
-fun getSelectedLocationFromDB(fragment: MainFragment){
+fun checkSelectedLocationFromDB(fragment: MainFragment){
     val locationList = MainFragmentArgs.fromBundle(fragment.requireArguments()).locationdatadb
     if (locationList != null) {
         if (locationList.list.isNotEmpty()) {

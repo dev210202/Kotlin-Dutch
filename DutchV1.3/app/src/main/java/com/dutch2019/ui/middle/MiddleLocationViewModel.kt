@@ -8,6 +8,7 @@ import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.RouteTimeData
 import com.dutch2019.model.StartEndPointData
 import com.dutch2019.network.Service
+import com.dutch2019.repository.APIRepository
 import com.google.gson.GsonBuilder
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
@@ -40,46 +41,21 @@ class MiddleLocationViewModel : BaseViewModel() {
     private val _totalRouteTime = MutableLiveData<String>()
     val totalRouteTime: LiveData<String> get() = _totalRouteTime
 
-    fun getMiddleRouteTime(centerPoint: TMapPoint, latitude : Double, longitude : Double) {
-        val gson = GsonBuilder().setLenient().create()
+    private val apiRepository = APIRepository.getInstance()
 
-        val loggingInterceptor = HttpLoggingInterceptor()
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .build()
-
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://apis.openapi.sk.com/tmap/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-        val service = retrofit.create(Service::class.java)
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun getMiddleRouteTime(centerPoint: TMapPoint, latitude: Double, longitude: Double) {
         var startEndPointData = StartEndPointData(
             centerPoint.longitude,
             centerPoint.latitude,
             longitude,
             latitude
         )
-        service.getRouteTime(startEndPointData).enqueue(object : retrofit2.Callback<RouteTimeData> {
-            override fun onFailure(call: Call<RouteTimeData>, t: Throwable) {
-                Log.e("data error", t.toString())
-            }
-
-            override fun onResponse(call: Call<RouteTimeData>, response: Response<RouteTimeData>) {
-                val value = response.body()
-                if (value != null) {
-                    var totalSecond = value.features[0].properties.totalTime
-                    _totalRouteTime.postValue(convertTime(totalSecond))
-                    Log.i("MIDDLEROUTE convertTime", convertTime(totalSecond))
-                }
-            }
-
-        })
+        compositeDisposable.add(apiRepository.getRouteTime(startEndPointData).subscribe({ data ->
+            var totalTime = data.features[0].properties.totalTime
+            _totalRouteTime.postValue(convertTime(totalTime))
+        }, { error ->
+            Log.e("data error", error.message.toString())
+        }))
     }
 
     fun setLocationList(list: ArrayList<LocationInfo>) {
@@ -113,7 +89,6 @@ class MiddleLocationViewModel : BaseViewModel() {
     fun setLocationAddress(point: TMapPoint) {
         val tMapData = TMapData()
         var locationAddress: String
-
 
         CoroutineScope(Dispatchers.IO).launch {
             locationAddress = try {
@@ -169,13 +144,13 @@ class MiddleLocationViewModel : BaseViewModel() {
             totalTime %= 60
             result += minute.toString() + "분"
         }
-        if(totalTime > 0){
+        if (totalTime > 0) {
             result += totalTime.toString() + "초"
         }
         return result
     }
 
-    fun resetRouteTime(){
+    fun resetRouteTime() {
         _totalRouteTime.postValue(" ")
     }
 }

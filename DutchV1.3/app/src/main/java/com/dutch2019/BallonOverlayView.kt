@@ -1,7 +1,6 @@
 package com.dutch2019
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,7 @@ class BalloonOverlayView(
     ) {
         val inflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view: View = inflater.inflate(R.layout.bubble_popup, parent, true)
+        val view: View = inflater.inflate(R.layout.view_ballonoverlay, parent, true)
         title = view.findViewById(R.id.bubble_title) as TextView
         setTitle(labelName)
 

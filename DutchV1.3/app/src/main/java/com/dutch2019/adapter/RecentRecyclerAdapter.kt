@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.dutch2019.databinding.RecentListItemBinding
+import com.dutch2019.databinding.ItemRecentBinding
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.ui.recent.RecentFragmentDirections
 
@@ -19,7 +19,7 @@ class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
-            RecentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecentViewHolder(binding)
     }
 
@@ -37,7 +37,7 @@ class RecentRecyclerAdapter : RecyclerView.Adapter<RecentRecyclerAdapter.RecentV
         }
     }
 
-    class RecentViewHolder(private val binding: RecentListItemBinding) :
+    class RecentViewHolder(private val binding: ItemRecentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var rightArrowButton = binding.rightArrowButton
         var locationImage = binding.locationImage

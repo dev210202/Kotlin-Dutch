@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.location_list_item.view.*
 import com.dutch2019.R
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.databinding.LocationListItemBinding
-import com.dutch2019.databinding.NearFacilityListItemBinding
+import com.dutch2019.databinding.ItemNearBinding
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.ui.search.SearchLocationFragmentDirections
 import com.kakao.kakaolink.v2.KakaoLinkResponse
@@ -34,7 +32,7 @@ class NearRecyclerAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearViewHolder {
         val binding =
-            NearFacilityListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NearViewHolder(binding)
     }
 
@@ -52,7 +50,7 @@ class NearRecyclerAdapter() :
         }
     }
 
-    class NearViewHolder(private val binding: NearFacilityListItemBinding) :
+    class NearViewHolder(private val binding: ItemNearBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         var arrowButton = binding.rightArrowButton

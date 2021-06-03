@@ -40,7 +40,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/locate_ic_marker" />
+                app:srcCompat="@drawable/all_redmarker_24" />
 
 
             <TextView
@@ -108,7 +108,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_grey"
+                android:background="@color/grey_light"
                 app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

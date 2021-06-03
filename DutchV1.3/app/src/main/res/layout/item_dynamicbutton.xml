@@ -13,23 +13,21 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_margin="8dp"
+            style="@style/dynamicbutton_background"
             android:id="@+id/location_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_main_location_search"
-            android:padding="8dp"
             android:text="@{locationInfo.name}"
             app:layout_constraintEnd_toStartOf="@+id/minus_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></Button>
 
         <Button
+            style="@style/dynamicminusbutton_backround"
             android:layout_margin="8dp"
             android:id="@+id/minus_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_baseline_remove_24"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"></Button>

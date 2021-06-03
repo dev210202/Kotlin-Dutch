@@ -6,7 +6,7 @@
             <item android:bottom="3dp">
                 <shape
                     android:shape="rectangle" android:padding = "10dp">
-                    <solid android:color="@color/light_grey"></solid>
+                    <solid android:color="@color/grey_light"></solid>
                    </shape>
             </item>
         </layer-list>
