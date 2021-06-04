@@ -21,12 +21,15 @@ class RatioRecyclerAdapter() :
 
     var locationList = ArrayList<LocationInfo>()
 
-    var pointArrayList = ArrayList<TMapPoint>()
     var pointA = TMapPoint(0.0, 0.0)
     var pointB = TMapPoint(0.0, 0.0)
     var isAChecked = false
     var isBChecked = false
 
+
+    init {
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatioViewHolder {
         var binding = ItemRatioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -41,7 +44,6 @@ class RatioRecyclerAdapter() :
         var chooseTextView = holder.binding.chooseTextview
         holder.bind(locationList[position], position)
         checkBox.setOnClickListener {
-
 
 
             if (checkBox.isChecked) {
@@ -132,15 +134,13 @@ class RatioRecyclerAdapter() :
 
     fun getRatioPointArrayList(): ArrayList<TMapPoint> {
 
-        return if (isAChecked && isBChecked) {
+        var pointArrayList = ArrayList<TMapPoint>()
+        if (isAChecked && isBChecked) {
             pointArrayList.add(pointA)
             pointArrayList.add(pointB)
             Log.e("PointArray", pointArrayList.toString())
-            pointArrayList
         }
-        else {
-            ArrayList<TMapPoint>()
-        }
+        return pointArrayList
     }
 
     fun checkPoints() {

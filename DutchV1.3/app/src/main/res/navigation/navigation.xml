@@ -107,12 +107,10 @@
         android:id="@+id/ratioFragment"
         android:name="com.dutch2019.ui.ratio.RatioFragment"
         android:label="RatioFragment" >
-        <argument
-            android:name="locationinfolist"
-            app:argType="com.dutch2019.model.LocationInfoList" />
+
         <action
             android:id="@+id/action_ratioFragment_to_middleLocationFragment"
-            app:destination="@id/middleLocationFragment" />
+            app:popUpTo="@id/middleLocationFragment" />
     </fragment>
 
 </navigation>

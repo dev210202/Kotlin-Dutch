@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dutch2019.ui.ratio.RatioViewModel" />
+            type="com.dutch2019.ui.middle.MiddleLocationViewModel" />
     </data>
 
     <LinearLayout
@@ -49,7 +49,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            ratio="@{vm.locationInfoList}"
+            ratio="@{vm.locationList}"
             android:id="@+id/ratio_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -156,8 +156,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/ok_button"
-
+                settingcompletebuttonclick="@{vm}"
+                android:id="@+id/button_setting_complete"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"

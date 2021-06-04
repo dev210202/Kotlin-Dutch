@@ -22,10 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+lateinit var tMapView : TMapView
+
 @BindingAdapter(value = ["mapview"])
 fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
+
     val viewModel = viewModel as MiddleLocationViewModel
-    val tMapView = TMapView(layout.context)
+    tMapView = TMapView(layout.context)
     layout.addView(tMapView)
 
     viewModel.setCenterPoint(viewModel.calculateCenterPoint(viewModel.getLocationList()))
@@ -42,13 +45,11 @@ fun mapview(layout: LinearLayout, viewModel: BaseViewModel) {
         viewModel.setNearSubway(viewModel.getCenterPoint())
     }
     mapAutoZoom(tMapView, viewModel.getLocationList(), viewModel.getCenterPoint())
+}
 
-//    var locationList = viewModel.getLocationList()
-//
-//    locationList.forEach {
-//        locationInfo ->
-//        viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), locationInfo)
-//    }
+@BindingAdapter(value = ["ratiocheck"])
+fun ratioCheck(layout: LinearLayout, ratioPoint: TMapPoint) {
+    setMarkRatioLocation(tMapView, layout.context, ratioPoint)
 }
 
 fun markSearchLoaction(
@@ -102,25 +103,6 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
     tMapView.addMarkerItem2(strId, marker)
 }
 
-fun setPolyLine(
-    tMapView: TMapView,
-    locationList: ArrayList<LocationInfo>,
-    centerPoint: TMapPoint
-) {
-    try {
-        for (i in 0 until locationList.size) {
-            val startPoint =
-                TMapPoint(locationList[i].latitude, locationList[i].longitude)
-            val tMapPolyLine = TMapData().findPathData(startPoint, centerPoint)
-            tMapPolyLine.lineColor = Color.BLACK
-            tMapPolyLine.lineWidth = 16F
-            tMapView.addTMapPolyLine("Line$i", tMapPolyLine)
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-
-}
 
 fun mapAutoZoom(tMapView: TMapView, locationList: ArrayList<LocationInfo>, centerPoint: TMapPoint) {
     var leftTopLat = centerPoint.latitude
@@ -161,7 +143,7 @@ fun setBallonOverlayClickEvent(tMapView: TMapView, baseViewModel: BaseViewModel)
     var viewModel = baseViewModel as MiddleLocationViewModel
     tMapView.setOnMarkerClickEvent { _, p1 ->
         val point = p1.tMapPoint
-     //   (viewModel as MiddleLocationViewModel).setCenterPoint(point)
+        //   (viewModel as MiddleLocationViewModel).setCenterPoint(point)
         viewModel.setLocationAddress(point)
         viewModel.setNearSubway(point)
         tMapView.rootView.textview_middle_result.text = p1.id
@@ -170,7 +152,14 @@ fun setBallonOverlayClickEvent(tMapView: TMapView, baseViewModel: BaseViewModel)
                 ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
             )
             viewModel.resetRouteTime()
-        } else {
+        }
+        else if(p1.id =="비율변경지점"){
+            tMapView.rootView.textview_middle_result.setTextColor(
+                ContextCompat.getColor(tMapView.rootView.context, R.color.blue)
+            )
+            viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+        }
+        else {
             tMapView.rootView.textview_middle_result.setTextColor(
                 ContextCompat.getColor(tMapView.rootView.context, R.color.black)
             )
@@ -180,8 +169,8 @@ fun setBallonOverlayClickEvent(tMapView: TMapView, baseViewModel: BaseViewModel)
 
 }
 
-/*
-fun setMarkRatioLocation(tMapView: TMapView, context: Context, changePoint: TMapPoint) {
+
+fun setMarkRatioLocation(tMapView: TMapView, context: Context, ratioPoint: TMapPoint) {
     val markerImage =
         BitmapFactory.decodeResource(
             context.resources,
@@ -191,14 +180,38 @@ fun setMarkRatioLocation(tMapView: TMapView, context: Context, changePoint: TMap
 
     val marker = MarkerOverlay(context, tMapView, "비율변경지점", "ratioMarkerItem")
 
-    val strId = "ratiomarkerItem"
+    val strId = "비율변경지점"
     marker.id = strId
     marker.chagneTextBlueColor(context)
     marker.icon = markerImage
     marker.setPosition(0.5F, 1F)
-    marker.tMapPoint = changePoint
-    Log.e("MARKERPOINTBLUE", changePoint.toString())
+    marker.tMapPoint = ratioPoint
+
     tMapView.addMarkerItem2(strId, marker)
-    marker.markerTouch
+    Log.e("MARKERPOINTBLUE", ratioPoint.toString())
+   // marker.markerTouch
+}
+
+/*
+fun setPolyLine(
+    tMapView: TMapView,
+    locationList: ArrayList<LocationInfo>,
+    centerPoint: TMapPoint
+) {
+    try {
+        for (i in 0 until locationList.size) {
+            val startPoint =
+                TMapPoint(locationList[i].latitude, locationList[i].longitude)
+            val tMapPolyLine = TMapData().findPathData(startPoint, centerPoint)
+            tMapPolyLine.lineColor = Color.BLACK
+            tMapPolyLine.lineWidth = 16F
+            tMapView.addTMapPolyLine("Line$i", tMapPolyLine)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
 }
 */
+
+

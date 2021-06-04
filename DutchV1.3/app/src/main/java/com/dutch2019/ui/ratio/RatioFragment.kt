@@ -9,22 +9,23 @@ import androidx.lifecycle.Observer
 import com.dutch2019.R
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentRatioBinding
+import com.dutch2019.ui.middle.MiddleLocationViewModel
 
 
-class RatioFragment : BaseFragment<FragmentRatioBinding, RatioViewModel>(
+class RatioFragment : BaseFragment<FragmentRatioBinding, MiddleLocationViewModel>(
     R.layout.fragment_ratio,
-    RatioViewModel::class.java
+    MiddleLocationViewModel::class.java
 ) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        RatioFragmentArgs.fromBundle(requireArguments()).let { data ->
-            viewModel.locationInfoList = data.locationinfolist
-        }
-
-        viewModel.ratio.observe(this, Observer {
-            binding.seekbarvalueTextview.text = it
+//        RatioFragmentArgs.fromBundle(requireArguments()).let { data ->
+//            viewModel.locationInfoList = data.locationinfolist
+//        }
+//
+        viewModel.ratio.observe(this, Observer { ratio ->
+            binding.seekbarvalueTextview.text = ratio
         })
 
     }

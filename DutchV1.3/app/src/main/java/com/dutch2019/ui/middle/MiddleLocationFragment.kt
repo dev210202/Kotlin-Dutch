@@ -2,9 +2,11 @@ package com.dutch2019.ui.middle
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.dutch2019.R
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMiddleLocationBinding
+import com.dutch2019.ui.ratio.RatioViewModel
 
 
 class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, MiddleLocationViewModel>(
@@ -26,5 +28,6 @@ class MiddleLocationFragment : BaseFragment<FragmentMiddleLocationBinding, Middl
         viewModel.totalRouteTime.observe(this, Observer {
             binding.routetitmeTextview.text = it
         })
+
     }
 }

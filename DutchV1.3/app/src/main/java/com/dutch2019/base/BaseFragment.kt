@@ -21,7 +21,10 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var binding: B
         private set
     open val viewModel by lazy {
-        ViewModelProvider(requireActivity().viewModelStore, ViewModelProvider.NewInstanceFactory()).get(viewModelClass)
+        ViewModelProvider(
+            requireActivity().viewModelStore,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(viewModelClass)
     }
 
     override fun onCreateView(
@@ -35,6 +38,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.setVariable(BR.vm, viewModel)
     }
 
@@ -44,4 +48,5 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
             ?.get(1) as Class<VM>).kotlin
         return type as Class<VM>
     }
+
 }

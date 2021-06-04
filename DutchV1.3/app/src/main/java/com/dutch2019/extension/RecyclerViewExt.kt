@@ -24,7 +24,7 @@ fun searchLocation(recyclerView: RecyclerView, locationData: LiveData<ArrayList<
 }
 
 @BindingAdapter(value = ["ratio"])
-fun ratio(recyclerView: RecyclerView, locationInfoList : LocationInfoList){
+fun ratio(recyclerView: RecyclerView, locationInfoList :ArrayList<LocationInfo>){
     setRecyclerView(recyclerView, "ratio")
     (recyclerView.adapter as RatioRecyclerAdapter).setLocationListData(locationInfoList)
     recyclerView.adapter?.notifyDataSetChanged()

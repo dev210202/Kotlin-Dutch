@@ -51,9 +51,7 @@ fun ratioButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
             locationInfoList.add(locationInfo)
         }
         view.findNavController().navigate(
-            MiddleLocationFragmentDirections.actionMiddleLocationFragmentToRatioFragment(
-                locationInfoList
-            )
+            MiddleLocationFragmentDirections.actionMiddleLocationFragmentToRatioFragment()
         )
     }
 }
