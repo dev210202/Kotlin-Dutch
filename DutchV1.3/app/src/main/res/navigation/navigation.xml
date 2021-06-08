@@ -38,9 +38,6 @@
         <action
             android:id="@+id/action_searchLocationFragment_to_mainFragment"
             app:popUpTo="@id/mainFragment" />
-        <argument
-            android:name="locationInfo"
-            app:argType="com.dutch2019.model.LocationInfo" />
     </fragment>
     <fragment
         android:id="@+id/locationCheckFragment"
@@ -83,6 +80,9 @@
         <action
             android:id="@+id/action_nearFacilityFragment_to_middleLocationFragment"
             app:popUpTo="@id/middleLocationFragment" />
+        <action
+            android:id="@+id/action_nearFacilityFragment_to_detailInfoFragment"
+            app:destination="@id/detailInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentFragment"
@@ -111,6 +111,15 @@
         <action
             android:id="@+id/action_ratioFragment_to_middleLocationFragment"
             app:popUpTo="@id/middleLocationFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_detail_info"
+        android:id="@+id/detailInfoFragment"
+        android:name="com.dutch2019.ui.detailinfo.DetailInfoFragment"
+        android:label="DetailInfoFragment" >
+        <argument
+            android:name="locationinfo"
+            app:argType="com.dutch2019.model.LocationInfo" />
     </fragment>
 
 </navigation>

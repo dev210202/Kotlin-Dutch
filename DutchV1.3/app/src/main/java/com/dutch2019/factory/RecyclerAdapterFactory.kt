@@ -8,7 +8,7 @@ public class RecyclerAdapterFactory : AdapterFactory() {
         lateinit var adapter: RecyclerView.Adapter<*>
         when (name) {
             "createButton" -> {
-                adapter = DynamicButtonRecyclerAdapter()
+                adapter = MainRecyclerAdapter()
             }
             "searchLocation" -> {
                 adapter = SearchRecyclerAdapter()

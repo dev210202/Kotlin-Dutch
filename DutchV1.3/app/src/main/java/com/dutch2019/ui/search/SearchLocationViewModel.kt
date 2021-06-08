@@ -10,14 +10,9 @@ import kotlin.collections.ArrayList
 
 class SearchLocationViewModel : BaseViewModel() {
 
-    private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
+    private val _locationList = MutableLiveData<ArrayList<LocationInfo>>(ArrayList())
     val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
-    var isDataLoadFail = MutableLiveData<Boolean>()
     var locationPosition : Int = 0
-
-    fun init(){
-        _locationList.value = ArrayList()
-    }
 
     fun searchLocationData(input: String) {
         val tMapData = TMapData()
@@ -28,15 +23,18 @@ class SearchLocationViewModel : BaseViewModel() {
                 }
             }
         }
+        else{
+            toastValue.postValue("검색할 위치를 입력해주세요!")
+        }
     }
 
     private fun setLocationData(arrayList: ArrayList<TMapPOIItem>): ArrayList<LocationInfo> {
 
         val locationArrayList = ArrayList<LocationInfo>()
         var item: TMapPOIItem
+
         if (arrayList.isEmpty()) {
             toastValue.postValue("검색된 위치가 없습니다.")
-            isDataLoadFail.postValue(true)
         } else {
             for(i in 0 until arrayList.size) {
                 val poiItem = arrayList[i]

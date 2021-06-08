@@ -1,13 +1,16 @@
 package com.dutch2019.extension
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import com.dutch2019.R
 import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationInfo
 import com.dutch2019.model.LocationInfoList
@@ -15,6 +18,7 @@ import com.dutch2019.ui.main.MainFragmentDirections
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.ui.middle.MiddleLocationFragmentDirections
 import com.dutch2019.ui.middle.MiddleLocationViewModel
+import com.dutch2019.ui.nearfacillity.NearFacilityFragmentDirections
 import com.dutch2019.ui.recent.RecentFragmentDirections
 import com.dutch2019.ui.search.SearchLocationViewModel
 import kotlinx.android.synthetic.main.fragment_search_location.view.*
@@ -22,8 +26,10 @@ import java.net.URI
 
 @BindingAdapter(value = ["plusbuttonclick"])
 fun plusButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
-    imageButton.setOnClickListener {
-        (viewModel as MainViewModel).addDummyLocationData()
+    imageButton.setOnClickListener {view ->
+        view.findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToSearchLocationFragment()
+        )
     }
 }
 
@@ -55,12 +61,31 @@ fun ratioButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
         )
     }
 }
+@BindingAdapter(value = ["resetbuttonclick"])
+fun resetButtonClick(imageButton: ImageButton, viewModel: BaseViewModel) {
+    imageButton.setOnClickListener {view ->
+        var dialog = Dialog(imageButton.rootView.context)
+        dialog.setContentView(R.layout.dialog_setting)
+        dialog.show()
+        var yesButton = dialog.findViewById<Button>(R.id.yes_button)
+        var noButton = dialog.findViewById<Button>(R.id.no_button)
 
+        yesButton.setOnClickListener {  _ ->
+            dialog.dismiss()
+            (viewModel as MiddleLocationViewModel).resetRatioPoint()
+            val navController = view.findNavController()
+            navController.popBackStack()
+        }
+        noButton.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+}
 
-@BindingAdapter(value = ["detaiiInfo"])
+@BindingAdapter(value = ["detailinfo"])
 fun detailInfo(imageButton: ImageButton, locationInfo: LocationInfo) {
-    imageButton.setOnClickListener {
-
+    imageButton.setOnClickListener {view ->
+        view.findNavController().navigate(NearFacilityFragmentDirections.actionNearFacilityFragmentToDetailInfoFragment(locationInfo))
     }
 }
 

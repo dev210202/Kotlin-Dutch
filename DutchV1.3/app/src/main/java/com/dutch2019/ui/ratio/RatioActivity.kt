@@ -44,7 +44,7 @@ class RatioActivity : AppCompatActivity() {
         })
 
         binding.resetButton.setOnClickListener {
-            dialog.setContentView(R.layout.setting_dialog)
+           dialog.setContentView(R.layout.setting_dialog)
             dialog.show();
         }
         binding.okButton.setOnClickListener {

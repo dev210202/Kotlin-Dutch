@@ -15,6 +15,4 @@ class RatioViewModel : BaseViewModel() {
     private val _ratio = MutableLiveData<String>()
     val ratio : LiveData<String> get() = _ratio
 
-
-
 }

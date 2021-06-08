@@ -13,8 +13,8 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding, MainVie
 ) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocationCheckFragmentArgs.fromBundle(requireArguments()).let {
-               data -> viewModel.setCheckLocationInfo(data.locationinfo)
+        LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
+            viewModel.checkLocationInfo = data.locationinfo
        }
     }
 }

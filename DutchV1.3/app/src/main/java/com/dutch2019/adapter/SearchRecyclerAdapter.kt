@@ -37,7 +37,6 @@ class SearchRecyclerAdapter :
             val imm = view.rootView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.rootView.inputedittext.windowToken, 0)
             view.findNavController().navigate(
-
                 SearchLocationFragmentDirections.actionSearchLocationFragmentToLocationCheckFragment(
                     locationDataList[position]
                 )

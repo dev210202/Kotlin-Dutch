@@ -7,12 +7,11 @@ import com.dutch2019.adapter.*
 import com.dutch2019.factory.RecyclerAdapterFactory
 import com.dutch2019.model.LocationDataDB
 import com.dutch2019.model.LocationInfo
-import com.dutch2019.model.LocationInfoList
 
 @BindingAdapter(value = ["createbutton"])
 fun createButton(recyclerView: RecyclerView, buttonData: LiveData<ArrayList<LocationInfo>>) {
     setRecyclerView(recyclerView, "createButton")
-    (recyclerView.adapter as DynamicButtonRecyclerAdapter).setLocationData(buttonData.value!!)
+    (recyclerView.adapter as MainRecyclerAdapter).setLocationData(buttonData.value!!)
     recyclerView.adapter?.notifyDataSetChanged()
 }
 

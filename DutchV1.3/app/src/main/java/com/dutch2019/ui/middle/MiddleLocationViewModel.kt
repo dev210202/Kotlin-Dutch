@@ -20,7 +20,7 @@ class MiddleLocationViewModel : BaseViewModel() {
     private var locationlist = ArrayList<LocationInfo>()
 
     private var centerPoint = TMapPoint(0.0, 0.0)
-    var ratioPoint = TMapPoint(0.0, 0.0)
+    private var ratioPoint = TMapPoint(0.0, 0.0)
 
     private val _middleLocationAddress = MutableLiveData<String>()
     val middleLocationAddress: LiveData<String> get() = _middleLocationAddress
@@ -78,6 +78,15 @@ class MiddleLocationViewModel : BaseViewModel() {
         centerPoint = point
     }
     fun getCenterPoint(): TMapPoint = centerPoint
+
+    fun setRatioPoint(point: TMapPoint) {
+        ratioPoint = point
+    }
+    fun getRatioPoint(): TMapPoint = ratioPoint
+
+    fun resetRatioPoint(){
+        ratioPoint = TMapPoint(0.0, 0.0)
+    }
 
     fun setLocationAddress(point: TMapPoint) {
         val tMapData = TMapData()

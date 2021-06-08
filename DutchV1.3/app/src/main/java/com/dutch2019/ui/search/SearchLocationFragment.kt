@@ -15,11 +15,6 @@ class SearchLocationFragment : BaseFragment<FragmentSearchLocationBinding, Searc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.init()
-
-        SearchLocationFragmentArgs.fromBundle(requireArguments()).let { data ->
-            viewModel.locationPosition = data.locationInfo.id
-        }
         viewModel.locationList.observe(this, Observer { list ->
             if (binding.recyclerview.adapter != null) {
                 (binding.recyclerview.adapter as SearchRecyclerAdapter).setLocationDataList(list)

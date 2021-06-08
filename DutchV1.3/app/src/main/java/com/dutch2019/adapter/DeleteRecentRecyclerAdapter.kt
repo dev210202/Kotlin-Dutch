@@ -10,39 +10,41 @@ class DeleteRecentRecyclerAdapter :
     RecyclerView.Adapter<DeleteRecentRecyclerAdapter.RecentViewHolder>() {
 
     private var locationDataDB = listOf<LocationDataDB>()
-    private var checkMap = HashMap<Int, Boolean>()
+    private var checkList = ArrayList<Boolean>()
     private var isAllSelectChecked = false
 
     fun setLocationDataDB(list: List<LocationDataDB>) {
         locationDataDB = list
         notifyDataSetChanged()
+        locationDataDB.forEach { _ ->
+            checkList.add(false)
+        }
     }
 
     fun selectAllCheckBox() {
-        isAllSelectChecked = if (isClickedSelectAllCheckBox()) {
-            for (i in 0 until checkMap.size) {
-                checkMap.replace(i, false)
+        if(isAllSelectChecked) {
+            for (i in checkList.indices) {
+                checkList[i] = false
+                isAllSelectChecked = false
             }
-            false
-        } else {
-            for (i in 0 until checkMap.size) {
-                checkMap.replace(i, true)
+        }
+        else{
+            for (i in checkList.indices) {
+                checkList[i] = true
+                isAllSelectChecked = true
             }
-            true
         }
     }
 
     fun getDeleteList(): ArrayList<LocationDataDB> {
         val deleteList = ArrayList<LocationDataDB>()
-        for(i in 0 until checkMap.size){
-            if(checkMap[i]!!){
+        for (i in 0 until checkList.size) {
+            if (checkList[i]) {
                 deleteList.add(locationDataDB[i])
             }
         }
         return deleteList
     }
-
-    private fun isClickedSelectAllCheckBox() : Boolean = isAllSelectChecked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
         val binding =
@@ -68,12 +70,9 @@ class DeleteRecentRecyclerAdapter :
             )
             binding.recyclerview.adapter?.notifyDataSetChanged()
 
-            if (position >= checkMap.size) {
-                checkMap[position] = isAllSelectChecked
-            }
-            checkbox.isChecked = checkMap[position]!!
+            checkbox.isChecked = checkList[position]
             checkbox.setOnClickListener {
-                checkMap[position] = checkbox.isChecked
+                checkList[position] = checkbox.isChecked
             }
         }
     }
