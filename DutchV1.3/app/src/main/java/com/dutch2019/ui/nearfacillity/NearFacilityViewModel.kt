@@ -25,9 +25,7 @@ class NearFacilityViewModel : BaseViewModel() {
     private val _locationList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationList: LiveData<ArrayList<LocationInfo>> get() = _locationList
 
-    //    var errorMessage = MutableLiveData<String>()
-    private val _detailInfo = MutableLiveData<String>()
-    val detailInfo : LiveData<String> get() = _detailInfo
+
     private val apiRepository = APIRepository.getInstance()
     fun initList() {
         _locationList.value = ArrayList()
@@ -36,14 +34,6 @@ class NearFacilityViewModel : BaseViewModel() {
     fun setLocaitonPoint(lat: Double, lon: Double) {
         locationPoint.latitude = lat
         locationPoint.longitude = lon
-    }
-
-    fun getDetailInfo(poiId: Int) {
-        compositeDisposable.add(apiRepository.getDetailInfo(poiId).subscribe({
-            data -> _detailInfo.postValue("부가정보: "+ data.poiDetailInfo.additionalInfo + " 소개내용 : " + data.poiDetailInfo.desc)
-        }, {
-            error -> Log.e("getDetailInfo error", error.message.toString())
-        }))
     }
 
     fun setNearFacilityCategory(input: String): String {
