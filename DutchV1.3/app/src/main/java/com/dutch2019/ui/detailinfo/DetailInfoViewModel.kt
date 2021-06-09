@@ -26,7 +26,7 @@ class DetailInfoViewModel : BaseViewModel() {
         }))
     }
 
-    fun filterText(value: String): String {
+    fun filtAdditionalInfo(value: String): String {
         var result = ""
         var splitList = value.split(";")
 

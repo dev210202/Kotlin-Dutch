@@ -29,7 +29,7 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding, DetailInfoVie
             binding.textviewDetailAddress.text = "주소: " + data.poiDetailInfo.address
             binding.textviewDetailTel.text = "전화번호: " + data.poiDetailInfo.tel
             binding.textviewDetailDescription.text = "소개: " + data.poiDetailInfo.desc
-            binding.textviewDetailAdditional.text = "부가정보: " + viewModel.filterText(data.poiDetailInfo.additionalInfo)
+            binding.textviewDetailAdditional.text = "부가정보: " + viewModel.filtAdditionalInfo(data.poiDetailInfo.additionalInfo)
         })
     }
 }
