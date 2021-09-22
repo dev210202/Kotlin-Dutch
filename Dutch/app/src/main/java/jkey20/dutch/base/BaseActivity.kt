@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.dutch2019.BR
+import jkey20.dutch.BR
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(

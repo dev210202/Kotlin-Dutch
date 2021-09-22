@@ -1,7 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
+    // add kapt
+    id 'kotlin-kapt'
+    // add navigation safe args
+    id("androidx.navigation.safeargs.kotlin")
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdk 31
@@ -13,11 +20,17 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // local properties key
+        buildConfigField "String", "TMAP_API", properties['tmapapi']
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    // dataBinding
     buildFeatures {
         dataBinding = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -41,11 +54,31 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation files('libs\\com.skt.Tmap_1.60.jar')
+
+
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    // unit test
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    kapt "com.android.databinding:compiler:3.3.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
+
     // fading textview
     implementation 'com.tomer:fadingtextview:2.5'
+
+
+
+    // navigation
+    def navigationVersion = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    // truth
+    testImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+
 
 }

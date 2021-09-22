@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.dutch2019.BR
-import com.dutch2019.R
+import jkey20.dutch.BR
+import jkey20.dutch.R
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
