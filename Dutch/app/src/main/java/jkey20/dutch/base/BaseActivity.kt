@@ -10,11 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import jkey20.dutch.BR
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
-    layoutRes: Int,
-    viewModelClass: Class<VM>
-) :
-    AppCompatActivity(layoutRes) {
+abstract class BaseActivity<B : ViewDataBinding>(
+    layoutRes: Int
+) : AppCompatActivity(layoutRes) {
 
     val binding by lazy {
         DataBindingUtil.bind<B>(
@@ -22,20 +20,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         )!!
     }
 
-    open val viewModel by lazy {
-        ViewModelProvider(this).get(viewModelClass)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.setVariable(BR.vm, viewModel)
     }
 
-    fun getViewModelClass(): Class<VM> {
-        val type = ((javaClass.genericSuperclass as ParameterizedType?)
-            ?.actualTypeArguments
-            ?.get(1) as Class<VM>).kotlin
-        return type as Class<VM>
-    }
 
 }
