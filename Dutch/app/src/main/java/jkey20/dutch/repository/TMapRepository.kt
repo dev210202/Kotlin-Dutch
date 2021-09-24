@@ -9,15 +9,7 @@ import javax.inject.Inject
 
 class TMapRepository : Repository() {
 
-    suspend fun findAll(input: String, list : MutableLiveData<ArrayList<TMapPOIItem>>): ArrayList<TMapPOIItem>? {
-
-        TMapData().findAllPOI(input) { searchList ->
-            searchList.forEach {
-                Log.i("LIST", it.name)
-            }
-            list.value = searchList
-
-        }
-        return list.value
+    suspend fun findAll(input: String): ArrayList<TMapPOIItem>? {
+        return TMapData().findAllPOI(input)
     }
 }

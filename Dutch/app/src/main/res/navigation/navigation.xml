@@ -17,5 +17,17 @@
         android:id="@+id/searchFragment"
         android:name="jkey20.dutch.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_locationCheckFragment"
+            app:destination="@id/locationCheckFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationCheckFragment"
+        android:name="jkey20.dutch.locationcheck.LocationCheckFragment"
+        android:label="LocationCheckFragment" >
+        <argument
+            android:name="locationData"
+            app:argType="jkey20.dutch.model.LocationData" />
+    </fragment>
 </navigation>

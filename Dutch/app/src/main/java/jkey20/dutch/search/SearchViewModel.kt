@@ -25,14 +25,7 @@ class SearchViewModel @Inject constructor(
 
     fun search(input: String) {
         viewModelScope.launch(Dispatchers.IO) {
-//            if (input.isNotEmpty()) {
-//                TMapData().findAllPOI(input) { searchList ->
-//                    _locationList.postValue(searchList)
-//                }
-//            } else {
-//                toastValue.postValue("검색할 위치를 입력해주세요!")
-//            }
-            tMapRepository.findAll(input, _locationList)
+            _locationList.postValue(tMapRepository.findAll(input))
         }
     }
 

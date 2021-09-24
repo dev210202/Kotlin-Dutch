@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.dutch2019.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jkey20.dutch.R
+import jkey20.dutch.adapter.SearchRecyclerAdapter
 import jkey20.dutch.databinding.FragmentSearchBinding
 
 @AndroidEntryPoint
@@ -23,9 +24,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        binding.recyclerviewSearch.adapter = SearchRecyclerAdapter()
+
         viewModel.locationList.observe(viewLifecycleOwner, Observer { list ->
+            (binding.recyclerviewSearch.adapter as SearchRecyclerAdapter).setLocationDataList(list)
             list.forEach {
-                Log.i("value", it.name)
+                Log.i("value", it.poiAddress)
             }
         })
 
