@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginEnd="18dp"
-                android:background="@drawable/ic_search_24"
+                android:background="@drawable/ic_search_black_24"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/search_recentbutton"

@@ -13,7 +13,7 @@ import com.skt.Tmap.TMapPOIItem
 import jkey20.dutch.R
 import jkey20.dutch.databinding.ItemSearchBinding
 import jkey20.dutch.model.LocationData
-import jkey20.dutch.search.SearchFragmentDirections
+import jkey20.dutch.ui.search.SearchFragmentDirections
 import jkey20.dutch.util.filtNull
 
 class SearchRecyclerAdapter :

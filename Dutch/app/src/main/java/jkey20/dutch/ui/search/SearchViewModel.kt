@@ -1,4 +1,4 @@
-package jkey20.dutch.search
+package jkey20.dutch.ui.search
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="locationData"
+            type="jkey20.dutch.model.LocationData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/orange"
+            android:id="@+id/textview_dynamic_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:textColor="@color/black"
+            android:text="@{locationData.name}"
+            android:textSize="16dp"
+            android:id="@+id/textview_dynamic_locationname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imagebutton_dynamic_remove"
+            app:layout_constraintStart_toEndOf="@+id/textview_dynamic_number"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/imagebutton_dynamic_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/ic_remove_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageButton>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_light"
+            app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
