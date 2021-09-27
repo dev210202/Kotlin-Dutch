@@ -1,5 +1,6 @@
 package jkey20.dutch.ui.locationcheck
 
+import android.graphics.BitmapFactory
 import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import androidx.core.content.res.ResourcesCompat
@@ -46,11 +47,10 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
         val markerItemPoint = TMapPoint(data.lat, data.lon)
 
         val markerImage =
-            (ResourcesCompat.getDrawable(
-                requireContext().resources,
-                R.drawable.ic_marker_black,
-                null
-            ) as VectorDrawable).toBitmap()
+            BitmapFactory.decodeResource(
+                context!!.resources,
+                R.drawable.ic_marker_black
+            )
 
         val markerItem = TMapMarkerItem().apply {
             icon = markerImage

@@ -1,7 +1,7 @@
 package jkey20.dutch.repository
 
 import com.google.gson.GsonBuilder
-import jkey20.dutch.network.Service
+import jkey20.dutch.network.TMapService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,7 +27,7 @@ abstract class Repository {
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
-    val service = retrofit.create(Service::class.java)
+    val service = retrofit.create(TMapService::class.java)
 
     init {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
