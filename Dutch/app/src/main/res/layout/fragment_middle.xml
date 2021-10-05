@@ -62,7 +62,7 @@
                     app:layout_constraintTop_toTopOf="@+id/textview_middle_routetime"></TextView>
 
                 <TextView
-
+                    android:textColor="@color/black"
                     android:id="@+id/textview_middle_routetime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,9 +134,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textview_middle_setting"
-                    android:text="비율 설정"
+                <Button
+                    android:background="@color/transparent"
+                    android:id="@+id/button_middle_safety"
+                    android:text="코로나19\n 안전지수"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     android:layout_width="wrap_content"
@@ -144,7 +146,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+                    app:layout_constraintTop_toTopOf="parent"></Button>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button

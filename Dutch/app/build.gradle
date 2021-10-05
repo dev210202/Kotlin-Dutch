@@ -22,8 +22,9 @@ android {
         versionName "1.0"
 
         // local properties key
-        buildConfigField "String", "TMAP_API", properties['tmapapi']
-
+        buildConfigField "String", "T_MAP_API", properties['tMapAPIKey']
+        buildConfigField "String", "T_SAFETY_CASTER_API", properties['safetyCaseterAPIKey']
+        buildConfigField "String", "KAKAO_API", properties['kakaoAPIKey']
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -91,12 +92,12 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
 
     // retrofit
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // okhttp logging
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
     // hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
@@ -106,4 +107,7 @@ dependencies {
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     implementation 'androidx.hilt:hilt-work:1.0.0-alpha03'
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+
+    // kakao
+    implementation "com.kakao.sdk:v2-link:2.8.1"
 }

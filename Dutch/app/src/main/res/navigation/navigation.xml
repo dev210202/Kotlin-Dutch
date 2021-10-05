@@ -40,5 +40,26 @@
         <argument
             android:name="locationlist"
             app:argType="jkey20.dutch.model.LocationDataList" />
+        <action
+            android:id="@+id/action_middleFragment_to_safeFragment"
+            app:destination="@id/safeFragment" />
+        <action
+            android:id="@+id/action_middleFragment_to_nearFragment"
+            app:destination="@id/nearFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/safeFragment"
+        android:name="jkey20.dutch.ui.safe.SafeFragment"
+        android:label="SafeFragment" />
+    <fragment
+        android:id="@+id/nearFragment"
+        android:name="jkey20.dutch.ui.near.NearFragment"
+        android:label="NearFragment" >
+        <argument
+            android:name="lat"
+            app:argType="float" />
+        <argument
+            android:name="lon"
+            app:argType="float" />
     </fragment>
 </navigation>

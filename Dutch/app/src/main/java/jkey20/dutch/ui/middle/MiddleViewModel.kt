@@ -9,6 +9,7 @@ import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jkey20.dutch.model.LocationData
+import jkey20.dutch.model.StartEndPointData
 import jkey20.dutch.repository.TMapRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +30,9 @@ class MiddleViewModel @Inject constructor(
 
     private val _centerPointNearSubway = MutableLiveData<String>()
     val centerPointNearSubway: LiveData<String> get() = _centerPointNearSubway
+
+    private val _routeTime = MutableLiveData<String>()
+    val routeTime: LiveData<String> get() = _routeTime
 
     fun setLocationList(list: ArrayList<LocationData>) {
         locationList = list
@@ -71,23 +75,19 @@ class MiddleViewModel @Inject constructor(
         }
     }
 
-    fun getMiddleRouteTime(centerPoint: TMapPoint, latitude: Double, longitude: Double) {
+    fun setRouteTime(point: TMapPoint, latitude: Double, longitude: Double){
         var startEndPointData = StartEndPointData(
-            centerPoint.longitude,
-            centerPoint.latitude,
+            point.longitude,
+            point.latitude,
             longitude,
             latitude
         )
-        compositeDisposable.add(apiRepository.getRouteTime(startEndPointData).subscribe({ data ->
-            var totalTime = data.features[0].properties.totalTime
-            _totalRouteTime.postValue(convertTime(totalTime))
-        }, { error ->
-            Log.e("data error", error.message.toString())
-        }))
+        viewModelScope.launch(Dispatchers.IO) {
+            _routeTime.postValue("소요시간 : " + tMapRepository.getRouteTime(startEndPointData))
+        }
     }
+
     fun resetRouteTime() {
-        _totalRouteTime.postValue(" ")
+        _routeTime.value =""
     }
-
-
 }

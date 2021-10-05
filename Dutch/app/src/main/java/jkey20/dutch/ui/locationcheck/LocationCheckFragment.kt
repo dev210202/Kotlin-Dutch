@@ -48,7 +48,7 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 
         val markerImage =
             BitmapFactory.decodeResource(
-                context!!.resources,
+                requireContext().resources,
                 R.drawable.ic_marker_black
             )
 
@@ -58,7 +58,7 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
             setPosition(0.5F, 1F)
         }
         return TMapView(context).apply {
-            setSKTMapApiKey("${BuildConfig.TMAP_API}")
+            setSKTMapApiKey("${BuildConfig.T_MAP_API}")
             setCenterPoint(data.lon, data.lat)
             addMarkerItem("markerItem", markerItem)
         }

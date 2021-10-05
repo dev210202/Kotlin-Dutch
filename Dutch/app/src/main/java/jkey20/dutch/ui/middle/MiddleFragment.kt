@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.base.BaseViewModel
 import com.skt.Tmap.TMapPoint
@@ -40,12 +41,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         val tMapView = TMapView(context)
         markLocationList(tMapView, requireContext(), middleViewModel.getLocationList())
         markMiddleLocation(tMapView, requireContext(), middleViewModel.getCenterPoint())
-        tMapView.setOnMarkerClickEvent { s, tMapMarkerItem2 ->
-            val point = tMapMarkerItem2.tMapPoint
-            middleViewModel.setCenterPointAdress(point)
-            middleViewModel.setCenterPointNearSubway(point)
-            binding.textviewMiddleResult.text = tMapMarkerItem2.id
-        }
+        setBallonOverlayClickEvent(tMapView, middleViewModel)
 
 
         middleViewModel.setCenterPointAdress(middleViewModel.getCenterPoint())
@@ -55,11 +51,29 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         binding.maplayoutMiddle.addView(tMapView)
 
+        binding.buttonMiddleSafety.setOnClickListener { view ->
+            view.findNavController()
+                .navigate(MiddleFragmentDirections.actionMiddleFragmentToSafeFragment())
+        }
+        binding.buttonCheckNearfacility.setOnClickListener { view ->
+            view.findNavController().navigate(
+                MiddleFragmentDirections.actionMiddleFragmentToNearFragment(
+                    middleViewModel.getCenterPoint().latitude.toFloat(),
+                    middleViewModel.getCenterPoint().longitude.toFloat()
+                )
+            )
+
+        }
+
         middleViewModel.centerPointAddress.observe(viewLifecycleOwner, Observer {
             binding.textviewMiddleAddress.text = it
         })
         middleViewModel.centerPointNearSubway.observe(viewLifecycleOwner, Observer {
             binding.textviewMiddleNearsubway.text = it
+        })
+
+        middleViewModel.routeTime.observe(viewLifecycleOwner, Observer {
+            binding.textviewMiddleRoutetime.text = it
         })
 
     }
@@ -77,18 +91,16 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
                     ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
                 )
                 viewModel.resetRouteTime()
-            }
-            else if(p1.id =="비율변경지점"){
+            } else if (p1.id == "비율변경지점") {
                 binding.textviewMiddleResult.setTextColor(
                     ContextCompat.getColor(tMapView.rootView.context, R.color.blue)
                 )
-                viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
-            }
-            else {
+                viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+            } else {
                 binding.textviewMiddleResult.setTextColor(
                     ContextCompat.getColor(tMapView.rootView.context, R.color.black)
                 )
-                viewModel.getMiddleRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+                viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
             }
         }
 

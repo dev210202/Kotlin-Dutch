@@ -1,6 +1,7 @@
 package jkey20.dutch.repository
 
 import com.google.gson.GsonBuilder
+import jkey20.dutch.network.SafeCasterService
 import jkey20.dutch.network.TMapService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,13 +23,13 @@ abstract class Repository {
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://apis.openapi.sk.com/tmap/")
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .baseUrl("https://apis.openapi.sk.com/")
+    //    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
-    val service = retrofit.create(TMapService::class.java)
-
+    val tMapService = retrofit.create(TMapService::class.java)
+    val safeCasterService = retrofit.create(SafeCasterService::class.java)
     init {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
     }

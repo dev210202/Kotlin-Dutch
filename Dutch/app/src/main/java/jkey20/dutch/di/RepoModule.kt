@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import jkey20.dutch.repository.SafeCasterRepository
 import jkey20.dutch.repository.TMapRepository
 import javax.inject.Singleton
 
@@ -12,5 +13,9 @@ import javax.inject.Singleton
 object RepoModule {
     @Provides
     @Singleton
-    fun provideRepository(): TMapRepository = TMapRepository()
+    fun provideTMapRepository(): TMapRepository = TMapRepository()
+
+    @Provides
+    @Singleton
+    fun provideSafeCasterRepository(): SafeCasterRepository = SafeCasterRepository()
 }

@@ -1,10 +1,13 @@
 package jkey20.dutch.repository
 
+import android.util.Log
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
+import jkey20.dutch.BuildConfig
 import jkey20.dutch.model.RouteDataList
 import jkey20.dutch.model.StartEndPointData
+import jkey20.dutch.model.ZipData
 import java.lang.Exception
 
 class TMapRepository : Repository() {
@@ -35,7 +38,20 @@ class TMapRepository : Repository() {
         }
     }
 
-    fun getRouteTime(startEndPointData: StartEndPointData): RouteDataList {
-        return service.getRouteTime(startEndPointData)
+    suspend fun getRouteTime(startEndPointData: StartEndPointData): String {
+        return filtRouteTime(tMapService.getRouteTime(startEndPointData).body()!!)
     }
+
+    suspend fun getZipCode(address : String) : String{
+        return filtZipCode(tMapService.getZipCode("${BuildConfig.T_MAP_API}", address).body()!!)
+    }
+
+    private fun filtRouteTime(routeDataList: RouteDataList): String {
+        return routeDataList.features[0].properties.totalTime
+    }
+
+    private fun filtZipCode(zipData : ZipData) : String{
+        return zipData.coordinateInfo.coordinate[0].zipcode
+    }
+
 }
