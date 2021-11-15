@@ -25,7 +25,7 @@
 
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/black"
                 android:hint="주소를 검색해주세요"
@@ -34,33 +34,48 @@
 
                 android:textColorHint="@color/mid_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/search_searchbutton"
+                app:layout_constraintEnd_toStartOf="@+id/layout_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"></EditText>
 
-            <ImageButton
-
-                android:id="@+id/search_searchbutton"
+            <LinearLayout
+                android:id="@+id/layout_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginEnd="18dp"
-                android:background="@drawable/ic_search_black_24"
-
+                android:layout_marginEnd="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/search_recentbutton"
-                app:layout_constraintTop_toTopOf="parent"></ImageButton>
+                app:layout_constraintEnd_toStartOf="@+id/layout_recent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/search_recentbutton"
+                <ImageButton
+                    android:id="@+id/search_searchbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+
+
+                    android:background="@drawable/ic_search_black_24"
+
+                    ></ImageButton>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_recent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/ic_recent_24"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/search_recentbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/ic_recent_24" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

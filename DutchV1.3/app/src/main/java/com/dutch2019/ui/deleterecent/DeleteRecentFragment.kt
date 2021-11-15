@@ -7,7 +7,6 @@ import com.dutch2019.adapter.DeleteRecentRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentDeleteRecentBinding
 import com.dutch2019.ui.recent.RecentViewModel
-
 class DeleteRecentFragment : BaseFragment<FragmentDeleteRecentBinding, RecentViewModel>(
     R.layout.fragment_delete_recent,
     RecentViewModel::class.java

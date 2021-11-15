@@ -119,7 +119,6 @@ fun deleteComplete(button: Button, viewModel: BaseViewModel) {
         adapter = DeleteRecentRecyclerAdapter()
     }
     button.setOnClickListener { view ->
-
         vm.deleteLocationDB(adapter.getDeleteList())
         view.findNavController().popBackStack()
     }

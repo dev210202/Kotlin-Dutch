@@ -15,13 +15,15 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "jkey20.dutch"
+        applicationId "com.dutch2019"
         minSdk 23
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 9
+        versionName "2.0.0"
 
         // local properties key
+        manifestPlaceholders["KAKAO_API"] = properties['kakaoAPIKey']
+
         buildConfigField "String", "T_MAP_API", properties['tMapAPIKey']
         buildConfigField "String", "T_SAFETY_CASTER_API", properties['safetyCaseterAPIKey']
         buildConfigField "String", "KAKAO_API", properties['kakaoAPIKey']
@@ -110,4 +112,18 @@ dependencies {
 
     // kakao
     implementation "com.kakao.sdk:v2-link:2.8.1"
+
+    // room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    // viewpager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }

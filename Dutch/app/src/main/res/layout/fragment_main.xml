@@ -28,10 +28,10 @@
                 android:id="@+id/imagebutton_main_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/ic_dutch_40"
 
+                android:background="@drawable/ic_dutch_40"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageButton>
 
@@ -41,11 +41,11 @@
                 style="@style/all_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:includeFontPadding="false"
-                android:text="중간지점을 찾기 위한\n위치를 입력해주세요"
+                android:text="중간지점을 찾기 위한\n위치를 설정해보세요"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imagebutton_main_logo"></TextView>
 

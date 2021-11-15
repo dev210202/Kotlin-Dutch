@@ -4,27 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable-v24/ic_internet_24.xml" value="0.26979166666666665" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable-v24/ic_marker_black.xml" value="0.26979166666666665" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable-v24/nearfacility_button.xml" value="0.1109375" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/background_orange.xml" value="0.1175925925925926" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ballonoverlay.xml" value="0.11197916666666667" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ic_close_12.xml" value="0.1" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ic_info_24.xml" value="0.26979166666666665" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ic_marker_red.xml" value="0.26979166666666665" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ic_search_24.xml" value="0.14479166666666668" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/ic_search_white_24.xml" value="0.11145833333333334" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/drawable/popup.xml" value="0.1" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/activity_main.xml" value="0.11018518518518519" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_location_check.xml" value="0.1" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_main.xml" value="0.176" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_middle.xml" value="0.176" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_near.xml" value="0.32098765432098764" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_safe.xml" value="0.25364583333333335" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_search.xml" value="0.136" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_dynamicbutton.xml" value="0.2" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_near.xml" value="0.42210526315789476" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_search.xml" value="0.536" />
-        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/view_ballonoverlay.xml" value="0.4" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_info.xml" value="0.4" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_middle.xml" value="0.1296875" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/fragment_near.xml" value="0.264" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_near.xml" value="0.4" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_ratio.xml" value="0.12335359675785208" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_recent.xml" value="0.264" />
+        <entry key="..\:/(DUTCH)/Dutch/app/src/main/res/layout/item_recent_edit.xml" value="0.264" />
       </map>
     </option>
   </component>

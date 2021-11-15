@@ -5,7 +5,7 @@
     <data>
         <variable
             name="locationData"
-            type="jkey20.dutch.model.LocationData" />
+            type="com.dutch2019.model.LocationData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,22 +37,31 @@
             android:layout_marginStart="22dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imagebutton_dynamic_remove"
+            app:layout_constraintEnd_toStartOf="@+id/layout_remove"
             app:layout_constraintStart_toEndOf="@+id/textview_dynamic_number"
             app:layout_constraintTop_toTopOf="parent">
 
 
         </TextView>
 
-        <ImageButton
-            android:id="@+id/imagebutton_dynamic_remove"
+        <LinearLayout
+            android:layout_marginEnd="10dp"
+            android:id="@+id/layout_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/ic_remove_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageButton>
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageButton
+                android:layout_margin="20dp"
+                android:id="@+id/imagebutton_dynamic_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/ic_remove_12"></ImageButton>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

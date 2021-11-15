@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="jkey20.dutch.ui.main.MainFragment"
+        android:name="com.dutch2019.ui.main.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
@@ -15,45 +15,54 @@
         <action
             android:id="@+id/action_mainFragment_to_middleFragment"
             app:destination="@id/middleFragment" />
+        <argument
+            android:name="locationdatalist"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="com.dutch2019.model.LocationDataList" />
+
+
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="jkey20.dutch.ui.search.SearchFragment"
+        android:name="com.dutch2019.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_locationCheckFragment"
             app:destination="@id/locationCheckFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_recentFragment"
+            app:destination="@id/recentFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/locationCheckFragment"
-        android:name="jkey20.dutch.ui.locationcheck.LocationCheckFragment"
+        android:name="com.dutch2019.ui.locationcheck.LocationCheckFragment"
         android:label="LocationCheckFragment" >
         <argument
             android:name="locationData"
-            app:argType="jkey20.dutch.model.LocationData" />
+            app:argType="com.dutch2019.model.LocationData" />
     </fragment>
     <fragment
         android:id="@+id/middleFragment"
-        android:name="jkey20.dutch.ui.middle.MiddleFragment"
+        android:name="com.dutch2019.ui.middle.MiddleFragment"
         android:label="MiddleFragment" >
         <argument
             android:name="locationlist"
-            app:argType="jkey20.dutch.model.LocationDataList" />
-        <action
-            android:id="@+id/action_middleFragment_to_safeFragment"
-            app:destination="@id/safeFragment" />
+            app:argType="com.dutch2019.model.LocationDataList" />
         <action
             android:id="@+id/action_middleFragment_to_nearFragment"
             app:destination="@id/nearFragment" />
+        <action
+            android:id="@+id/action_middleFragment_to_ratioFragment"
+            app:destination="@id/ratioFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/safeFragment"
-        android:name="jkey20.dutch.ui.safe.SafeFragment"
-        android:label="SafeFragment" />
+
     <fragment
         android:id="@+id/nearFragment"
-        android:name="jkey20.dutch.ui.near.NearFragment"
+        android:name="com.dutch2019.ui.near.NearFragment"
         android:label="NearFragment" >
         <argument
             android:name="lat"
@@ -61,5 +70,44 @@
         <argument
             android:name="lon"
             app:argType="float" />
+        <action
+            android:id="@+id/action_nearFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.dutch2019.ui.recent.RecentFragment"
+        android:label="RecentFragment" >
+
+        <action
+            android:id="@+id/action_recentFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_recentFragment_to_recentEditFragment"
+            app:destination="@id/recentEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentEditFragment"
+        android:name="com.dutch2019.ui.recentedit.RecentEditFragment"
+        android:label="RecentEditFragment" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ratioFragment"
+        android:name="com.dutch2019.ui.ratio.RatioFragment"
+        android:label="fragment_ratio"
+        tools:layout="@layout/fragment_ratio" >
+        <argument
+            android:name="locationdatalist"
+            app:argType="com.dutch2019.model.LocationDataList" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.dutch2019.ui.Info.InfoFragment"
+        android:label="InfoFragment" >
+        <argument
+            android:name="locationdata"
+            app:argType="com.dutch2019.model.LocationData" />
     </fragment>
 </navigation>

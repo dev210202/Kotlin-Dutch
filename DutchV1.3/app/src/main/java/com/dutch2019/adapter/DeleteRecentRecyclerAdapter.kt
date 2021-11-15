@@ -22,13 +22,13 @@ class DeleteRecentRecyclerAdapter :
     }
 
     fun selectAllCheckBox() {
-        if(isAllSelectChecked) {
+        if (isAllSelectChecked) {
             for (i in checkList.indices) {
                 checkList[i] = false
                 isAllSelectChecked = false
             }
         }
-        else{
+        else {
             for (i in checkList.indices) {
                 checkList[i] = true
                 isAllSelectChecked = true
@@ -63,8 +63,9 @@ class DeleteRecentRecyclerAdapter :
         private var checkbox = binding.checkBox
         fun bind(locationData: LocationDataDB, position: Int) {
             binding.locationdata = locationData
-            val adapter = DeleteRecentDetailRecyclerAdapter()
-            binding.recyclerview.adapter = adapter
+
+            binding.recyclerview.adapter = DeleteRecentDetailRecyclerAdapter()
+            
             (binding.recyclerview.adapter as DeleteRecentDetailRecyclerAdapter).setLocationDataDB(
                 locationData.list
             )
