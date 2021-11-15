@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dutch2019">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+
+    <application
+        android:name="com.dutch2019.DutchApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/dutch_ic_launcher"
+        android:label="더치"
+        android:roundIcon="@mipmap/dutch_ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name="com.dutch2019.ui.splash.SplashActivity"
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="kakaolink"
+                    android:scheme="kakao${KAKAO_API}" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dutch2019.ui.main.MainActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="true">
+
+        </activity>
+    </application>
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+</manifest>

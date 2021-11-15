@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="layout_background_black">@color/black</color>
+    <color name="textview_textcolor_white">@color/white</color>
+    <color name="textview_textcolor_black">@color/black</color>
+    <color name="textview_textcolor_orange">@color/orange</color>
+    <color name="button_textcolor_white">@color/white</color>
+    <color name="button_background_black">@color/black</color>
+    <color name="layout_backgroundcontour_grey_light">@color/grey_light</color>
+    <color name="dutch_ic_launcher_background">#EF4B33</color>
+
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="orange">#e24b35</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#2f2f2f</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="grey_light">#f1f1f1</color>
+    <color name="mid_grey">#8f8f8f</color>
+    <color name="dark_grey">#464646</color>
+    <color name="blue">#103896</color>
+
+</resources>

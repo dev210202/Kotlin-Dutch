@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+
+            <ImageView
+
+                android:id="@+id/recent_searchimageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="22dp"
+
+                android:background="@drawable/ic_search_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+            <TextView
+                android:id="@+id/recent_searchtextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:text="최근검색 목록"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/recent_searchimageview"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="불러올 위치를 선택해주세요"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/recent_searchtextview"
+                app:layout_constraintTop_toBottomOf="@+id/recent_searchtextview"></TextView>
+
+            <Button
+                android:id="@+id/button_recentedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="편집"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recent_searchtextview"></Button>
+             </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"></LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/recyclerview_recent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Dutch</string>
+    <string-array name="main_infotext">
+        <item>돋보기모양 버튼을 눌러 설정할 위치를 추가하세요</item>
+        <item>2개 이상의 위치를 설정하고 중간지점 찾기 버튼을 눌러주세요</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
