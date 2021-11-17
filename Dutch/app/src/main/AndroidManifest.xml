@@ -8,7 +8,7 @@
 
 
     <application
-        android:name="com.dutch2019.DutchApplication"
+        android:name=".DutchApplication"
         android:allowBackup="true"
         android:icon="@mipmap/dutch_ic_launcher"
         android:label="더치"
@@ -16,23 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name="com.dutch2019.ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
 
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:host="kakaolink"
                     android:scheme="kakao${KAKAO_API}" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dutch2019.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true">
 
