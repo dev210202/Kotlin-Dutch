@@ -91,12 +91,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="8dp"
                     android:includeFontPadding="false"
                     android:text="근처 지하철역 : "
                     android:textColor="#8f8f8f"
                     android:textSize="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/textview_middle_safetytext"
+                    android:layout_marginBottom="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"></TextView>
 
                 <TextView
@@ -112,26 +112,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView5"
                     app:layout_constraintStart_toEndOf="@+id/textView5"></TextView>
 
-                <TextView
-                    android:id="@+id/textview_middle_safetytext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="코로나 안전지수"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView5">
 
-                </TextView>
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/safecaster"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"></ImageView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

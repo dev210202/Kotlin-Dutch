@@ -69,7 +69,6 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         middleViewModel.centerPointAddress.observe(viewLifecycleOwner, Observer {
             binding.textviewMiddleAddress.text = it
             middleViewModel.saveLocations(middleViewModel.getLocationList())
-            middleViewModel.loadZipCode(middleViewModel.centerPointAddress.value!!)
             dismissLoadingDialog(loadingDialog)
         })
         middleViewModel.centerPointNearSubway.observe(viewLifecycleOwner, Observer {
@@ -78,14 +77,6 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         middleViewModel.routeTime.observe(viewLifecycleOwner, Observer {
             binding.textviewMiddleRoutetime.text = it
-        })
-        middleViewModel.zipCode.observe(viewLifecycleOwner, Observer {
-            zipCode ->
-            middleViewModel.loadSafetyIndex(zipCode)
-        })
-        middleViewModel.safetyIndex.observe(viewLifecycleOwner, Observer {
-            safetyIndex ->
-            binding.textviewMiddleSafetytext.text = getSafetyText(safetyIndex.toInt())
         })
     }
 

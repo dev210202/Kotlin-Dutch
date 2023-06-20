@@ -42,10 +42,6 @@ class TMapRepository(private val api: TMapService) {
         return filtRouteTime(api.getRouteTime(startEndPointData).body()!!)
     }
 
-    suspend fun getZipCode(address : String) : String{
-        return filtZipCode(api.getZipCode("${BuildConfig.T_MAP_API}", address).body()!!)
-    }
-
     private fun filtRouteTime(routeDataList: RouteDataList): String {
         return routeDataList.features[0].properties.totalTime
     }

@@ -25,7 +25,6 @@ android {
         manifestPlaceholders["KAKAO_API"] = properties['kakaoAPIKey']
 
         buildConfigField "String", "T_MAP_API", properties['tMapAPIKey']
-        buildConfigField "String", "T_SAFETY_CASTER_API", properties['safetyCaseterAPIKey']
         buildConfigField "String", "KAKAO_API", properties['kakaoAPIKey']
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -11,7 +11,6 @@ import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.StartEndPointData
 import com.dutch2019.repository.DBRepository
-import com.dutch2019.repository.SafeCasterRepository
 import com.dutch2019.repository.TMapRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class MiddleViewModel @Inject constructor(
     private val tMapRepository: TMapRepository,
     private val dataBaseRepository: DBRepository,
-    private val safeCasterRepository: SafeCasterRepository
 ) : BaseViewModel() {
 
     private var locationList = ArrayList<LocationData>()
@@ -37,12 +35,6 @@ class MiddleViewModel @Inject constructor(
 
     private val _routeTime = MutableLiveData<String>()
     val routeTime: LiveData<String> get() = _routeTime
-
-    private val _zipCode = MutableLiveData<String>()
-    val zipCode: LiveData<String> get() = _zipCode
-
-    private val _safetyIndex = MutableLiveData<Double>()
-    val safetyIndex: LiveData<Double> get() = _safetyIndex
 
     private val _ratio = MutableLiveData<String>("5 : 5")
     val ratio: LiveData<String> get() = _ratio
@@ -133,26 +125,6 @@ class MiddleViewModel @Inject constructor(
         }
     }
 
-    fun loadZipCode(address: String) {
-        Log.i("ADDRESS!!", address)
-        viewModelScope.launch(Dispatchers.IO) {
-            _zipCode.postValue(getZipCode(address))
-        }
-    }
-
-    fun loadSafetyIndex(zipCode: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _safetyIndex.postValue(getSafetyIndex(zipCode))
-        }
-    }
-
-    private suspend fun getSafetyIndex(zipCode: String): Double {
-        return safeCasterRepository.getSafetyIndex(zipCode)
-    }
-
-    private suspend fun getZipCode(address: String): String {
-        return tMapRepository.getZipCode(address)
-    }
 
     private fun convertTime(time: String): String {
         var result = ""
