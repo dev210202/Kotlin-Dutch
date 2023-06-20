@@ -1,13 +1,13 @@
 package com.dutch2019.repository
 
 import com.skt.Tmap.TMapData
-import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
 import com.dutch2019.BuildConfig
 import com.dutch2019.model.RouteDataList
 import com.dutch2019.model.StartEndPointData
 import com.dutch2019.model.ZipData
 import com.dutch2019.network.TMapService
+import com.skt.Tmap.poi_item.TMapPOIItem
 import java.lang.Exception
 
 class TMapRepository(private val api: TMapService) {

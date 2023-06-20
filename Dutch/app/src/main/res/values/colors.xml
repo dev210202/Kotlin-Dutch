@@ -21,5 +21,5 @@
     <color name="mid_grey">#8f8f8f</color>
     <color name="dark_grey">#464646</color>
     <color name="blue">#103896</color>
-
+    <color name="black_splash">#000000</color>
 </resources>

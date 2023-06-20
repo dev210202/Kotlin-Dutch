@@ -8,12 +8,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.skt.Tmap.TMapPOIItem
 import com.dutch2019.R
 import com.dutch2019.databinding.ItemSearchBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.ui.search.SearchFragmentDirections
 import com.dutch2019.util.filtNull
+import com.skt.Tmap.poi_item.TMapPOIItem
 
 class SearchRecyclerAdapter :
     RecyclerView.Adapter<SearchRecyclerAdapter.LocationDataViewHolder>() {
