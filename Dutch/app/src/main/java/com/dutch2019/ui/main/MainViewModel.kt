@@ -8,12 +8,18 @@ import com.dutch2019.model.LocationData
 
 class MainViewModel : BaseViewModel() {
 
+    private val _infoMessage = MutableLiveData<String>()
+    val infoMessage: LiveData<String> get() = _infoMessage
+
     private val _sktMapApikeyAuth = MutableLiveData<Boolean>(false)
-    val sktMapApikeyAuth : LiveData<Boolean> get() = _sktMapApikeyAuth
+    val sktMapApikeyAuth: LiveData<Boolean> get() = _sktMapApikeyAuth
 
     private val _checkLocationList = MutableLiveData(ArrayList<LocationData>())
-    val checkLocationList : LiveData<ArrayList<LocationData>> get() = _checkLocationList
+    val checkLocationList: LiveData<ArrayList<LocationData>> get() = _checkLocationList
 
+    fun setInfoMessage(message: String) {
+        _infoMessage.postValue(message)
+    }
 
     fun setSKTMapApikeySuccess() {
         _sktMapApikeyAuth.postValue(true)
@@ -22,15 +28,16 @@ class MainViewModel : BaseViewModel() {
     fun setSKTMapApikeyFail() {
         _sktMapApikeyAuth.postValue(false)
     }
-    fun isSKTMapApikeySuccess(): Boolean{
+
+    fun isSKTMapApikeySuccess(): Boolean {
         return _sktMapApikeyAuth.value!!
     }
 
-    fun addLocation(locationData: LocationData){
+    fun addLocation(locationData: LocationData) {
         _checkLocationList.value!!.add(locationData)
     }
 
-    fun setCheckLocationList(list : ArrayList<LocationData>){
+    fun setCheckLocationList(list: ArrayList<LocationData>) {
         _checkLocationList.value = list
     }
 }

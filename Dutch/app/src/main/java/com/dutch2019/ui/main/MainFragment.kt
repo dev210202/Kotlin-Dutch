@@ -12,6 +12,7 @@ import com.dutch2019.R
 import com.dutch2019.adapter.MainRecyclerAdapter
 import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationDataList
+import com.dutch2019.util.NetWorkStatus
 import com.dutch2019.util.checkNetWorkStatus
 
 @AndroidEntryPoint
@@ -69,7 +70,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
             if (locationSetList.size < 2) {
                 Toast.makeText(context, "위치를 2개 이상으로 설정해주세요!", Toast.LENGTH_LONG).show()
             }
-            else if(checkNetWorkStatus(requireContext()) == "NONE"){
+            else if(checkNetWorkStatus(requireContext()) == NetWorkStatus.NONE){
                 Toast.makeText(context, "인터넷 연결을 확인해주세요!", Toast.LENGTH_LONG).show()
             }
             else {

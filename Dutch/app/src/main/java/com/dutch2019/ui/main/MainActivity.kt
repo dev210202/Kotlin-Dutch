@@ -9,6 +9,7 @@ import com.dutch2019.BuildConfig
 import com.dutch2019.R
 import com.dutch2019.base.BaseActivity
 import com.dutch2019.databinding.ActivityMainBinding
+import com.dutch2019.util.NetWorkStatus
 import com.dutch2019.util.checkNetWorkStatus
 import com.kakao.sdk.common.util.Utility
 import com.skt.Tmap.TMapTapi
@@ -44,11 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 // 에러 메시지 표시
             }
         }
-
-        var keyHash = Utility.getKeyHash(this)
-        Log.i("keyHash", keyHash)
-
-        Log.i("NETWORK CHECK", checkNetWorkStatus(this))
 
         binding.root.viewTreeObserver.addOnPreDrawListener(object :
             ViewTreeObserver.OnPreDrawListener {

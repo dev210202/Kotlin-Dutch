@@ -4,21 +4,20 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
 
-
-fun checkNetWorkStatus(context: Context) : String{
+enum class NetWorkStatus{
+    WIFI, MOBILE, NONE
+}
+fun checkNetWorkStatus(context: Context) : NetWorkStatus{
     val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val netWork = manager.activeNetworkInfo
 
-    // todo : network 유무에 따라 처리할것
     if(netWork != null){
         if(netWork.type == ConnectivityManager.TYPE_WIFI){
-            Log.i("WIFI", "!!")
-            return "WIFI"
+            return NetWorkStatus.WIFI
         }
         if(netWork.type == ConnectivityManager.TYPE_MOBILE){
-            Log.i("MOBILE", "!!")
-            return "MOBILE"
+            return NetWorkStatus.MOBILE
         }
     }
-    return "NONE"
+    return NetWorkStatus.NONE
 }
