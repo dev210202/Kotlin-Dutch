@@ -9,9 +9,6 @@ import com.dutch2019.BuildConfig
 import com.dutch2019.R
 import com.dutch2019.base.BaseActivity
 import com.dutch2019.databinding.ActivityMainBinding
-import com.dutch2019.util.NetWorkStatus
-import com.dutch2019.util.checkNetWorkStatus
-import com.kakao.sdk.common.util.Utility
 import com.skt.Tmap.TMapTapi
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +24,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         TMapTapi(this).apply {
             setOnAuthenticationListener(object : TMapTapi.OnAuthenticationListenerCallback {
+
                 override fun SKTMapApikeySucceed() = vm.setSKTMapApikeySuccess()
+
                 override fun SKTMapApikeyFailed(errorMessage: String?) {
                     vm.setSKTMapApikeyFail()
                     when (errorMessage) {
