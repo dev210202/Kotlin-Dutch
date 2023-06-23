@@ -5,16 +5,26 @@ import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.os.Process
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dutch2019.ui.error.ErrorActivity
-import com.dutch2019.ui.main.MainActivity
 import java.io.PrintWriter
 import java.io.StringWriter
 
+fun getMessageByErrorTypeClassify(errorMessage: String?) : String{
+    when(errorMessage){
+        "Forbidden" -> {
+           return "잘못된 앱키를 사용중입니다."
+        }
+        "Too Many Requests" -> {
+            return "호출 건수 제한을 초과했습니다."
+        }
+    }
+    return "TMap API 서버 오류 발생"
+}
 
 class ExceptionHandler(
-    application: Application,
-    private val crashlyticsExceptionHandler: Thread.UncaughtExceptionHandler
+    application: Application
 ) : Thread.UncaughtExceptionHandler {
 
     var lastActivity: Activity? = null
