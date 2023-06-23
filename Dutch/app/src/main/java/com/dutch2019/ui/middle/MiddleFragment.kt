@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
 import com.dutch2019.databinding.FragmentMiddleBinding
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.util.getSafetyText
 import com.dutch2019.util.marker.*
 import com.skt.Tmap.TMapTapi
 

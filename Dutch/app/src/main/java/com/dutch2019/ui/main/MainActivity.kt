@@ -32,7 +32,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
                 override fun SKTMapApikeyFailed(errorMessage: String?) {
                     vm.setConfirmedSktMapApikey()
-                    toast(getMessageByErrorTypeClassify(errorMessage))
+                    runOnUiThread{
+                        toast(getMessageByErrorTypeClassify(errorMessage))
+                    }
                 }
             })
             setSKTMapAuthentication("${BuildConfig.T_MAP_API}")

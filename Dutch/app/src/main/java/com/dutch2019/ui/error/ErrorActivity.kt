@@ -5,22 +5,19 @@ import android.os.Bundle
 import com.dutch2019.R
 import com.dutch2019.base.BaseActivity
 import com.dutch2019.databinding.ActivityErrorBinding
+import com.dutch2019.util.IntentValue
 
 class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error) {
 
-    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>("lastIntent") }
-
+    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(IntentValue.ERROR_TEXT) }
+    private val errorText by lazy { intent.getStringExtra(IntentValue.LAST_INTENT) }
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-
-        val errorText = intent.getStringExtra("errorText")
-
         binding.ivError.setOnClickListener {
             binding.tvError.text = errorText
         }
         binding.btnRefresh.setOnClickListener {
-                startActivity(lastActivityIntent)
+            startActivity(lastActivityIntent)
         }
     }
 
