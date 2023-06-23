@@ -49,6 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             override fun onPreDraw(): Boolean {
                 return if (vm.isConfirmedSktMapApikey()) {
                     binding.root.viewTreeObserver.removeOnPreDrawListener(this)
+                    setTheme(R.style.Theme_Dutch)
                     true
                 } else {
                     false
