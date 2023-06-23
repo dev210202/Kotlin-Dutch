@@ -17,9 +17,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintlayout_main_background"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3.5"
-            android:background="@color/black"
+            android:layout_height="wrap_content"
+
+            android:background="@color/black_splash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,9 +28,8 @@
                 android:id="@+id/imagebutton_main_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-
-                android:background="@drawable/ic_dutch_40"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/ic_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageButton>
@@ -38,13 +37,16 @@
 
             <TextView
                 android:id="@+id/textview_main_title"
-                style="@style/all_title"
+                style="@style/Pretendard_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="sans-serif-medium"
-                android:includeFontPadding="false"
-                android:text="중간지점을 찾기 위한\n위치를 설정해보세요"
+                android:layout_marginBottom="42dp"
+                android:text="@string/main_description"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imagebutton_main_logo"></TextView>
@@ -54,38 +56,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_main"
-
+            tools:listitem="@layout/item_main_dynamicbutton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8.5"
-            android:background="@color/white"
+            android:layout_weight="6.5"
+            android:background="@color/black_splash"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/white">
-
-
-            <com.tomer.fadingtextview.FadingTextView
-                android:id="@+id/fadingTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
-
-                android:gravity="center"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:texts="@array/main_infotext"
-                app:timeout="500"></com.tomer.fadingtextview.FadingTextView>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/buttonlayout"
@@ -96,27 +76,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_main_plus"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/layout_background_black"
-                >
-
-                <ImageButton
-                    android:id="@+id/imagebutton_main_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_search_white_24"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    ></ImageButton>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/button_main_search"
