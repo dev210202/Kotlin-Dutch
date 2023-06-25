@@ -1,52 +1,59 @@
 package com.dutch2019.ui.search
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
 import com.dutch2019.adapter.SearchRecyclerAdapter
 import com.dutch2019.databinding.FragmentSearchBinding
+import com.dutch2019.util.toast
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
     R.layout.fragment_search
 ) {
 
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val vm: SearchViewModel by viewModels()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.recyclerviewSearch.adapter = SearchRecyclerAdapter()
+        binding.recyclerviewSearch.adapter = SearchRecyclerAdapter(
+            onRightArrowButtonClicked = { locationData ->
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToLocationCheckFragment(
+                        locationData = locationData
+                    )
+                )
+            }
+        )
 
-        searchViewModel.locationList.observe(viewLifecycleOwner, Observer { list ->
-            if(list == null){
-                Toast.makeText(requireContext(), "검색된 값이 없습니다.", Toast.LENGTH_LONG).show()
-            }
-            else {
-                (binding.recyclerviewSearch.adapter as SearchRecyclerAdapter).setLocationDataList(list)
-            }
+        vm.tMapPOIItemList.observe(viewLifecycleOwner, Observer { list ->
+            (binding.recyclerviewSearch.adapter as SearchRecyclerAdapter).setTMapPOIItemList(list)
         })
 
-        binding.layoutSearch.setOnClickListener {
-            searchViewModel.search(binding.edittextSearch.text.toString())
+        vm.inputValue.observe(this) { input ->
+            vm.search(input, errorToast = { toastMessage ->
+                context!!.toast(toastMessage)
+            })
         }
-        binding.searchSearchbutton.setOnClickListener {
-            searchViewModel.search(binding.edittextSearch.text.toString())
+        binding.ibSearch.setOnClickListener {
+            vm.setInputValue(binding.etSearch.text.toString())
         }
-        binding.layoutRecent.setOnClickListener {
-            requireView().findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToRecentFragment()
-            )
-        }
-        binding.searchRecentbutton.setOnClickListener{
-            requireView().findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToRecentFragment()
-            )
+
+        binding.etSearch.setOnKeyListener { view, keyCode, p2 ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                vm.setInputValue(binding.etSearch.text.toString())
+            }
+            false
         }
     }
 }
