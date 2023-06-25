@@ -12,4 +12,5 @@
     <string name="main_description">만날 장소가 고민이라면\n중간지점에서 만나보세요!</string>
     <string name="item_location_add">위치 추가하기</string>
     <string name="main_middle_search_button">중간지점 찾기</string>
+    <string name="et_search">위치를 입력해주세요</string>
 </resources>

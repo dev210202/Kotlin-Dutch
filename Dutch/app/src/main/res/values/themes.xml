@@ -25,4 +25,8 @@
     <style name="Pretendard_SemiBold">
         <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
+
+    <style name="Pretendard_Regular">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
 </resources>
