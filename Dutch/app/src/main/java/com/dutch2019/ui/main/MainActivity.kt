@@ -25,6 +25,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         super.onCreate(savedInstanceState)
 
+        setTMapAPIAuth()
+        vm.loadRecentDB()
+
+        vm.isConfirmedSktMapApikey.observe(this) {
+            binding.root.viewTreeObserver.dispatchOnPreDraw()
+        }
+
+        binding.root.viewTreeObserver.addOnPreDrawListener(createPreDrawListener())
+
+    }
+
+    private fun createPreDrawListener(): ViewTreeObserver.OnPreDrawListener {
+        return object: ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                return if (vm.isConfirmedSktMapApikey()) {
+                    binding.root.viewTreeObserver.removeOnPreDrawListener(this)
+                    setTheme(R.style.Theme_Dutch)
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+    }
+    private fun setTMapAPIAuth() {
         TMapTapi(this).apply {
             setOnAuthenticationListener(object : TMapTapi.OnAuthenticationListenerCallback {
 
@@ -39,22 +64,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             })
             setSKTMapAuthentication("${BuildConfig.T_MAP_API}")
         }
-
-        vm.isConfirmedSktMapApikey.observe(this) {
-            binding.root.viewTreeObserver.dispatchOnPreDraw()
-        }
-
-        binding.root.viewTreeObserver.addOnPreDrawListener(object :
-            ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                return if (vm.isConfirmedSktMapApikey()) {
-                    binding.root.viewTreeObserver.removeOnPreDrawListener(this)
-                    setTheme(R.style.Theme_Dutch)
-                    true
-                } else {
-                    false
-                }
-            }
-        })
     }
 }

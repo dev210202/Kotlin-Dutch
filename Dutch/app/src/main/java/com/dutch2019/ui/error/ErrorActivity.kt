@@ -9,8 +9,8 @@ import com.dutch2019.util.IntentValue
 
 class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error) {
 
-    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(IntentValue.ERROR_TEXT) }
-    private val errorText by lazy { intent.getStringExtra(IntentValue.LAST_INTENT) }
+    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(IntentValue.LAST_INTENT) }
+    private val errorText by lazy { intent.getStringExtra(IntentValue.ERROR_TEXT) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.ivError.setOnClickListener {

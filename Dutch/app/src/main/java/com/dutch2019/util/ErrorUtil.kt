@@ -78,7 +78,6 @@ class ExceptionHandler(
     private fun isSkipActivity(activity: Activity) = activity is ErrorActivity
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
-        Log.e("throwable", throwable.message.toString())
         lastActivity?.run {
             startErrorActivity(this, getErrorText(throwable))
         }
@@ -93,6 +92,7 @@ class ExceptionHandler(
             putExtra(IntentValue.LAST_INTENT, lastActivityIntent)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
+        Log.e("errorText", errorText)
         startActivity(errorActivityIntent)
         finish()
     }

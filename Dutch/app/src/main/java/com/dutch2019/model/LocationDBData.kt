@@ -33,4 +33,9 @@ data class LocationDBData(
         parcel.writeList(locations)
 
     }
+
+
+    fun convertLocationDBDataListToData(list : LocationDBDataList): List<LocationDBData>{
+        return list.value
+    }
 }

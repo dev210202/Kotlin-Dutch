@@ -9,8 +9,10 @@ import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
+import com.dutch2019.ui.search.SearchFragmentArgs
 import com.dutch2019.util.NetWorkStatus
 import com.dutch2019.util.checkNetWorkStatus
+import com.dutch2019.util.convertLocationDBDataToDataList
 import com.dutch2019.util.toast
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,16 +27,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var list = MainFragmentArgs.fromBundle(requireArguments()).locationdatalist
-        if (list != null) {
-            vm.setLocationList(list)
-        }
-
         binding.recyclerviewMain.apply {
             adapter = MainRecyclerAdapter(
                 onLocationSearchButtonClicked = {
                     view!!.findNavController().navigate(
-                        MainFragmentDirections.actionMainFragmentToSearchFragment()
+                        MainFragmentDirections.actionMainFragmentToSearchFragment(
+                            locationdbdatalist = vm.getRecentLocationList().convertLocationDBDataToDataList()
+                        )
                     )
                 }, onLocationCloseButtonClicked = { position ->
                     vm.removeAtLocationList(position)
