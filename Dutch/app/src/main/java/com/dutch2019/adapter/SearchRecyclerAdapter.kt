@@ -37,16 +37,7 @@ class SearchRecyclerAdapter(
 
     override fun onBindViewHolder(holder: LocationDataViewHolder, position: Int) {
         val tMapPOIItem = locationDataList[position]
-        val locationData = convertTMapPOIItemToLocationData(locationDataList[position])
         holder.bind(tMapPOIItem)
-        holder.layoutSearch.setOnClickListener { view: View ->
-
-            view.findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToLocationCheckFragment(
-                    locationData = locationData
-                )
-            )
-        }
     }
 
     class LocationDataViewHolder(private val binding: ItemSearchBinding,
