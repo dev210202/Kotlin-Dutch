@@ -18,7 +18,7 @@ import com.dutch2019.model.LocationData
 class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
     R.layout.fragment_location_check
 ) {
-    private val viewModel: MainViewModel by activityViewModels()
+    private val vm: MainViewModel by activityViewModels()
     lateinit var locationData: LocationData
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -26,13 +26,13 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 
         LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
             locationData = data.locationData
-            binding.checkMaplayout.addView(mapSetting(locationData))
+            binding.layoutCheckMap.addView(mapSetting(locationData))
             binding.name = data.locationData.name
             binding.address = data.locationData.address
         }
 
-        binding.locationsetbutton.setOnClickListener { view ->
-            viewModel.addLocation(locationData)
+        binding.btnSetLocation.setOnClickListener { view ->
+            vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
             val navController = view.findNavController()
             navController.popBackStack()
             navController.popBackStack()
