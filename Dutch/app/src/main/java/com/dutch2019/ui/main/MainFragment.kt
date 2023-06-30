@@ -10,10 +10,7 @@ import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
 import com.dutch2019.ui.search.SearchFragmentArgs
-import com.dutch2019.util.NetWorkStatus
-import com.dutch2019.util.checkNetWorkStatus
-import com.dutch2019.util.convertLocationDBDataToDataList
-import com.dutch2019.util.toast
+import com.dutch2019.util.*
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,26 +25,32 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         super.onActivityCreated(savedInstanceState)
 
         binding.recyclerviewMain.apply {
-            adapter = MainRecyclerAdapter(
-                onLocationSearchButtonClicked = {
-                    view!!.findNavController().navigate(
-                        MainFragmentDirections.actionMainFragmentToSearchFragment(
-                            locationdbdatalist = vm.getRecentLocationList().convertLocationDBDataToDataList()
-                        )
+            adapter = MainRecyclerAdapter(onLocationSearchButtonClicked = { itemPosition ->
+                vm.setSelectedItemIndex(itemPosition)
+                view!!.findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToSearchFragment(
+                        locationdbdatalist = vm.getRecentLocationList()
+                            .convertLocationDBDataToDataList()
                     )
-                }, onLocationCloseButtonClicked = { position ->
-                    vm.removeAtLocationList(position)
-                }, onLocationAddButtonClicked = {
-                    vm.addLocation(LocationData())
-                    scrollToPosition((this.adapter as MainRecyclerAdapter).getLocationDataList().size - 1)
-                }
-            ).apply {
+                )
+            }, onLocationCloseButtonClicked = { position ->
+                vm.removeAtLocationList(position)
+                // change, remove
+            }, onLocationAddButtonClicked = {
+                vm.addLocation(LocationData())
+            }).apply {
                 setLocationDataList(vm.getLocationList())
             }
         }
 
         vm.locationList.observe(viewLifecycleOwner) { list ->
-            (binding.recyclerviewMain.adapter as MainRecyclerAdapter).setLocationDataList(list)
+            val changedList = list.toMutableList()
+            (binding.recyclerviewMain.adapter as MainRecyclerAdapter).setLocationDataList(
+                changedList
+            )
+            binding.recyclerviewMain.scrollToPosition(
+                (binding.recyclerviewMain.adapter as MainRecyclerAdapter).getLocationDataList().size - 1
+            )
         }
 
         binding.imagebuttonMainLogo.setOnClickListener {

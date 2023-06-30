@@ -1,5 +1,6 @@
 package com.dutch2019.util
 
+import android.util.Log
 import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationDBDataList
 import com.dutch2019.model.LocationData

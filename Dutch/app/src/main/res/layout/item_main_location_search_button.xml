@@ -18,7 +18,7 @@
 
         <FrameLayout
 
-            android:id="@+id/frameLayout"
+            android:id="@+id/layout_marker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="12dp"
@@ -41,7 +41,7 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/tv_name"
             style="@style/Pretendard_SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:textColor="@color/gray3"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/frameLayout"
+            app:layout_constraintStart_toEndOf="@+id/layout_marker"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout

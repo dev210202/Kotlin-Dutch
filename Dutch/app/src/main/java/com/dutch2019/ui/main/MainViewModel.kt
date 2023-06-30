@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val dataBaseRepository: DBRepository): BaseViewModel(){
+class MainViewModel @Inject constructor(private val dataBaseRepository: DBRepository) :
+    BaseViewModel() {
 
     private val _isConfirmedSktMapApikey = MutableLiveData<Boolean>(false)
     val isConfirmedSktMapApikey: LiveData<Boolean> get() = _isConfirmedSktMapApikey
@@ -26,6 +27,10 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
 
     private val _recentLocationList = MutableListLiveData<LocationDBData>()
     val recentLocationList: LiveData<List<LocationDBData>> get() = _recentLocationList
+
+    private val _selectedItemIndex = MutableLiveData<Int>()
+    val selectedItemIndex: LiveData<Int> get() = _selectedItemIndex
+
     init {
         createEmptyLeastLocationItems()
     }
@@ -39,12 +44,23 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
     }
 
     fun addLocation(locationData: LocationData) {
-        _locationList.add(locationData)
+        val list = _locationList.value!!.toMutableList()
+        list.add(locationData)
+        _locationList.value = list
     }
 
-    fun removeAtLocationList(position: Int){
-        _locationList.remove(_locationList.value!![position])
+    fun removeAtLocationList(position: Int) {
+        /*
+            list를 새롭게 변경하는 이유
+
+            locationList에서 삭제하면 list의 아이템의 참조가 같은거로 판단해서 recyclerview의 item이 업데이트 되지 않는다.
+            따라서 리스트를 복사한 새로운 리스트에서 제거한 뒤 다시 리스트의 값을 변경하여 반영하게 한다.
+         */
+        val list = _locationList.value!!.toMutableList()
+        list.removeAt(position)
+        _locationList.value = list
     }
+
     fun setLocationList(list: ArrayList<LocationData>) {
         _locationList.value = list
     }
@@ -61,11 +77,25 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
 
     fun loadRecentDB() {
         viewModelScope.launch {
-            _recentLocationList.value =  dataBaseRepository.getRecentData()
+            _recentLocationList.value = dataBaseRepository.getRecentData()
         }
     }
 
-    fun getRecentLocationList() : List<LocationDBData>{
+    fun getRecentLocationList(): List<LocationDBData> {
         return _recentLocationList.value!!
+    }
+
+    fun getSelectedItemIndex(): Int {
+        return _selectedItemIndex.value!!
+    }
+
+    fun setSelectedItemIndex(index: Int) {
+        _selectedItemIndex.value = index
+    }
+
+    fun changeLocationListItem(position: Int, locationData: LocationData) {
+        val list = _locationList.value!!.toMutableList()
+        list.set(index = position, element = locationData)
+        _locationList.value = list
     }
 }

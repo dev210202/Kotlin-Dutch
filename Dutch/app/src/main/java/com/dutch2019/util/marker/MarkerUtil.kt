@@ -2,6 +2,7 @@ package com.dutch2019.util.marker
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import androidx.core.content.ContextCompat
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 import com.dutch2019.R
@@ -104,3 +105,6 @@ fun setMarkRatioLocation(tMapView: TMapView, context: Context, ratioPoint: TMapP
 
     tMapView.addMarkerItem2(strId, marker)
 }
+
+fun getDefaultMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_gray)
+fun getChangedtMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_gray5)
