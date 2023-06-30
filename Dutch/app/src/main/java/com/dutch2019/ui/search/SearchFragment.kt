@@ -84,5 +84,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             binding.etSearch.text = null
             binding.recyclerviewSearch.adapter = recentAdapter
         }
+
+        binding.btnEdit.setOnClickListener {
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToRecentEditFragment()
+            )
+        }
     }
 }

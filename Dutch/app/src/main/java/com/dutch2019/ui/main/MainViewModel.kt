@@ -61,7 +61,7 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
 
     fun loadRecentDB() {
         viewModelScope.launch {
-            _recentLocationList.value =  dataBaseRepository.getRecentData().sortByRecentList()
+            _recentLocationList.value =  dataBaseRepository.getRecentData()
         }
     }
 
