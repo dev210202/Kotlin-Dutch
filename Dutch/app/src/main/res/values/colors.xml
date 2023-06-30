@@ -10,6 +10,7 @@
     <color name="layout_backgroundcontour_grey_light">@color/grey_light</color>
     <color name="dutch_ic_launcher_background">#EF4B33</color>
 
+    <color name="primary">#EF4B33</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
@@ -22,6 +23,9 @@
     <color name="dark_grey">#464646</color>
     <color name="blue">#103896</color>
     <color name="black_splash">#000000</color>
+    <color name="gray2">#D3D3D3</color>
     <color name="gray3">#AEAEAE</color>
+    <color name="gray4">#909090</color>
     <color name="gray5">#474747</color>
+    <color name="gray7">#1E1E1E</color>
 </resources>

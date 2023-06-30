@@ -50,6 +50,7 @@
                     android:layout_marginHorizontal="8dp"
                     android:background="@color/transparent"
                     android:hint="@string/et_search"
+                    android:textColorHint="@color/gray3"
                     android:inputType="text"
                     android:maxLines="2"
                     android:textSize="14sp"
@@ -97,6 +98,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
         <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/item_search"
             android:layout_marginTop="13dp"
             android:id="@+id/recyclerview_search"
             android:layout_width="match_parent"
