@@ -92,7 +92,6 @@ class MainRecyclerAdapter(
             }
             binding.btnClose.setOnClickListener {
                 onLocationCloseButtonClicked(position)
-
             }
             binding.layoutSearch.setOnClickListener {
                 onLocationSearchButtonClicked(position)

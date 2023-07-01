@@ -1,6 +1,7 @@
 package com.dutch2019.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.dutch2019.R
@@ -22,21 +23,19 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     var count = 0
     private val vm: MainViewModel by activityViewModels()
     private val mainAdapter by lazy {
-        MainRecyclerAdapter(
-            onLocationSearchButtonClicked = { itemPosition ->
-                vm.setSelectedItemIndex(itemPosition)
-                view!!.findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToSearchFragment(
-                        locationdbdatalist = vm.getRecentLocationList()
-                            .convertLocationDBDataToDataList()
-                    )
+        MainRecyclerAdapter(onLocationSearchButtonClicked = { itemPosition ->
+            vm.setSelectedItemIndex(itemPosition)
+            view!!.findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToSearchFragment(
+                    locationdbdatalist = vm.getRecentLocationList()
+                        .convertLocationDBDataToDataList()
                 )
-            }, onLocationCloseButtonClicked = { position ->
-                vm.removeAtLocationList(position)
-            }, onLocationAddButtonClicked = {
-                vm.addLocation(LocationData())
-            }
-        ).apply {
+            )
+        }, onLocationCloseButtonClicked = { position ->
+            vm.removeAtLocationList(position)
+        }, onLocationAddButtonClicked = {
+            vm.addLocation(LocationData())
+        }).apply {
             setLocationDataList(vm.getLocationList())
         }
     }
@@ -51,6 +50,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         vm.locationList.observe(viewLifecycleOwner) { list ->
             mainAdapter.setLocationDataList(list)
             binding.recyclerviewMain.scrollToPosition(mainAdapter.getLocationDataList().size - 1)
+
+            if (isExistTwoOrMoreLocation()) {
+                setActiveFindMiddleLocationBtn()
+            } else {
+                setDisableFindMiddleLocationBtn()
+            }
         }
 
         binding.imagebuttonMainLogo.setOnClickListener {
@@ -61,7 +66,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         binding.btnFindMiddlelocation.setOnClickListener {
             val locationList = vm.getLocationList()
 
-            if (isExistTwoOrMoreLocation(locationList)) {
+            if (isExistTwoOrMoreLocation()) {
                 checkFindMiddleLocationAvailable(locationList)
             } else {
                 context?.toast("위치를 2개 이상 설정해주세요!")
@@ -81,18 +86,16 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
     }
 
-    private fun isExistTwoOrMoreLocation(locationList: List<LocationData>): Boolean {
-        var locationCount = 0
-        locationList.forEach { locationData ->
-            if (locationCount >= 2) {
-                return@forEach
+    private fun isExistTwoOrMoreLocation(): Boolean {
+        var count = 0
+        mainAdapter.getLocationDataList().forEach { locationData ->
+            if (locationData.name.isNotEmpty()) {
+                count++
+                if (count >= 2) {
+                    return true
+                }
             }
-            if (locationData.lat != 0.0 && locationData.lon != 0.0) {
-                locationCount++
-            }
-        }
-        if (locationCount < 2) {
-            return true
+            Log.e("count", count.toString())
         }
         return false
     }
@@ -104,5 +107,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         } else {
             count++
         }
+    }
+
+    private fun setActiveFindMiddleLocationBtn() {
+        binding.btnFindMiddlelocation.setTextColor(getActiveTextColor(context!!))
+        binding.btnFindMiddlelocation.background = getActiveBackground(context!!)
+    }
+
+    private fun setDisableFindMiddleLocationBtn() {
+        binding.btnFindMiddlelocation.setTextColor(getDisableTextColor(context!!))
+        binding.btnFindMiddlelocation.background = getDisableBackground(context!!)
     }
 }
