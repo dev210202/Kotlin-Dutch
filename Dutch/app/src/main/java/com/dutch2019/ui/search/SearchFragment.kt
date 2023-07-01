@@ -1,20 +1,18 @@
 package com.dutch2019.ui.search
 
 import android.os.Bundle
-import android.transition.Visibility
 import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.dutch2019.base.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
 import com.dutch2019.adapter.EmptyDataObserver
 import com.dutch2019.adapter.RecentRecyclerAdapter
 import com.dutch2019.adapter.SearchRecyclerAdapter
+import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentSearchBinding
 import com.dutch2019.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
@@ -22,20 +20,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
 ) {
 
     private val vm: SearchViewModel by viewModels()
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val recentLocationList =
-            SearchFragmentArgs.fromBundle(requireArguments()).locationdbdatalist
-        vm.setRecentLocationList(recentLocationList.convertLocationDBDataListToData())
-        if (recentLocationList.value.isEmpty()) {
-            binding.btnEdit.visibility = View.INVISIBLE
-            binding.tvEmpty.visibility = View.VISIBLE
-        }
-
-        val emptyDataObserver = EmptyDataObserver(binding.recyclerviewSearch, binding.tvEmpty)
-        val searchAdapter = SearchRecyclerAdapter(onRightArrowButtonClicked = { locationData ->
+    private val recentLocationList by lazy { SearchFragmentArgs.fromBundle(requireArguments()).locationdbdatalist }
+    private val emptyDataObserver by lazy {
+        EmptyDataObserver(
+            binding.recyclerviewSearch,
+            binding.tvEmpty
+        )
+    }
+    private val searchAdapter by lazy {
+        SearchRecyclerAdapter(onRightArrowButtonClicked = { locationData ->
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToLocationCheckFragment(
                     locationData = locationData
@@ -44,28 +37,43 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }).apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
-        val recentAdapter = RecentRecyclerAdapter().apply {
+    }
+    private val recentAdapter by lazy {
+        RecentRecyclerAdapter().apply {
             setLocationDataList(vm.getRecentLocationList())
         }.apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        vm.setRecentLocationList(recentLocationList.convertLocationDBDataListToData())
+
+        if (recentLocationList.value.isEmpty()) {
+            setEmptyViewVisible()
+        }
+
         binding.recyclerviewSearch.apply {
             adapter = recentAdapter
         }
 
-
-
-        vm.tMapPOIItemList.observe(viewLifecycleOwner, Observer { list ->
+        vm.tMapPOIItemList.observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
                 binding.tvInfo.text = "검색결과"
                 binding.recyclerviewSearch.adapter = searchAdapter
-                (binding.recyclerviewSearch.adapter as SearchRecyclerAdapter).setTMapPOIItemList(list)
+                searchAdapter.setTMapPOIItemList(
+                    list
+                )
             }
-        })
+        }
 
-        vm.inputValue.observe(this) { input ->
-            vm.search(input, errorToast = { toastMessage ->
-                context!!.toast(toastMessage)
+        vm.inputValue.observe(viewLifecycleOwner) { input ->
+            vm.search(input, showToast = { toastMessage ->
+                activity!!.runOnUiThread {
+                    context!!.toast(toastMessage)
+                }
             })
         }
         binding.ibSearch.setOnClickListener {
@@ -80,9 +88,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }
 
         binding.ibClose.setOnClickListener {
-            binding.tvInfo.text = "최근검색"
-            binding.etSearch.text = null
-            binding.recyclerviewSearch.adapter = recentAdapter
+            setInitView()
         }
 
         binding.btnEdit.setOnClickListener {
@@ -90,5 +96,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                 SearchFragmentDirections.actionSearchFragmentToRecentEditFragment()
             )
         }
+    }
+
+    private fun setEmptyViewVisible() {
+        binding.btnEdit.visibility = View.INVISIBLE
+        binding.tvEmpty.visibility = View.VISIBLE
+    }
+
+    private fun setInitView() {
+        binding.tvInfo.text = "최근검색"
+        binding.etSearch.text = null
+        binding.recyclerviewSearch.adapter = recentAdapter
     }
 }

@@ -19,13 +19,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     R.layout.fragment_main
 ) {
 
-    private val vm: MainViewModel by activityViewModels()
     var count = 0
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding.recyclerviewMain.apply {
-            adapter = MainRecyclerAdapter(onLocationSearchButtonClicked = { itemPosition ->
+    private val vm: MainViewModel by activityViewModels()
+    private val mainAdapter by lazy {
+        MainRecyclerAdapter(
+            onLocationSearchButtonClicked = { itemPosition ->
                 vm.setSelectedItemIndex(itemPosition)
                 view!!.findNavController().navigate(
                     MainFragmentDirections.actionMainFragmentToSearchFragment(
@@ -35,22 +33,24 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
                 )
             }, onLocationCloseButtonClicked = { position ->
                 vm.removeAtLocationList(position)
-                // change, remove
             }, onLocationAddButtonClicked = {
                 vm.addLocation(LocationData())
-            }).apply {
-                setLocationDataList(vm.getLocationList())
             }
+        ).apply {
+            setLocationDataList(vm.getLocationList())
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        binding.recyclerviewMain.apply {
+            adapter = mainAdapter
         }
 
         vm.locationList.observe(viewLifecycleOwner) { list ->
-            val changedList = list.toMutableList()
-            (binding.recyclerviewMain.adapter as MainRecyclerAdapter).setLocationDataList(
-                changedList
-            )
-            binding.recyclerviewMain.scrollToPosition(
-                (binding.recyclerviewMain.adapter as MainRecyclerAdapter).getLocationDataList().size - 1
-            )
+            mainAdapter.setLocationDataList(list)
+            binding.recyclerviewMain.scrollToPosition(mainAdapter.getLocationDataList().size - 1)
         }
 
         binding.imagebuttonMainLogo.setOnClickListener {

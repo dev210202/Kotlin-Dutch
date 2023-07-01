@@ -10,7 +10,6 @@ import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.repository.DBRepository
-import com.dutch2019.util.sortByRecentList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,21 +43,11 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
     }
 
     fun addLocation(locationData: LocationData) {
-        val list = _locationList.value!!.toMutableList()
-        list.add(locationData)
-        _locationList.value = list
+        _locationList.add(locationData)
     }
 
     fun removeAtLocationList(position: Int) {
-        /*
-            list를 새롭게 변경하는 이유
-
-            locationList에서 삭제하면 list의 아이템의 참조가 같은거로 판단해서 recyclerview의 item이 업데이트 되지 않는다.
-            따라서 리스트를 복사한 새로운 리스트에서 제거한 뒤 다시 리스트의 값을 변경하여 반영하게 한다.
-         */
-        val list = _locationList.value!!.toMutableList()
-        list.removeAt(position)
-        _locationList.value = list
+        _locationList.remove(_locationList.value!![position])
     }
 
     fun setLocationList(list: ArrayList<LocationData>) {
@@ -67,12 +56,6 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
 
     fun getLocationList(): List<LocationData> {
         return _locationList.value!!
-    }
-
-    private fun createEmptyLeastLocationItems() {
-        _locationList.add(LocationData())
-        _locationList.add(LocationData())
-        _locationList.add(LocationData())
     }
 
     fun loadRecentDB() {
@@ -94,8 +77,12 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
     }
 
     fun changeLocationListItem(position: Int, locationData: LocationData) {
-        val list = _locationList.value!!.toMutableList()
-        list.set(index = position, element = locationData)
-        _locationList.value = list
+        _locationList.set(index = position, element = locationData)
+    }
+
+    private fun createEmptyLeastLocationItems() {
+        _locationList.add(LocationData())
+        _locationList.add(LocationData())
+        _locationList.add(LocationData())
     }
 }

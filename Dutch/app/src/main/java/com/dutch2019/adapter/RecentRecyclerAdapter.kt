@@ -40,6 +40,7 @@ class RecentRecyclerAdapter(
         fun bind(locationDBData: LocationDBData) {
             binding.address = locationDBData.centerAddress
             binding.locations = locationDBData.locations.getLocationsName()
+            // TODO : 리스트 아이템 클릭시 메인에 위치리스트에 데이터 세팅
         }
     }
 }
