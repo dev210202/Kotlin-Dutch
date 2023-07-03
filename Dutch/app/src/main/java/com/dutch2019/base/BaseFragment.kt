@@ -21,6 +21,7 @@ abstract class BaseFragment<B : ViewDataBinding>(
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.bind(view!!)!!
+        binding.lifecycleOwner = viewLifecycleOwner
         return view
     }
 

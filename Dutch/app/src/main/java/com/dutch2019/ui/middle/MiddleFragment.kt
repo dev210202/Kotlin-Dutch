@@ -19,6 +19,7 @@ import com.dutch2019.model.LocationDataList
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.util.dismissLoadingDialog
 import com.dutch2019.util.marker.*
+import com.dutch2019.util.markerIdValue
 import com.dutch2019.util.showLoadingDialog
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapTapi
@@ -32,7 +33,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
+        binding.vm = vm
         showLoadingDialog(requireActivity())
 
         MiddleFragmentArgs.fromBundle(requireArguments()).let { data ->
@@ -51,9 +52,9 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint(),  requireContext())
 
-        binding.maplayoutMiddle.addView(tMapView)
+        binding.layoutMiddle.addView(tMapView)
 
-        binding.buttonMiddleRatiosetting.setOnClickListener { view ->
+        binding.btnRatio.setOnClickListener { view ->
             view.findNavController().navigate(
                 MiddleFragmentDirections.actionMiddleFragmentToRatioFragment(
                     LocationDataList().convertLocationData(vm.getLocationList())
@@ -61,7 +62,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
             )
         }
 
-        binding.buttonCheckNearfacility.setOnClickListener { view ->
+        binding.btnCheckNearfacility.setOnClickListener { view ->
             view.findNavController().navigate(
                 MiddleFragmentDirections.actionMiddleFragmentToNearFragment(
                     vm.getCenterPoint().latitude.toFloat(),
@@ -72,17 +73,10 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         }
 
         vm.centerPointAddress.observe(viewLifecycleOwner, Observer {
-            binding.textviewMiddleAddress.text = it
             vm.saveLocations(vm.getLocationList())
             dismissLoadingDialog()
         })
-        vm.centerPointNearSubway.observe(viewLifecycleOwner, Observer {
-            binding.textviewMiddleNearsubway.text = it
-        })
 
-        vm.routeTime.observe(viewLifecycleOwner, Observer {
-            binding.textviewMiddleRoutetime.text = it
-        })
     }
 
     private fun setBallonOverlayClickEvent(tMapView: TMapView, viewModel: MiddleViewModel) {
@@ -91,22 +85,26 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
             val point = p1.tMapPoint
             viewModel.setCenterPointAddress(point)
             viewModel.setCenterPointNearSubway(point)
-            binding.textviewMiddleResult.text = p1.id
-            if (p1.id == "중간지점") {
-                binding.textviewMiddleResult.setTextColor(
-                    ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
-                )
-                viewModel.resetRouteTime()
-            } else if (p1.id == "비율변경지점") {
-                binding.textviewMiddleResult.setTextColor(
-                    ContextCompat.getColor(tMapView.rootView.context, R.color.blue)
-                )
-                viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
-            } else {
-                binding.textviewMiddleResult.setTextColor(
-                    ContextCompat.getColor(tMapView.rootView.context, R.color.black)
-                )
-                viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+            binding.tvInfo.text = p1.id
+            when (p1.id) {
+                markerIdValue.MIDDLE -> {
+                    binding.tvInfo.setTextColor(
+                        ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
+                    )
+                    viewModel.resetRouteTime()
+                }
+                markerIdValue.RATIO -> {
+                    binding.tvInfo.setTextColor(
+                        ContextCompat.getColor(tMapView.rootView.context, R.color.blue)
+                    )
+                    viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+                }
+                else -> {
+                    binding.tvInfo.setTextColor(
+                        ContextCompat.getColor(tMapView.rootView.context, R.color.gray2)
+                    )
+                    viewModel.setRouteTime(viewModel.getCenterPoint(), p1.latitude, p1.longitude)
+                }
             }
         }
 

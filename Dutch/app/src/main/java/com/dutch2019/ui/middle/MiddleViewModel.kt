@@ -27,13 +27,13 @@ class MiddleViewModel @Inject constructor(
     private var centerPoint = TMapPoint(0.0, 0.0)
     private var ratioPoint = TMapPoint(0.0, 0.0)
 
-    private val _centerPointAddress = MutableLiveData<String>()
+    private val _centerPointAddress = MutableLiveData<String>("")
     val centerPointAddress: LiveData<String> get() = _centerPointAddress
 
-    private val _centerPointNearSubway = MutableLiveData<String>()
+    private val _centerPointNearSubway = MutableLiveData<String>("")
     val centerPointNearSubway: LiveData<String> get() = _centerPointNearSubway
 
-    private val _routeTime = MutableLiveData<String>()
+    private val _routeTime = MutableLiveData<String>("")
     val routeTime: LiveData<String> get() = _routeTime
 
     private val _ratio = MutableLiveData<String>("5 : 5")
@@ -79,7 +79,6 @@ class MiddleViewModel @Inject constructor(
     fun setCenterPointAddress(point: TMapPoint) {
         viewModelScope.launch(Dispatchers.IO) {
             _centerPointAddress.postValue(tMapRepository.getAddress(point))
-
         }
     }
 
