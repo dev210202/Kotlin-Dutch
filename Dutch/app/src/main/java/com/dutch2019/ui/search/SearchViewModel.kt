@@ -10,6 +10,7 @@ import com.dutch2019.model.MutableListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dutch2019.repository.TMapRepository
 import com.dutch2019.util.isNotNull
+import com.dutch2019.util.toast
 import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -28,14 +29,13 @@ class SearchViewModel @Inject constructor(
 
     private val _recentLocationList = MutableListLiveData<LocationDBData>()
     val recentLocationList: LiveData<List<LocationDBData>> get() = _recentLocationList
-    fun search(input: String, errorToast: (String) -> Unit) {
+    fun search(input: String, showToast: (String) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val resultList = tMapRepository.findAll(input)
             if (resultList.isNotNull()) {
-                Log.e("?","?")
                 _tMapPOIItemList.postValue(resultList!!)
             } else {
-                _tMapPOIItemList.postValue(arrayListOf())
+                showToast("검색된 위치가 없습니다.")
             }
         }
     }
