@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.BuildConfig
 import com.dutch2019.base.BaseFragment
 import com.skt.Tmap.TMapView
@@ -71,6 +72,10 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
                 )
             )
 
+        }
+
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         vm.centerPointAddress.observe(viewLifecycleOwner, Observer {
