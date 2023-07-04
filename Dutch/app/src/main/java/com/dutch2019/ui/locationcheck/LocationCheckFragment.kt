@@ -2,6 +2,8 @@ package com.dutch2019.ui.locationcheck
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.dutch2019.base.BaseFragment
@@ -43,14 +45,11 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
     fun mapSetting(data: LocationData): TMapView {
         val markerItemPoint = TMapPoint(data.lat, data.lon)
 
-        val markerImage =
-            BitmapFactory.decodeResource(
-                requireContext().resources,
-                R.drawable.ic_marker_black
-            )
+        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker_check)
+        val bitmap = drawable!!.toBitmap()
 
         val markerItem = TMapMarkerItem().apply {
-            icon = markerImage
+            icon = bitmap
             tMapPoint = markerItemPoint
             setPosition(0.5F, 0.8F)
         }
