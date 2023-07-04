@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.base.BaseFragment
 import com.skt.Tmap.TMapMarkerItem
 import com.skt.Tmap.TMapPoint
@@ -34,11 +35,15 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
             binding.address = data.locationData.address
         }
 
-        binding.btnSetLocation.setOnClickListener { view ->
+        binding.btnSetLocation.setOnClickListener {
             vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
-            val navController = view.findNavController()
-            navController.popBackStack()
-            navController.popBackStack()
+            findNavController().apply {
+                popBackStack()
+                popBackStack()
+            }
+        }
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
