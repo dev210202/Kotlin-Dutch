@@ -39,7 +39,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }
     }
     private val recentAdapter by lazy {
-        RecentRecyclerAdapter().apply {
+        RecentRecyclerAdapter(
+            onRecentItemClicked = {locationDBdata ->
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToMainFragment(
+                        locationDBdata
+                    )
+                )
+            }
+        ).apply {
             setLocationDataList(vm.getRecentLocationList())
         }.apply {
             registerAdapterDataObserver(emptyDataObserver)

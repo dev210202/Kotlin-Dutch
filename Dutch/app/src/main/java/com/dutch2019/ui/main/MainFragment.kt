@@ -11,6 +11,7 @@ import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
+import com.dutch2019.ui.middle.MiddleFragmentArgs
 import com.dutch2019.ui.search.SearchFragmentArgs
 import com.dutch2019.util.*
 import com.kakao.sdk.common.util.Utility
@@ -43,6 +44,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
 
     override fun onViewCreated(view : View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        MainFragmentArgs.fromBundle(requireArguments()).locationdbdata.apply {
+            if(this.isNotNull()){
+                val loadedList =this!!.locations.toMutableList()
+                loadedList.add(LocationData())
+                vm.setLocationList(loadedList)
+            }
+        }
 
         binding.recyclerviewMain.apply {
             adapter = mainAdapter
