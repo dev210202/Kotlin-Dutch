@@ -12,6 +12,7 @@ import com.dutch2019.model.LocationDataList
 import com.dutch2019.util.getLocationsName
 
 class RecentRecyclerAdapter(
+    private val onRecentItemClicked : (LocationDBData) -> Unit,
 ) : RecyclerView.Adapter<RecentRecyclerAdapter.RecentDataViewHolder>() {
 
     private var locationDataList = listOf<LocationDBData>()
@@ -23,7 +24,7 @@ class RecentRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentDataViewHolder {
         val binding = ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecentDataViewHolder(binding)
+        return RecentDataViewHolder(binding, onRecentItemClicked)
     }
 
     override fun getItemCount(): Int = locationDataList.size
@@ -34,13 +35,16 @@ class RecentRecyclerAdapter(
 
     class RecentDataViewHolder(
         private val binding: ItemRecentBinding,
+        private val onRecentItemClicked : (LocationDBData) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         val layout = binding.layoutRecent
         fun bind(locationDBData: LocationDBData) {
             binding.address = locationDBData.centerAddress
             binding.locations = locationDBData.locations.getLocationsName()
-            // TODO : 리스트 아이템 클릭시 메인에 위치리스트에 데이터 세팅
+            binding.layoutRecent.setOnClickListener {
+                onRecentItemClicked(locationDBData)
+            }
         }
     }
 }

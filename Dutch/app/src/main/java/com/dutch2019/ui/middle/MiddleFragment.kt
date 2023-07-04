@@ -3,6 +3,7 @@ package com.dutch2019.ui.middle
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -30,8 +31,8 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 ) {
     private val vm: MiddleViewModel by activityViewModels()
     private val tMapView by lazy { TMapView(context) }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.vm = vm
         showLoadingDialog(requireActivity())

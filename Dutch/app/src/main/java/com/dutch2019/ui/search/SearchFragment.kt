@@ -39,15 +39,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }
     }
     private val recentAdapter by lazy {
-        RecentRecyclerAdapter().apply {
+        RecentRecyclerAdapter(
+            onRecentItemClicked = {locationDBdata ->
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToMainFragment(
+                        locationDBdata
+                    )
+                )
+            }
+        ).apply {
             setLocationDataList(vm.getRecentLocationList())
         }.apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         vm.setRecentLocationList(recentLocationList.convertLocationDBDataListToData())
 

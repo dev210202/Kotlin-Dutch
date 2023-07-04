@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
         _locationList.remove(_locationList.value!![position])
     }
 
-    fun setLocationList(list: ArrayList<LocationData>) {
+    fun setLocationList(list: List<LocationData>) {
         _locationList.value = list
     }
 

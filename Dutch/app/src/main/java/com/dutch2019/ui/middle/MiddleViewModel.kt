@@ -22,7 +22,7 @@ class MiddleViewModel @Inject constructor(
     private val dataBaseRepository: DBRepository,
 ) : BaseViewModel() {
 
-    private var locationList = ArrayList<LocationData>()
+    private var locationList = listOf<LocationData>()
 
     private var centerPoint = TMapPoint(0.0, 0.0)
     private var ratioPoint = TMapPoint(0.0, 0.0)
@@ -39,15 +39,15 @@ class MiddleViewModel @Inject constructor(
     private val _ratio = MutableLiveData<String>("5 : 5")
     val ratio: LiveData<String> get() = _ratio
 
-    fun setLocationList(list: ArrayList<LocationData>) {
+    fun setLocationList(list: List<LocationData>) {
         locationList = list
     }
 
-    fun getLocationList(): ArrayList<LocationData> {
+    fun getLocationList(): List<LocationData> {
         return locationList
     }
 
-    fun calculateCenterPoint(locationList: ArrayList<LocationData>): TMapPoint {
+    fun calculateCenterPoint(locationList: List<LocationData>): TMapPoint {
         var totalLat = 0.0
         var totalLon = 0.0
         locationList.forEach { data ->
@@ -110,7 +110,7 @@ class MiddleViewModel @Inject constructor(
         _routeTime.value = ""
     }
 
-    fun saveLocations(locationList: ArrayList<LocationData>) {
+    fun saveLocations(locationList: List<LocationData>) {
         val data = LocationDBData(
             0,
             centerPoint.latitude,
