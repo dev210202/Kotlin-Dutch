@@ -14,7 +14,7 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.ivError.setOnClickListener {
-            binding.tvError.text = errorText
+            binding.tvError.text = errorText.toString()
         }
         binding.btnRefresh.setOnClickListener {
             startActivity(lastActivityIntent)

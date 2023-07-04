@@ -29,7 +29,9 @@ class LocationDataList() : ArrayList<LocationData>(), Parcelable {
 
         val locationDataList = LocationDataList()
         list.forEach { locationData ->
-            locationDataList.add(locationData)
+            if(locationData.name.isNotEmpty()) {
+                locationDataList.add(locationData)
+            }
         }
         return locationDataList
     }

@@ -6,79 +6,83 @@
     <data>
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/gray7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <CheckBox
-
-                android:id="@+id/recenteditall_checkbox"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-
-                android:layout_marginStart="16dp"
-                android:button="@color/transparent"
-                android:checked="false"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/custom_checkbox"
+            <ImageButton
+                android:id="@+id/ib_left_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_left_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></CheckBox>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/recentedit_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="10dp"
-                android:text="전체선택"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/recenteditall_checkbox"
-                app:layout_constraintStart_toEndOf="@+id/recenteditall_checkbox"></TextView>
-
-            <Button
-                android:id="@+id/button_recentdelete"
+                style="@style/Pretendard_SemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:text="삭제"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/button_recentcomplete"></Button>
-            <Button
-                android:id="@+id/button_recentcomplete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:text="완료"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"></Button>
+                android:layout_marginVertical="16dp"
+                android:text="최근검색 편집"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ib_left_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ib_left_arrow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="horizontal"></LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
-
-            android:id="@+id/recyclerview_recentedit"
+            tools:listitem="@layout/item_recent_edit"
+            android:id="@+id/rv_recent_edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                style="@style/Pretendard_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_gray2_round"
+                android:text="전체 선택"
+                android:textColor="@color/gray5"
+                android:textSize="16sp" />
+
+            <Button
+                style="@style/Pretendard_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_gray_round"
+                android:text="0개 삭제"
+                android:textColor="@color/gray3"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
