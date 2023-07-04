@@ -2,6 +2,7 @@ package com.dutch2019.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.dutch2019.R
@@ -40,8 +41,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view : View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerviewMain.apply {
             adapter = mainAdapter

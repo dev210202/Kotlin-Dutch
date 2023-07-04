@@ -2,6 +2,7 @@ package com.dutch2019.ui.locationcheck
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
@@ -23,8 +24,8 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
     private val vm: MainViewModel by activityViewModels()
     lateinit var locationData: LocationData
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
             locationData = data.locationData
