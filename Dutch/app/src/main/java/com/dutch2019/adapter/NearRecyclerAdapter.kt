@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemNearBinding
@@ -12,8 +13,10 @@ import com.dutch2019.ui.near.NearFragmentDirections
 import com.dutch2019.util.*
 
 class NearRecyclerAdapter(
+    private val onItemClicked : (LocationData) -> Unit
 ) :
     RecyclerView.Adapter<NearRecyclerAdapter.NearViewHolder>() {
+
 
     private var selectedPosition = -1
     private var locationDataList = mutableListOf<LocationData>()
@@ -21,8 +24,16 @@ class NearRecyclerAdapter(
     fun setLocationDataList(list: List<LocationData>) {
         locationDataList = list.toMutableList()
         notifyDataSetChanged()
+
     }
 
+    fun setSelectedPosition(position: Int){
+        val beforePosition = selectedPosition
+        selectedPosition = position
+        notifyItemChanged(position)
+        notifyItemChanged(beforePosition)
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearViewHolder {
         val binding =
             ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,10 +46,8 @@ class NearRecyclerAdapter(
     override fun onBindViewHolder(holder: NearViewHolder, position: Int) {
         holder.bind(locationDataList[position])
         holder.layout.setOnClickListener {
-            val beforePosition = selectedPosition
-            selectedPosition = holder.adapterPosition
-            notifyItemChanged(position)
-            notifyItemChanged(beforePosition)
+            setSelectedPosition(holder.adapterPosition)
+            onItemClicked(locationDataList[position])
         }
         if(selectedPosition == position){
             holder.setBackgroundSelected()

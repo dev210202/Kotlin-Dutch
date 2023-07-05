@@ -52,6 +52,22 @@ fun mark(tMapView: TMapView, context: Context, locationData: LocationData, numbe
     tMapView.addMarkerItem2(marker.id, marker)
 }
 
+fun markNearFacility(tMapView: TMapView, context: Context, locationData: LocationData) {
+    val markerImage = ContextCompat.getDrawable(context, R.drawable.ic_marker_near)!!.toBitmap()
+    val markerItemPoint = TMapPoint(locationData.lat, locationData.lon)
+
+    val marker = MarkerOverlay(tMapView, context, locationData.name)
+    val strId = locationData.name
+
+    marker.id = strId
+    marker.changeTextRedColor(context)
+    marker.icon = markerImage
+    marker.setPosition(0.5F, 1F)
+    marker.tMapPoint = markerItemPoint
+    tMapView.addMarkerItem2(strId, marker)
+}
+
+
 fun markLocationList(tMapView: TMapView, context: Context, locationList: List<LocationData>) {
     locationList.forEach { locationData ->
         mark(tMapView, context, locationData, locationList.indexOf(locationData) + 1)
@@ -71,6 +87,11 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
     tMapView.addMarkerItem2(strId, marker)
 }
 
+fun markNearFacilityList(tMapView: TMapView, context: Context, locationList: List<LocationData>) {
+    locationList.forEach { locationData ->
+        markNearFacility(tMapView, context, locationData)
+    }
+}
 
 fun mapAutoZoom(
     tMapView: TMapView, locationList: List<LocationData>, centerPoint: TMapPoint, context: Context
