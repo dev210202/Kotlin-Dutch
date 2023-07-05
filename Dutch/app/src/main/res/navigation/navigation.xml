@@ -70,12 +70,6 @@
         android:id="@+id/nearFragment"
         android:name="com.dutch2019.ui.near.NearFragment"
         android:label="NearFragment" >
-        <argument
-            android:name="lat"
-            app:argType="float" />
-        <argument
-            android:name="lon"
-            app:argType="float" />
         <action
             android:id="@+id/action_nearFragment_to_infoFragment"
             app:destination="@id/infoFragment" />

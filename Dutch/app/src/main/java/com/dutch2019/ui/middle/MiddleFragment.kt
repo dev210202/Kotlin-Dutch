@@ -43,6 +43,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         }
 
         vm.setCenterPoint(vm.calculateCenterPoint(vm.getLocationList()))
+        vm.setSearchPoint(vm.getCenterPoint())
 
         markLocationList(tMapView, requireContext(), vm.getLocationList())
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
@@ -66,12 +67,8 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         binding.btnCheckNearfacility.setOnClickListener { view ->
             view.findNavController().navigate(
-                MiddleFragmentDirections.actionMiddleFragmentToNearFragment(
-                    vm.getCenterPoint().latitude.toFloat(),
-                    vm.getCenterPoint().longitude.toFloat()
-                )
+                MiddleFragmentDirections.actionMiddleFragmentToNearFragment()
             )
-
         }
 
         binding.ibLeftArrow.setOnClickListener {
@@ -89,6 +86,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         tMapView.setOnMarkerClickEvent { _, p1 ->
             val point = p1.tMapPoint
+            vm.setSearchPoint(point)
             viewModel.setCenterPointAddress(point)
             viewModel.setCenterPointNearSubway(point)
             binding.tvInfo.text = p1.id

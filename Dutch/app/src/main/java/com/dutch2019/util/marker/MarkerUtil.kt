@@ -13,10 +13,13 @@ import com.dutch2019.R
 import com.dutch2019.model.LocationData
 import com.dutch2019.util.changeToDP
 import com.dutch2019.util.markerIdValue
+import com.skt.Tmap.TMapMarkerItem2
+import com.skt.Tmap.TMapView.OnCalloutMarker2ClickCallback
 import java.lang.Exception
 
 
 fun mark(tMapView: TMapView, context: Context, locationData: LocationData, number: Int) {
+    tMapView.setOnMarkerClickEvent { p0, p1 -> }
     val markerItemPoint = TMapPoint(locationData.lat, locationData.lon)
     val drawable = ContextCompat.getDrawable(context, R.drawable.ic_marker_black)
     val bitmap = drawable!!.toBitmap()

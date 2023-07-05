@@ -9,9 +9,14 @@ import com.skt.Tmap.TMapPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
+import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.model.StartEndPointData
 import com.dutch2019.repository.DBRepository
 import com.dutch2019.repository.TMapRepository
+import com.dutch2019.util.filtNull
+import com.dutch2019.util.filtZero
+import com.skt.Tmap.TMapData
+import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +31,7 @@ class MiddleViewModel @Inject constructor(
 
     private var centerPoint = TMapPoint(0.0, 0.0)
     private var ratioPoint = TMapPoint(0.0, 0.0)
+    private var searchPoint = TMapPoint(0.0, 0.0)
 
     private val _centerPointAddress = MutableLiveData<String>("")
     val centerPointAddress: LiveData<String> get() = _centerPointAddress
@@ -38,6 +44,9 @@ class MiddleViewModel @Inject constructor(
 
     private val _ratio = MutableLiveData<String>("5 : 5")
     val ratio: LiveData<String> get() = _ratio
+
+    private val _facilityList = MutableListLiveData<LocationData>()
+    val facilityList: LiveData<List<LocationData>> get() = _facilityList
 
     fun setLocationList(list: List<LocationData>) {
         locationList = list
@@ -148,6 +157,69 @@ class MiddleViewModel @Inject constructor(
         _ratio.postValue(value)
     }
 
+    fun setSearchPoint(point : TMapPoint){
+        searchPoint = point
+    }
+    fun getSearchPoint(): TMapPoint{
+        return searchPoint
+    }
+
+    fun getNearFacilityCategory(input: String): String {
+
+        when (input) {
+            "대중교통" -> {
+                return "지하철;버스;버스정류장;"
+            }
+            "문화시설" -> {
+                return "주요시설물;문화시설;영화관;놀거리;"
+            }
+            "음식점" -> {
+                return "식음료;한식;중식;양식;"
+            }
+            "카페" -> {
+                return "카페"
+            }
+        }
+        return ""
+    }
+
+    fun searchNearFacility(point: TMapPoint, category: String) {
+        Log.i("category", category)
+        val tMapData = TMapData()
+        tMapData.findAroundNamePOI(
+            point,
+            category,
+            3,
+            50
+        ) { p0 ->
+            val locationArrayList = ArrayList<LocationData>()
+            if (p0 != null) {
+                for (i in 0 until p0.size) {
+                    val item = p0[i]
+                    if (isItemDataOK(item)) {
+                        locationArrayList.add(
+                            LocationData(
+                                item.poiid,
+                                item.poiName,
+                                filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " "+ filtNull(
+                                    filtZero(" "+item.buildingNo2)
+                                ),
+                                filtNull(" "+ item.telNo),
+                                item.poiPoint.latitude,
+                                item.poiPoint.longitude
+                            )
+                        )
+                    }
+
+                }
+                _facilityList.postValue(locationArrayList)
+            }
+        }
+    }
+
+    private fun isItemDataOK(item: TMapPOIItem): Boolean {
+        return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
+    }
     fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint): TMapPoint? {
         var changePoint = TMapPoint(0.0, 0.0)
         var ratioValue = Integer.valueOf(ratio.value?.split(" : ")?.get(0))
