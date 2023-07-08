@@ -2,29 +2,20 @@ package com.dutch2019.ui.near
 
 import android.graphics.PointF
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.dutch2019.base.BaseFragment
 import com.dutch2019.R
 import com.dutch2019.adapter.NearRecyclerAdapter
+import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentNearBinding
 import com.dutch2019.ui.middle.MiddleViewModel
-import com.dutch2019.util.*
+import com.dutch2019.util.category
+import com.dutch2019.util.getFacilitySearchCategory
 import com.dutch2019.util.marker.*
-import com.skt.Tmap.TMapMarkerItem
-import com.skt.Tmap.TMapMarkerItem2
-import com.skt.Tmap.TMapPoint
+import com.dutch2019.util.setActiveButton
 import com.skt.Tmap.TMapView
-import com.skt.Tmap.TMapView.OnCalloutMarker2ClickCallback
-import com.skt.Tmap.TMapView.OnCalloutRightButtonClickCallback
-import com.skt.Tmap.poi_item.TMapPOIItem
-import java.util.ArrayList
 
 class NearFragment : BaseFragment<FragmentNearBinding>(
     R.layout.fragment_near
@@ -33,9 +24,11 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
     private val tMapView by lazy { TMapView(context) }
     private val nearRecyclerAdapter by lazy {
         NearRecyclerAdapter(
-            onItemClicked = {
-
-        }).apply {
+            onItemClicked = { locationData ->
+                removeAllBallon(tMapView)
+                val clickedItem = tMapView.getMarkerItem2FromID(locationData.name)
+                clickedItem.onSingleTapUp(PointF(), tMapView)
+            }).apply {
             // add empty observer
         }
     }
@@ -53,7 +46,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
         setMarkRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
         mapAutoZoom(tMapView, vm.getLocationList(), vm.getSearchPoint(), requireContext())
-        setBallonOverlayClickEvent(tMapView)
+        setMarkerClickEvent(tMapView)
 
         binding.layoutNear.addView(tMapView)
 
@@ -72,6 +65,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
         override fun onClick(view: View) {
             setButtonStateDefault()
             setActiveButton(view as Button)
+            removeNearFacilityMarks(tMapView, vm.getFacilityList())
             when (view) {
                 binding.btnTransport -> {
                     vm.searchNearFacility(
@@ -108,42 +102,28 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
         binding.btnCulture.isSelected = false
     }
 
-
-    private fun setBallonOverlayClickEvent(tMapView: TMapView) {
-        tMapView.setOnCalloutRightButtonClickListener {
-            Log.e("RIGHTBUTTON", it.toString())
+    private fun setMarkerClickEvent(tMapView: TMapView) {
+        tMapView.setOnMarkerClickEvent { _, tMapMarkerItem ->
+            if(isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(tMapMarkerItem.id)) {
+                val clickedPoint = tMapMarkerItem.tMapPoint
+                vm.setSearchPoint(clickedPoint)
+                changeDefaultNearMarks(
+                    tMapView,
+                    requireContext(),
+                    vm.getFacilityList(),
+                    tMapMarkerItem
+                )
+                tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
+                changeNearPrimaryMark(tMapMarkerItem, requireContext())
+                val index = vm.getIndexToFacilityList(clickedPoint, tMapMarkerItem.id)
+                binding.rvNearFacility.scrollToPosition(index)
+                nearRecyclerAdapter.setSelectedPosition(index)
+            }
+            else{
+                val clickedPoint = tMapMarkerItem.tMapPoint
+                vm.setSearchPoint(clickedPoint)
+                tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
+            }
         }
-        tMapView.setOnClickListenerCallBack(object : OnClickListener,
-            TMapView.OnClickListenerCallback {
-            override fun onClick(p0: View?) {
-            }
-
-            override fun onPressEvent(
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
-                point: TMapPoint,
-                p3: PointF?
-            ): Boolean {
-                if(vm.isMarkClick(point)){
-                    vm.setSearchPoint(point)
-                    tMapView.setCenterPoint(point.longitude, point.latitude)
-                    nearRecyclerAdapter.setSelectedPosition(vm.getIndexToFacilityList(point) + 1)
-                }
-                else{
-                    Log.e("NOT MARK","!!")
-                }
-                return true
-            }
-
-            override fun onPressUpEvent(
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
-                p2: TMapPoint?,
-                p3: PointF?
-            ): Boolean {
-                return true
-            }
-
-        })
     }
 }

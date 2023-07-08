@@ -1,21 +1,20 @@
 package com.dutch2019.util.marker
 
 import android.content.Context
-import android.graphics.*
-import android.graphics.Paint.Align
-import android.util.Log
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapView
 import com.dutch2019.R
 import com.dutch2019.model.LocationData
 import com.dutch2019.util.changeToDP
 import com.dutch2019.util.markerIdValue
 import com.skt.Tmap.TMapMarkerItem2
-import com.skt.Tmap.TMapView.OnCalloutMarker2ClickCallback
-import java.lang.Exception
+import com.skt.Tmap.TMapPoint
+import com.skt.Tmap.TMapView
 
 
 fun mark(tMapView: TMapView, context: Context, locationData: LocationData, number: Int) {
@@ -39,7 +38,9 @@ fun mark(tMapView: TMapView, context: Context, locationData: LocationData, numbe
     }
 
     canvas.setBitmap(bitmap)
-    canvas.drawText(text, (bitmap.width / 2).toFloat(), ((bitmap.height / 2) + changeToDP(2, context)), paint)
+    canvas.drawText(
+        text, (bitmap.width / 2).toFloat(), ((bitmap.height / 2) + changeToDP(2, context)), paint
+    )
 
     val marker = MarkerOverlay(
         tMapView, context, locationData.name
@@ -90,6 +91,29 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
 fun markNearFacilityList(tMapView: TMapView, context: Context, locationList: List<LocationData>) {
     locationList.forEach { locationData ->
         markNearFacility(tMapView, context, locationData)
+    }
+}
+
+fun removeNearFacilityMarks(tMapView: TMapView, locationList: List<LocationData>) {
+    locationList.forEach { locationData ->
+        tMapView.removeMarkerItem2(
+            locationData.name
+        )
+    }
+}
+
+fun changeDefaultNearMarks(
+    tMapView: TMapView,
+    context: Context,
+    locationList: List<LocationData>,
+    clickedMarkerItem: TMapMarkerItem2
+) {
+    locationList.forEach { locationData ->
+        if (locationData.lat != clickedMarkerItem.latitude && locationData.lon != clickedMarkerItem.longitude) {
+            val markerItem = tMapView.getMarkerItem2FromID(locationData.name)
+            markerItem.icon =
+                ContextCompat.getDrawable(context, R.drawable.ic_marker_near)!!.toBitmap()
+        }
     }
 }
 
@@ -178,4 +202,29 @@ fun checkBottomLon(locationData: LocationData, lon: Double): Double {
     } else {
         lon
     }
+}
+
+fun removeAllBallon(tMapView: TMapView) {
+    tMapView.allMarkerItem2.forEach { tMapMarkerItem2 ->
+        val item = tMapMarkerItem2 as MarkerOverlay
+        item.markerTouch = false
+    }
+    tMapView.postInvalidate()
+}
+
+fun changeNearPrimaryMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
+    tMapMarkerItem.icon =
+        ContextCompat.getDrawable(context, R.drawable.ic_marker_primary)!!.toBitmap()
+}
+
+fun isNotMiddleMarker(id: String) =
+    id != markerIdValue.MIDDLE
+
+fun isNotLocationMarker(id: String, list: List<LocationData>): Boolean {
+    list.forEach { locationData ->
+        if (locationData.name == id) {
+            return false
+        }
+    }
+    return true
 }

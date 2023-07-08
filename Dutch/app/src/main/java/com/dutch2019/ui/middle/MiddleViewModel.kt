@@ -86,9 +86,9 @@ class MiddleViewModel @Inject constructor(
         ratioPoint = TMapPoint(0.0, 0.0)
     }
 
-    fun getIndexToFacilityList(item: TMapPoint): Int {
+    fun getIndexToFacilityList(item: TMapPoint, locationName : String): Int {
         val value = _facilityList.value!!.find {
-            it.lat == item.latitude && it.lon == item.longitude
+            it.lat == item.latitude && it.lon == item.longitude && it.name == locationName
         }
         return _facilityList.value!!.indexOf(value)
     }
@@ -185,23 +185,8 @@ class MiddleViewModel @Inject constructor(
         return searchPoint
     }
 
-    fun getNearFacilityCategory(input: String): String {
-
-        when (input) {
-            "대중교통" -> {
-                return "지하철;버스;버스정류장;"
-            }
-            "문화시설" -> {
-                return "주요시설물;문화시설;영화관;놀거리;"
-            }
-            "음식점" -> {
-                return "식음료;한식;중식;양식;"
-            }
-            "카페" -> {
-                return "카페"
-            }
-        }
-        return ""
+    fun getFacilityList() : List<LocationData> {
+        return _facilityList.value!!
     }
 
     fun searchNearFacility(point: TMapPoint, category: String) {
