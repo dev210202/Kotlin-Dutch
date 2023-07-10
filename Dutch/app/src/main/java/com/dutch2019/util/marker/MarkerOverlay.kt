@@ -6,7 +6,8 @@ import android.graphics.PointF
 import android.graphics.Rect
 import android.os.Handler
 import android.util.DisplayMetrics
-import android.view.View.MeasureSpec
+import android.util.Log
+import android.view.View.*
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
     var mAnimationCount = 0
     private var rect = Rect()
     var mMapView: TMapView = view
+    private var isCallOut = false
 
     init {
         val wmgr = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -85,6 +87,7 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
         canvas.drawBitmap(icon, 0f, 0f, null)
         canvas.restore()
         if (showCallout) {
+            balloonView.visibility = VISIBLE
             canvas.save()
             canvas.rotate(
                 -mapView.rotate,
@@ -108,12 +111,16 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
 
 
             calloutRect = rect
+            isCallOut = true
             canvas.restore()
         }
     }
 
     override fun onSingleTapUp(point: PointF?, mapView: TMapView): Boolean {
+        // marker event 부분
+        mapView.onMarker2ClickListener.onCalloutMarker2ClickEvent(this.id, this)
         mapView.showCallOutViewWithMarkerItemID(id)
+        Log.e("onSingleTapUp", "!!")
         return false
     }
 
@@ -145,4 +152,5 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
         balloonView.findViewById<TextView>(R.id.bubble_title)
             .setTextColor(ContextCompat.getColor(context, R.color.blue))
     }
+
 }

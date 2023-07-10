@@ -16,10 +16,10 @@
             android:id="@+id/action_mainFragment_to_middleFragment"
             app:destination="@id/middleFragment" />
         <argument
-            android:name="locationdatalist"
+            android:name="locationdbdata"
+            app:argType="com.dutch2019.model.LocationDBData"
             app:nullable="true"
-            android:defaultValue="@null"
-            app:argType="com.dutch2019.model.LocationDataList" />
+            android:defaultValue="@null"/>
 
 
     </fragment>
@@ -31,9 +31,15 @@
         <action
             android:id="@+id/action_searchFragment_to_locationCheckFragment"
             app:destination="@id/locationCheckFragment" />
+        <argument
+            android:name="locationdbdatalist"
+            app:argType="com.dutch2019.model.LocationDBDataList" />
         <action
-            android:id="@+id/action_searchFragment_to_recentFragment"
-            app:destination="@id/recentFragment" />
+            android:id="@+id/action_searchFragment_to_recentEditFragment"
+            app:destination="@id/recentEditFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
 
 
     </fragment>
@@ -64,28 +70,11 @@
         android:id="@+id/nearFragment"
         android:name="com.dutch2019.ui.near.NearFragment"
         android:label="NearFragment" >
-        <argument
-            android:name="lat"
-            app:argType="float" />
-        <argument
-            android:name="lon"
-            app:argType="float" />
         <action
             android:id="@+id/action_nearFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/recentFragment"
-        android:name="com.dutch2019.ui.recent.RecentFragment"
-        android:label="RecentFragment" >
 
-        <action
-            android:id="@+id/action_recentFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_recentFragment_to_recentEditFragment"
-            app:destination="@id/recentEditFragment" />
-    </fragment>
     <fragment
         android:id="@+id/recentEditFragment"
         android:name="com.dutch2019.ui.recentedit.RecentEditFragment"

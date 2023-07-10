@@ -72,12 +72,16 @@ class RecentEditRecyclerAdapter :
     inner class RecentEditDataViewHolder(private val binding: ItemRecentEditBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        var layout = binding.linearLayout
+        var layout = binding.layoutRecentEdit
+        var checkboxLayout = binding.layoutCheckbox
         var checkbox = binding.checkbox
 
         fun bind(locationDBData: LocationDBData, position: Int) {
             binding.address = locationDBData.centerAddress
             binding.locations = getLocationsName(locationDBData.locations)
+            checkboxLayout.setOnClickListener {
+                checkbox.isChecked
+            }
             checkbox.isChecked = checkList[position]
             checkbox.setOnClickListener {
                 checkList[position] = checkbox.isChecked

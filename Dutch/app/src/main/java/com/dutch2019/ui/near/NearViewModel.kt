@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dutch2019.base.BaseViewModel
 import com.skt.Tmap.TMapData
-import com.skt.Tmap.TMapPOIItem
 import com.skt.Tmap.TMapPoint
 import com.dutch2019.model.LocationData
 import com.dutch2019.util.filtNull
 import com.dutch2019.util.filtZero
+import com.skt.Tmap.poi_item.TMapPOIItem
 
 class NearViewModel : BaseViewModel() {
 

@@ -1,5 +1,16 @@
 package com.dutch2019.util
 
+object MarkerId {
+    const val MIDDLE = "중간지점"
+    const val RATIO = "비율변경지점"
+}
+
+object Category {
+    const val TRANSPORT = "대중교통"
+    const val FOOD = "음식점"
+    const val CAFE = "카페"
+    const val CULTURE = "문화시설"
+}
 fun filtNull(value: String): String {
     return value.replace(" null", "")
 }
@@ -13,16 +24,22 @@ fun filtBlank(value : String):String{
 fun filtDoubleBlank(value : String):String{
     return value.replace("  ", " ")
 }
-fun getSafetyText(safetyIndex: Int): String {
-    var safetyText = ""
-    if (safetyIndex >= 0 && safetyIndex <= 50) {
-        safetyText = "코로나 안전지수 : " + safetyIndex + " - 양호"
-    } else if (safetyIndex >= 51 && safetyIndex <= 70) {
-        safetyText = "코로나 안전지수 : " + safetyIndex + " - 보통"
-    } else if (safetyIndex >= 71 && safetyIndex <= 90) {
-        safetyText = "코로나 안전지수 : " + safetyIndex + " - 주의"
-    } else if (safetyIndex >= 91 && safetyIndex <= 100) {
-        safetyText = "코로나 안전지수 : " + safetyIndex + " - 경계"
+
+fun getFacilitySearchCategory(input: String): String {
+
+    when (input) {
+         Category.TRANSPORT -> {
+            return "지하철;버스;버스정류장;"
+        }
+        Category.CULTURE -> {
+            return "주요시설물;문화시설;영화관;놀거리;"
+        }
+        Category.FOOD -> {
+            return "식음료;한식;중식;양식;"
+        }
+        Category.CAFE -> {
+            return "카페"
+        }
     }
-    return safetyText
+    return ""
 }

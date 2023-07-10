@@ -9,10 +9,11 @@ import com.dutch2019.databinding.ItemRecentBinding
 import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.ui.recent.RecentFragmentDirections
+import com.dutch2019.util.getLocationsName
 
-class RecentRecyclerAdapter :
-    RecyclerView.Adapter<RecentRecyclerAdapter.RecentDataViewHolder>() {
+class RecentRecyclerAdapter(
+    private val onRecentItemClicked : (LocationDBData) -> Unit,
+) : RecyclerView.Adapter<RecentRecyclerAdapter.RecentDataViewHolder>() {
 
     private var locationDataList = listOf<LocationDBData>()
 
@@ -22,53 +23,28 @@ class RecentRecyclerAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentDataViewHolder {
-        val binding =
-            ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecentDataViewHolder(binding)
+        val binding = ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecentDataViewHolder(binding, onRecentItemClicked)
     }
 
     override fun getItemCount(): Int = locationDataList.size
 
     override fun onBindViewHolder(holder: RecentDataViewHolder, position: Int) {
         holder.bind(locationDataList[position])
-        holder.layout.setOnClickListener { view: View ->
-            view.findNavController().navigate(
-                RecentFragmentDirections.actionRecentFragmentToMainFragment(
-                    convertLocationDataList(locationDataList[position])
-                )
-            )
-        }
     }
 
-    class RecentDataViewHolder(private val binding: ItemRecentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class RecentDataViewHolder(
+        private val binding: ItemRecentBinding,
+        private val onRecentItemClicked : (LocationDBData) -> Unit,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        var layout = binding.linearLayout
-
+        val layout = binding.layoutRecent
         fun bind(locationDBData: LocationDBData) {
             binding.address = locationDBData.centerAddress
-            binding.locations = getLocationsName(locationDBData.locations)
-        }
-
-        fun getLocationsName(locationDataList: List<LocationData>) : String{
-            var locationsName = ""
-            locationDataList.forEach { locationData ->
-                if(locationsName.isNotEmpty()) {
-                    locationsName += " - " + locationData.name
-                }
-                else{
-                    locationsName += locationData.name
-                }
+            binding.locations = locationDBData.locations.getLocationsName()
+            binding.layoutRecent.setOnClickListener {
+                onRecentItemClicked(locationDBData)
             }
-            return locationsName
         }
-    }
-
-    private fun convertLocationDataList(locationDBData : LocationDBData) : LocationDataList{
-        val locationDataList = LocationDataList()
-        locationDBData.locations.forEach { locationData ->
-            locationDataList.add(locationData)
-        }
-        return locationDataList
     }
 }

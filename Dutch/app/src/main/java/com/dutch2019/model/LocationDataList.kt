@@ -25,11 +25,13 @@ class LocationDataList() : ArrayList<LocationData>(), Parcelable {
         }
     }
 
-    fun convertLocationData(list: ArrayList<LocationData>): LocationDataList {
+    fun convertLocationData(list: List<LocationData>): LocationDataList {
 
         val locationDataList = LocationDataList()
         list.forEach { locationData ->
-            locationDataList.add(locationData)
+            if(locationData.name.isNotEmpty()) {
+                locationDataList.add(locationData)
+            }
         }
         return locationDataList
     }

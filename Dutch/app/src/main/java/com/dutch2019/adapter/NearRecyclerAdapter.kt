@@ -1,28 +1,43 @@
 package com.dutch2019.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemNearBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.ui.near.NearFragmentDirections
+import com.dutch2019.util.*
 
-class NearRecyclerAdapter() :
+class NearRecyclerAdapter(
+    private val onItemClicked : (LocationData) -> Unit
+) :
     RecyclerView.Adapter<NearRecyclerAdapter.NearViewHolder>() {
 
 
-    private var locationDataList = ArrayList<LocationData>()
+    private var selectedPosition = -1
+    private var locationDataList = mutableListOf<LocationData>()
 
-    fun setLocationDataList(list: ArrayList<LocationData>) {
-        locationDataList = list
+    fun setLocationDataList(list: List<LocationData>) {
+        locationDataList = list.toMutableList()
         notifyDataSetChanged()
+
     }
 
+    fun setSelectedPosition(position: Int){
+        val beforePosition = selectedPosition
+        selectedPosition = position
+        notifyItemChanged(position)
+        notifyItemChanged(beforePosition)
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearViewHolder {
         val binding =
             ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NearViewHolder(binding)
+        return NearViewHolder(binding, parent.context)
     }
 
     override fun getItemCount(): Int = locationDataList.size
@@ -30,21 +45,35 @@ class NearRecyclerAdapter() :
 
     override fun onBindViewHolder(holder: NearViewHolder, position: Int) {
         holder.bind(locationDataList[position])
-        holder.infoButton.setOnClickListener { view ->
-            view.findNavController().navigate(
-                NearFragmentDirections.actionNearFragmentToInfoFragment(
-                    locationDataList[position]
-                )
-            )
+        holder.layout.setOnClickListener {
+            setSelectedPosition(holder.adapterPosition)
+            onItemClicked(locationDataList[position])
+        }
+        if(selectedPosition == position){
+            holder.setBackgroundSelected()
+        }
+        else{
+            holder.setBackgroundDefault()
         }
     }
 
-    class NearViewHolder(private val binding: ItemNearBinding) :
+    inner class NearViewHolder(
+        private val binding: ItemNearBinding,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
-
-        var infoButton = binding.infoButton
+         val layout = binding.layoutNear
         fun bind(locationData: LocationData) {
-            binding.locationdata = locationData
+            binding.name = locationData.name
+            binding.address = locationData.address
+        }
+        fun setBackgroundSelected(){
+            binding.layoutNear.setBackgroundColor(getSelectedBackgroundColor(context))
+            binding.tvNameItem.setTextColor(getSelectedTextColor(context))
+        }
+        fun setBackgroundDefault(){
+            binding.layoutNear.setBackgroundColor(getDefaultBackgroundColor(context))
+            binding.tvNameItem.setTextColor(getActiveTextColor(context))
         }
     }
 }
