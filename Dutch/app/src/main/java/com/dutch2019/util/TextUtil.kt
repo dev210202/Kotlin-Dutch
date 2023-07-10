@@ -1,11 +1,11 @@
 package com.dutch2019.util
 
-object markerIdValue {
+object MarkerId {
     const val MIDDLE = "중간지점"
     const val RATIO = "비율변경지점"
 }
 
-object category {
+object Category {
     const val TRANSPORT = "대중교통"
     const val FOOD = "음식점"
     const val CAFE = "카페"
@@ -28,16 +28,16 @@ fun filtDoubleBlank(value : String):String{
 fun getFacilitySearchCategory(input: String): String {
 
     when (input) {
-        category.TRANSPORT -> {
+         Category.TRANSPORT -> {
             return "지하철;버스;버스정류장;"
         }
-        category.CULTURE -> {
+        Category.CULTURE -> {
             return "주요시설물;문화시설;영화관;놀거리;"
         }
-        category.FOOD -> {
+        Category.FOOD -> {
             return "식음료;한식;중식;양식;"
         }
-        category.CAFE -> {
+        Category.CAFE -> {
             return "카페"
         }
     }

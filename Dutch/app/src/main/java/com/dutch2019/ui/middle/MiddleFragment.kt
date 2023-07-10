@@ -1,30 +1,22 @@
 package com.dutch2019.ui.middle
 
-import android.app.ProgressDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.dutch2019.BuildConfig
 import com.dutch2019.base.BaseFragment
 import com.skt.Tmap.TMapView
 import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
 import com.dutch2019.databinding.FragmentMiddleBinding
-import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.ui.main.MainViewModel
+import com.dutch2019.util.MarkerId
 import com.dutch2019.util.dismissLoadingDialog
 import com.dutch2019.util.marker.*
-import com.dutch2019.util.markerIdValue
 import com.dutch2019.util.showLoadingDialog
-import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapTapi
 
 @AndroidEntryPoint
 class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
@@ -91,13 +83,13 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
             viewModel.setCenterPointNearSubway(point)
             binding.tvInfo.text = p1.id
             when (p1.id) {
-                markerIdValue.MIDDLE -> {
+                MarkerId.MIDDLE -> {
                     binding.tvInfo.setTextColor(
                         ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
                     )
                     viewModel.resetRouteTime()
                 }
-                markerIdValue.RATIO -> {
+                MarkerId.RATIO -> {
                     binding.tvInfo.setTextColor(
                         ContextCompat.getColor(tMapView.rootView.context, R.color.blue)
                     )

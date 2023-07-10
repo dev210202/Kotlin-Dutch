@@ -153,7 +153,4 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
             .setTextColor(ContextCompat.getColor(context, R.color.blue))
     }
 
-    fun removeBallonView(){
-        balloonView.visibility = INVISIBLE
-    }
 }

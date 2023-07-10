@@ -11,7 +11,7 @@ import com.dutch2019.adapter.NearRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentNearBinding
 import com.dutch2019.ui.middle.MiddleViewModel
-import com.dutch2019.util.category
+import com.dutch2019.util.Category
 import com.dutch2019.util.getFacilitySearchCategory
 import com.dutch2019.util.marker.*
 import com.dutch2019.util.setActiveButton
@@ -23,12 +23,11 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
     private val vm: MiddleViewModel by activityViewModels()
     private val tMapView by lazy { TMapView(context) }
     private val nearRecyclerAdapter by lazy {
-        NearRecyclerAdapter(
-            onItemClicked = { locationData ->
-                removeAllBallon(tMapView)
-                val clickedItem = tMapView.getMarkerItem2FromID(locationData.name)
-                clickedItem.onSingleTapUp(PointF(), tMapView)
-            }).apply {
+        NearRecyclerAdapter(onItemClicked = { locationData ->
+            removeAllBallon(tMapView)
+            val clickedItem = tMapView.getMarkerItem2FromID(locationData.name)
+            clickedItem.onSingleTapUp(PointF(), tMapView)
+        }).apply {
             // add empty observer
         }
     }
@@ -61,41 +60,38 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
         binding.btnCafe.setOnClickListener(chipOnClickListener)
     }
 
-    inner class ChipOnClickListener() : OnClickListener {
+    inner class ChipOnClickListener : OnClickListener {
         override fun onClick(view: View) {
             setButtonStateDefault()
             setActiveButton(view as Button)
-            removeNearFacilityMarks(tMapView, vm.getFacilityList())
+            removeAllNearFacilityMark(tMapView, vm.getFacilityList())
+
             when (view) {
                 binding.btnTransport -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(category.TRANSPORT)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.TRANSPORT)
                     )
                 }
                 binding.btnFood -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(category.FOOD)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.FOOD)
                     )
                 }
                 binding.btnCafe -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(category.CAFE)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CAFE)
                     )
                 }
                 binding.btnCulture -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(category.CULTURE)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CULTURE)
                     )
                 }
             }
         }
     }
 
-    fun setButtonStateDefault() {
+    private fun setButtonStateDefault() {
         binding.btnTransport.isSelected = false
         binding.btnCafe.isSelected = false
         binding.btnFood.isSelected = false
@@ -104,22 +100,17 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
 
     private fun setMarkerClickEvent(tMapView: TMapView) {
         tMapView.setOnMarkerClickEvent { _, tMapMarkerItem ->
-            if(isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(tMapMarkerItem.id)) {
+            if (isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(tMapMarkerItem.id)
+            ) {
                 val clickedPoint = tMapMarkerItem.tMapPoint
                 vm.setSearchPoint(clickedPoint)
-                changeDefaultNearMarks(
-                    tMapView,
-                    requireContext(),
-                    vm.getFacilityList(),
-                    tMapMarkerItem
-                )
+                changeDefaultNearMarks(tMapView, requireContext(), vm.getFacilityList(), tMapMarkerItem)
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
                 changeNearPrimaryMark(tMapMarkerItem, requireContext())
                 val index = vm.getIndexToFacilityList(clickedPoint, tMapMarkerItem.id)
                 binding.rvNearFacility.scrollToPosition(index)
                 nearRecyclerAdapter.setSelectedPosition(index)
-            }
-            else{
+            } else {
                 val clickedPoint = tMapMarkerItem.tMapPoint
                 vm.setSearchPoint(clickedPoint)
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
