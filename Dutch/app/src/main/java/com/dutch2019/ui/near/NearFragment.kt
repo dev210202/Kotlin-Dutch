@@ -7,6 +7,7 @@ import android.view.View.OnClickListener
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import com.dutch2019.R
+import com.dutch2019.adapter.EmptyDataObserver
 import com.dutch2019.adapter.NearRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentNearBinding
@@ -22,13 +23,19 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
 ) {
     private val vm: MiddleViewModel by activityViewModels()
     private val tMapView by lazy { TMapView(context) }
+    private val emptyDataObserver by lazy {
+        EmptyDataObserver(
+                binding.rvNearFacility,
+                binding.tvEmpty
+        )
+    }
     private val nearRecyclerAdapter by lazy {
         NearRecyclerAdapter(onItemClicked = { locationData ->
             removeAllBallon(tMapView)
             val clickedItem = tMapView.getMarkerItem2FromID(locationData.name)
             clickedItem.onSingleTapUp(PointF(), tMapView)
         }).apply {
-            // add empty observer
+            registerAdapterDataObserver(emptyDataObserver)
         }
     }
     private val chipOnClickListener by lazy {
