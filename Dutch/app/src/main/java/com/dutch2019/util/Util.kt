@@ -22,4 +22,4 @@ fun List<LocationData>.getLocationsName(): String {
 
 fun List<LocationDBData>.convertLocationDBDataToDataList() = LocationDBDataList(value = this)
 
-fun changeToDP(value :Int , context: Context) = value * context!!.resources.displayMetrics.density
+fun changeToDP(value :Int , context: Context) = value * context.resources.displayMetrics.density

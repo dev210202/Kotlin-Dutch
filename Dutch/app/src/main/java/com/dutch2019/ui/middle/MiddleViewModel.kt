@@ -9,9 +9,15 @@ import com.skt.Tmap.TMapPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
+import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.model.StartEndPointData
 import com.dutch2019.repository.DBRepository
 import com.dutch2019.repository.TMapRepository
+import com.dutch2019.util.filtNull
+import com.dutch2019.util.filtZero
+import com.dutch2019.util.isNotNull
+import com.skt.Tmap.TMapData
+import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +32,7 @@ class MiddleViewModel @Inject constructor(
 
     private var centerPoint = TMapPoint(0.0, 0.0)
     private var ratioPoint = TMapPoint(0.0, 0.0)
+    private var searchPoint = TMapPoint(0.0, 0.0)
 
     private val _centerPointAddress = MutableLiveData<String>("")
     val centerPointAddress: LiveData<String> get() = _centerPointAddress
@@ -38,6 +45,9 @@ class MiddleViewModel @Inject constructor(
 
     private val _ratio = MutableLiveData<String>("5 : 5")
     val ratio: LiveData<String> get() = _ratio
+
+    private val _facilityList = MutableListLiveData<LocationData>()
+    val facilityList: LiveData<List<LocationData>> get() = _facilityList
 
     fun setLocationList(list: List<LocationData>) {
         locationList = list
@@ -69,12 +79,31 @@ class MiddleViewModel @Inject constructor(
     fun setRatioPoint(point: TMapPoint) {
         ratioPoint = point
     }
+
     fun getRatioPoint(): TMapPoint = ratioPoint
 
-    fun resetRatioPoint(){
+    fun resetRatioPoint() {
         ratioPoint = TMapPoint(0.0, 0.0)
     }
 
+    fun getIndexToFacilityList(item: TMapPoint, locationName : String): Int {
+        val value = _facilityList.value!!.find {
+            it.lat == item.latitude && it.lon == item.longitude && it.name == locationName
+        }
+        return _facilityList.value!!.indexOf(value)
+    }
+
+    fun isMarkClick(point: TMapPoint): Boolean {
+        Log.e("POINT", point.toString())
+        val value = _facilityList.value!!.find {
+            Log.e("POINT", it.toString())
+            it.lat == point.latitude && it.lon == point.longitude
+        }
+        if(value.isNotNull()){
+            return true
+        }
+        return false
+    }
 
     fun setCenterPointAddress(point: TMapPoint) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -148,12 +177,61 @@ class MiddleViewModel @Inject constructor(
         _ratio.postValue(value)
     }
 
+    fun setSearchPoint(point: TMapPoint) {
+        searchPoint = point
+    }
+
+    fun getSearchPoint(): TMapPoint {
+        return searchPoint
+    }
+
+    fun getFacilityList() : List<LocationData> {
+        return _facilityList.value!!
+    }
+
+    fun searchNearFacility(point: TMapPoint, category: String) {
+        val tMapData = TMapData()
+        tMapData.findAroundNamePOI(
+            point,
+            category,
+            3,
+            50
+        ) { p0 ->
+            val findList = mutableListOf<LocationData>()
+            if (p0 != null) {
+                for (i in 0 until p0.size) {
+                    val item = p0[i]
+                    if (isItemDataOK(item)) {
+                        findList.add(
+                            LocationData(
+                                item.poiid,
+                                item.poiName,
+                                filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
+                                    filtZero(" " + item.buildingNo2)
+                                ),
+                                filtNull(" " + item.telNo),
+                                item.poiPoint.latitude,
+                                item.poiPoint.longitude
+                            )
+                        )
+                    }
+
+                }
+                _facilityList.postValue(findList)
+            }
+        }
+    }
+
+    private fun isItemDataOK(item: TMapPOIItem): Boolean {
+        return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
+    }
+
     fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint): TMapPoint? {
         var changePoint = TMapPoint(0.0, 0.0)
         var ratioValue = Integer.valueOf(ratio.value?.split(" : ")?.get(0))
         when {
 
-            (ratioValue ==  5) -> {
+            (ratioValue == 5) -> {
                 changePoint = TMapPoint(
                     (point1.latitude + point2.latitude) / 2,
                     (point1.longitude + point2.longitude) / 2
@@ -164,29 +242,37 @@ class MiddleViewModel @Inject constructor(
             is1stQuadrant(point1, point2) -> {
 
                 Log.e("1", "!!")
-                var changeLat = ((10 - ratioValue) * point1.latitude + (ratioValue) * point2.latitude) / (10)
-                var changeLon = ((10 - ratioValue) * point1.longitude + ratioValue * point2.longitude) / (10)
+                var changeLat =
+                    ((10 - ratioValue) * point1.latitude + (ratioValue) * point2.latitude) / (10)
+                var changeLon =
+                    ((10 - ratioValue) * point1.longitude + ratioValue * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is2ndQuadrant(point1, point2) -> {
 
                 Log.e("2", "!!")
-                var changeLat = ((10 - ratioValue) * point1.latitude + ratioValue * point2.latitude) / (10)
-                var changeLon = (ratioValue * point2.longitude + (10 - ratioValue) * point1.longitude) / (10)
+                var changeLat =
+                    ((10 - ratioValue) * point1.latitude + ratioValue * point2.latitude) / (10)
+                var changeLon =
+                    (ratioValue * point2.longitude + (10 - ratioValue) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is3rdQuadrant(point1, point2) -> {
 
                 Log.e("3", "!!")
-                var changeLat = (ratioValue * point2.latitude + (10 - ratioValue) * point1.latitude) / (10)
-                var changeLon = (ratioValue * point2.longitude + (10 - ratioValue) * point1.longitude) / (10)
+                var changeLat =
+                    (ratioValue * point2.latitude + (10 - ratioValue) * point1.latitude) / (10)
+                var changeLon =
+                    (ratioValue * point2.longitude + (10 - ratioValue) * point1.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
             is4thQuadrant(point1, point2) -> {
 
                 Log.e("4", "!!")
-                var changeLat = (ratioValue * point2.latitude + (10 - ratioValue) * point1.latitude) / (10)
-                var changeLon = ((10 - ratioValue) * point1.longitude + ratioValue * point2.longitude) / (10)
+                var changeLat =
+                    (ratioValue * point2.latitude + (10 - ratioValue) * point1.latitude) / (10)
+                var changeLon =
+                    ((10 - ratioValue) * point1.longitude + ratioValue * point2.longitude) / (10)
                 changePoint = TMapPoint(changeLat, changeLon)
             }
         }

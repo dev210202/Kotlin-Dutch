@@ -4,128 +4,199 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black">
+            android:background="@color/gray7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView2"
+            <ImageButton
+                android:id="@+id/ib_left_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="16dp"
-                android:includeFontPadding="false"
-                android:text="친구에게 중간지점을 공유해보세요!"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_left_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Pretendard_SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:text="주변시설 살펴보기"
                 android:textColor="@color/white"
-                android:textSize="24dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_near"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_near">
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/tv_empty"
+                style="@style/Pretendard_Medium"
+                android:textSize="14sp"
+                android:textColor="@color/gray4"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                tools:text="검색 결과가 없습니다.\n 다른 카테고리를 선택해주세요."
+                app:layout_constraintBottom_toBottomOf="@+id/layout_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:id="@+id/layout_chips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/textView2">
+                android:paddingHorizontal="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/rv_near_facility"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <Button
-
-                    android:id="@+id/button_near_transport"
+                    android:id="@+id/btn_transport"
+                    style="@style/Pretendard_Medium"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/nearfacility_traffic_button"
-
-                    android:gravity="center"
-                    android:includeFontPadding="false"
+                    android:background="@drawable/button_nearfacility_chip"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:text="대중교통"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16dp"></Button>
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp" />
 
                 <Button
+                    android:id="@+id/btn_food"
+                    style="@style/Pretendard_Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_nearfacility_chip"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="음식점"
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp" />
 
-                    android:id="@+id/button_near_culture"
+                <Button
+                    android:id="@+id/btn_cafe"
+                    style="@style/Pretendard_Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_nearfacility_chip"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="카페"
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_culture"
+                    style="@style/Pretendard_Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/nearfacility_culture_button"
-
-                    android:gravity="center"
-                    android:includeFontPadding="false"
+                    android:background="@drawable/button_nearfacility_chip"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:text="문화시설"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"></Button>
-
-
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp" />
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/rv_near_facility"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/layout_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_chips"
+                tools:listitem="@layout/item_near" />
+
             <LinearLayout
+                android:id="@+id/layout_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <Button
-                    android:id="@+id/button_near_food"
+                    android:id="@+id/btn_share"
+                    style="@style/Pretendard_Bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_weight="1"
-                    android:background="@drawable/nearfacility_restaurant_button"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-
-                    android:textStyle="bold"
-                    android:text="음식점"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"></Button>
-
-                <Button
-
-                    android:id="@+id/button_near_cafe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/nearfacility_button"
-
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="카페"
-                    android:textColor="@color/white"
-
-                    android:textStyle="bold"
-                    android:textSize="16dp"></Button>
+                    android:background="@drawable/button_gray_round"
+                    android:text="친구에게 공유하기"
+                    android:textColor="@color/gray2"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
-            android:id="@+id/recyclerview_near"
 
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
