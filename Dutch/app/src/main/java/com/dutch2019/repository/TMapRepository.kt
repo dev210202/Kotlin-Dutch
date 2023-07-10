@@ -14,6 +14,7 @@ import java.lang.Exception
 class TMapRepository(private val api: TMapService) {
 
     fun findAll(input: String): ArrayList<TMapPOIItem>? = TMapData().findAllPOI(input)
+    fun findNearFacility(point: TMapPoint, category: String): ArrayList<TMapPOIItem>? = TMapData().findAroundNamePOI(point, category, 3, 50)
 
     fun getAddress(point: TMapPoint): String {
         try {
@@ -24,13 +25,10 @@ class TMapRepository(private val api: TMapService) {
     }
 
     fun getNearSubway(point: TMapPoint): String {
-        val tMapPOIItems = TMapData().findAroundNamePOI(
-            point, "지하철", 20, 3
-        )
-        return if (tMapPOIItems.isEmpty()) {
-            "근처 지하철이 없습니다"
-        } else {
-            tMapPOIItems[0].poiName
+        try {
+            return TMapData().findAroundNamePOI(point, "지하철", 20, 3)[0].poiName
+        } catch (e: Exception) {
+            return "근처 지하철이 없습니다."
         }
     }
 

@@ -3,7 +3,7 @@ package com.dutch2019.ui.near
 import android.graphics.PointF
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnClickListener
+import android.view.View.*
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import com.dutch2019.R
@@ -18,16 +18,11 @@ import com.dutch2019.util.marker.*
 import com.dutch2019.util.setActiveButton
 import com.skt.Tmap.TMapView
 
-class NearFragment : BaseFragment<FragmentNearBinding>(
-    R.layout.fragment_near
-) {
+class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
     private val vm: MiddleViewModel by activityViewModels()
     private val tMapView by lazy { TMapView(context) }
     private val emptyDataObserver by lazy {
-        EmptyDataObserver(
-                binding.rvNearFacility,
-                binding.tvEmpty
-        )
+        EmptyDataObserver(binding.rvNearFacility, binding.tvEmpty)
     }
     private val nearRecyclerAdapter by lazy {
         NearRecyclerAdapter(onItemClicked = { locationData ->
@@ -57,6 +52,9 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
         binding.layoutNear.addView(tMapView)
 
         vm.facilityList.observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()) {
+                setEmptyViewVisible()
+            }
             binding.rvNearFacility.adapter = nearRecyclerAdapter
             nearRecyclerAdapter.setLocationDataList(list)
             markNearFacilityList(tMapView, requireContext(), list)
@@ -72,27 +70,19 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
             setButtonStateDefault()
             setActiveButton(view as Button)
             removeAllNearFacilityMark(tMapView, vm.getFacilityList())
-
+            setEmptyViewInvisible()
             when (view) {
                 binding.btnTransport -> {
-                    vm.searchNearFacility(
-                        vm.getSearchPoint(), getFacilitySearchCategory(Category.TRANSPORT)
-                    )
+                    vm.searchNearFacility(vm.getSearchPoint(), getFacilitySearchCategory(Category.TRANSPORT))
                 }
                 binding.btnFood -> {
-                    vm.searchNearFacility(
-                        vm.getSearchPoint(), getFacilitySearchCategory(Category.FOOD)
-                    )
+                    vm.searchNearFacility(vm.getSearchPoint(), getFacilitySearchCategory(Category.FOOD))
                 }
                 binding.btnCafe -> {
-                    vm.searchNearFacility(
-                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CAFE)
-                    )
+                    vm.searchNearFacility(vm.getSearchPoint(), getFacilitySearchCategory(Category.CAFE))
                 }
                 binding.btnCulture -> {
-                    vm.searchNearFacility(
-                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CULTURE)
-                    )
+                    vm.searchNearFacility(vm.getSearchPoint(), getFacilitySearchCategory(Category.CULTURE))
                 }
             }
         }
@@ -107,8 +97,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
 
     private fun setMarkerClickEvent(tMapView: TMapView) {
         tMapView.setOnMarkerClickEvent { _, tMapMarkerItem ->
-            if (isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(tMapMarkerItem.id)
-            ) {
+            if (isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(tMapMarkerItem.id)) {
                 val clickedPoint = tMapMarkerItem.tMapPoint
                 vm.setSearchPoint(clickedPoint)
                 changeDefaultNearMarks(tMapView, requireContext(), vm.getFacilityList(), tMapMarkerItem)
@@ -123,5 +112,13 @@ class NearFragment : BaseFragment<FragmentNearBinding>(
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
             }
         }
+    }
+
+    private fun setEmptyViewVisible() {
+        binding.tvEmpty.visibility = VISIBLE
+    }
+
+    private fun setEmptyViewInvisible() {
+        binding.tvEmpty.visibility = INVISIBLE
     }
 }
