@@ -6,11 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Process
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.dutch2019.ui.error.ErrorActivity
 import java.io.PrintWriter
 import java.io.StringWriter
+import kotlin.Unit.toString
 
 object IntentValue {
     const val LAST_INTENT = "LAST_INTENT"
@@ -25,16 +24,13 @@ fun getMessageByErrorTypeClassify(errorMessage: String?): String {
     return "TMap API 서버 오류 발생"
 }
 
-class ExceptionHandler(
-    application: Application
-) : Thread.UncaughtExceptionHandler {
+class ExceptionHandler(application: Application) : Thread.UncaughtExceptionHandler {
 
     var lastActivity: Activity? = null
     private var activityCount = 0
 
     init {
-        application.registerActivityLifecycleCallbacks(object :
-            Application.ActivityLifecycleCallbacks {
+        application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 if (isSkipActivity(activity)) {
@@ -79,7 +75,7 @@ class ExceptionHandler(
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
         lastActivity?.run {
-            startErrorActivity(this, getErrorText(throwable))
+            startErrorActivity(this, throwable.cause!!.stackTraceToString())
         }
         Process.killProcess(Process.myPid())
         System.exit(0)
@@ -92,14 +88,8 @@ class ExceptionHandler(
             putExtra(IntentValue.LAST_INTENT, lastActivityIntent)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        Log.e("errorText", errorText)
         startActivity(errorActivityIntent)
         finish()
     }
 
-}
-
-private fun getErrorText(throwable: Throwable): String {
-    val stringWriter = StringWriter()
-    return throwable.printStackTrace(PrintWriter(stringWriter)).toString()
 }

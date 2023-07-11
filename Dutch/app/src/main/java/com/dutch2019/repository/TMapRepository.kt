@@ -17,18 +17,18 @@ class TMapRepository(private val api: TMapService) {
     fun findNearFacility(point: TMapPoint, category: String): ArrayList<TMapPOIItem>? = TMapData().findAroundNamePOI(point, category, 3, 50)
 
     fun getAddress(point: TMapPoint): String {
-        try {
-            return TMapData().convertGpsToAddress(point.latitude, point.longitude)
+        return try {
+            TMapData().convertGpsToAddress(point.latitude, point.longitude)
         } catch (e: Exception) {
-            return "상세주소가 없습니다."
+            "상세주소가 없습니다."
         }
     }
 
     fun getNearSubway(point: TMapPoint): String {
-        try {
-            return TMapData().findAroundNamePOI(point, "지하철", 20, 3)[0].poiName
+        return try {
+            TMapData().findAroundNamePOI(point, "지하철", 20, 3)[0].poiName
         } catch (e: Exception) {
-            return "근처 지하철이 없습니다."
+            "근처 지하철이 없습니다."
         }
     }
 
@@ -38,10 +38,6 @@ class TMapRepository(private val api: TMapService) {
 
     private fun filtRouteTime(routeDataList: RouteDataList): String {
         return routeDataList.features[0].properties.totalTime
-    }
-
-    private fun filtZipCode(zipData: ZipData): String {
-        return zipData.coordinateInfo.coordinate[0].zipcode
     }
 
 }
