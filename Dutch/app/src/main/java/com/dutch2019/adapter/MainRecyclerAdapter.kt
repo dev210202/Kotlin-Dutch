@@ -8,9 +8,8 @@ import com.dutch2019.databinding.ItemMainLocationAddButtonBinding
 import com.dutch2019.databinding.ItemMainLocationSearchButtonBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.util.getChangedTextColor
-import com.dutch2019.util.getDefaultTextColor
 import com.dutch2019.util.marker.getChangedtMarkerBackground
-import com.dutch2019.util.marker.getDefaultMarkerBackground
+import com.dutch2019.util.setDefaultLocationItem
 
 class MainRecyclerAdapter(
     private val onLocationSearchButtonClicked: (position: Int) -> Unit,
@@ -86,9 +85,7 @@ class MainRecyclerAdapter(
                    이 코드가 없으면 recycler view item에 유효한 위치가 있을때,
                    view를 재활용하는 경우 유효한 위치가 저장된 view를 재활용하면서 다시 if문을 거치게되는데, else가 없으면 그대로 변경된 ui가 표시됨.
                  */
-                binding.tvName.text = "위치를 입력해주세요."
-                binding.tvName.setTextColor(getDefaultTextColor(context))
-                binding.layoutMarker.background = getDefaultMarkerBackground(context)
+                setDefaultLocationItem(context, binding.tvName, binding.layoutMarker)
             }
             binding.btnClose.setOnClickListener {
                 onLocationCloseButtonClicked(position)

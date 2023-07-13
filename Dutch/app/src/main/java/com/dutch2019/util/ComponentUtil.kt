@@ -4,9 +4,16 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.dutch2019.R
+import com.dutch2019.util.marker.getDefaultMarkerBackground
 
+object ButtonState {
+    const val DISABLE = "Disable"
+    const val DEFAULT = "Default"
+}
 lateinit var loadingDialog : ProgressDialog
 fun getDefaultTextColor(context: Context) = ContextCompat.getColor(context, R.color.gray3)
 
@@ -34,9 +41,24 @@ fun dismissLoadingDialog(){
     loadingDialog.dismiss()
 }
 
-fun setActiveButton(button : Button){
-    button.apply {
-        isSelected = true
-        setTextColor(getActiveTextColor(button.context))
+fun setButtonState(button : Button, state: String){
+    when(state){
+        ButtonState.DEFAULT -> {
+            button.isSelected = true
+            button.setTextColor(getActiveTextColor(button.context))
+        }
+        ButtonState.DISABLE -> {
+            button.isSelected = false
+            button.setTextColor(getDefaultTextColor(button.context))
+        }
     }
+}
+
+fun setDisableButton(button: Button){
+
+}
+ fun setDefaultLocationItem(context : Context, textview: TextView, layout: FrameLayout) {
+    textview.text = "위치를 입력해주세요"
+    textview.setTextColor(getDefaultTextColor(context))
+    layout.background = getDefaultMarkerBackground(context)
 }

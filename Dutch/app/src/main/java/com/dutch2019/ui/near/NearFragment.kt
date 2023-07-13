@@ -12,10 +12,11 @@ import com.dutch2019.adapter.NearRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentNearBinding
 import com.dutch2019.ui.middle.MiddleViewModel
+import com.dutch2019.util.ButtonState
 import com.dutch2019.util.Category
 import com.dutch2019.util.getFacilitySearchCategory
 import com.dutch2019.util.marker.*
-import com.dutch2019.util.setActiveButton
+import com.dutch2019.util.setButtonState
 import com.skt.Tmap.TMapView
 
 class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
@@ -46,7 +47,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
         markLocationList(tMapView, requireContext(), vm.getLocationList())
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
         setMarkRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
-        mapAutoZoom(tMapView, vm.getLocationList(), vm.getSearchPoint(), requireContext())
+        mapAutoZoom(tMapView, vm.getLocationList(), vm.getSearchPoint())
         setMarkerClickEvent(tMapView)
 
         binding.layoutNear.addView(tMapView)
@@ -68,7 +69,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
     inner class ChipOnClickListener : OnClickListener {
         override fun onClick(view: View) {
             setButtonStateDefault()
-            setActiveButton(view as Button)
+            setButtonState(view as Button, ButtonState.DEFAULT)
             removeAllNearFacilityMark(tMapView, vm.getFacilityList())
             setEmptyViewInvisible()
             when (view) {
@@ -102,7 +103,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
                 vm.setSearchPoint(clickedPoint)
                 changeDefaultNearMarks(tMapView, requireContext(), vm.getFacilityList(), tMapMarkerItem)
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
-                changeNearPrimaryMark(tMapMarkerItem, requireContext())
+                //changeNearPrimaryMark(tMapMarkerItem, requireContext())
                 val index = vm.getIndexToFacilityList(clickedPoint, tMapMarkerItem.id)
                 binding.rvNearFacility.scrollToPosition(index)
                 nearRecyclerAdapter.setSelectedPosition(index)

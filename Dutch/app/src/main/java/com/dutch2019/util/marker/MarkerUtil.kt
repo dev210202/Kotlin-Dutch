@@ -23,7 +23,7 @@ fun mark(tMapView: TMapView, context: Context, locationData: LocationData, numbe
 	val markerItemPoint = TMapPoint(locationData.lat, locationData.lon)
 	val markerBitmap = getCustomMarkerBackground(context).toBitmap()
 	val marker = MarkerOverlay(tMapView, context, locationData.name)
-	drawNumberOnMarker(context, markerBitmap, number)
+	drawTextOnMarker(context, markerBitmap, number.toString())
 	setMarkerVariables(marker, id = locationData.name, icon = markerBitmap, point = markerItemPoint)
 	tMapView.addMarkerItem2(marker.id, marker)
 }
@@ -74,7 +74,7 @@ fun changeDefaultNearMarks(tMapView: TMapView, context: Context, locationList: L
 	}
 }
 
-fun mapAutoZoom(tMapView: TMapView, locationList: List<LocationData>, centerPoint: TMapPoint, context: Context) {
+fun mapAutoZoom(tMapView: TMapView, locationList: List<LocationData>, centerPoint: TMapPoint) {
 	var leftTopLat = centerPoint.latitude
 	var leftTopLon = centerPoint.longitude
 	var rightBottomLat = centerPoint.latitude
@@ -163,7 +163,9 @@ fun removeAllBallon(tMapView: TMapView) {
 fun changeNearPrimaryMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
 	tMapMarkerItem.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker_primary)!!.toBitmap()
 }
-
+fun changeSelectRatioMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
+	tMapMarkerItem.icon = getSelectRatioBigMarkerBackground(context).toBitmap()
+}
 fun isNotMiddleMarker(id: String) = id != MarkerId.MIDDLE
 
 fun isNotLocationMarker(id: String, list: List<LocationData>): Boolean {
@@ -183,15 +185,16 @@ fun getDefaultMarkerBackground(context: Context) = ContextCompat.getDrawable(con
 
 fun getChangedtMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_gray5)!!
 
-fun getNearMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_near)!!
+fun getNearMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.marker_near)!!
 
 fun getMiddleMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_middle)!!
 
-fun drawNumberOnMarker(context: Context, bitmap: Bitmap, number: Int) {
+fun getSelectRatioBigMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio_24)!!
+fun getSelectRatioMarkerBackground(context: Context) = ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio)!!
+fun drawTextOnMarker(context: Context, bitmap: Bitmap, text: String) {
 	val canvas = Canvas()
 
 	val paint = Paint()
-	val text = number.toString()
 	val customTypeface = ResourcesCompat.getFont(context, R.font.pretendard_bold)
 
 	paint.apply {

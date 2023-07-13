@@ -45,7 +45,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         vm.setCenterPointAddress(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
 
-        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint(),  requireContext())
+        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
 
         binding.layoutMiddle.addView(tMapView)
 

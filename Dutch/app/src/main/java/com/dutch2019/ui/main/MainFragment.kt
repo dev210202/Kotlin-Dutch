@@ -119,6 +119,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
     }
 
+    // TODO: button_cta로 교체해서 코드 줄이기
     private fun setActiveFindMiddleLocationBtn() {
         binding.btnFindMiddlelocation.setTextColor(getActiveTextColor(context!!))
         binding.btnFindMiddlelocation.background = getActiveBackground(context!!)

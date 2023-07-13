@@ -49,6 +49,11 @@ class MiddleViewModel @Inject constructor(
     private val _facilityList = MutableListLiveData<LocationData>()
     val facilityList: LiveData<List<LocationData>> get() = _facilityList
 
+    private val _ratioLocationA = MutableLiveData(LocationData())
+    val ratioLocationA : LiveData<LocationData> get() = _ratioLocationA
+    private val _ratioLocationB = MutableLiveData(LocationData())
+    val ratioLocationB : LiveData<LocationData> get() = _ratioLocationB
+
     fun setLocationList(list: List<LocationData>) {
         locationList = list
     }
@@ -186,6 +191,16 @@ class MiddleViewModel @Inject constructor(
         }
     }
 
+    fun isNotSetRatioLocationA() = _ratioLocationA.value!!.name.isEmpty()
+    fun isNotSetRatioLocationB() = _ratioLocationB.value!!.name.isEmpty()
+    fun clearSetRatioLocationA() = _ratioLocationA.postValue(LocationData())
+    fun clearSetRatioLocationB() = _ratioLocationB.postValue(LocationData())
+    fun setRatioLocationA(locationData: LocationData){
+        _ratioLocationA.value = locationData
+    }
+    fun setRatioLocationB(locationData: LocationData){
+        _ratioLocationB.value = locationData
+    }
     private fun isItemDataOK(item: TMapPOIItem): Boolean {
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
