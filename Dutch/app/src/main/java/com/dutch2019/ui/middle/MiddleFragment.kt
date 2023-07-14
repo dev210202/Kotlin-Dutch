@@ -39,15 +39,14 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
 
         markLocationList(tMapView, requireContext(), vm.getLocationList())
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
-        setMarkRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
+        markRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
         setBallonOverlayClickEvent(tMapView, vm)
 
         vm.setCenterPointAddress(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
 
-        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
-
         binding.layoutMiddle.addView(tMapView)
+        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
 
         binding.btnRatio.setOnClickListener { view ->
             view.findNavController().navigate(

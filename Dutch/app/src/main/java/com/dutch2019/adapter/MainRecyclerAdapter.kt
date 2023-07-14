@@ -8,7 +8,7 @@ import com.dutch2019.databinding.ItemMainLocationAddButtonBinding
 import com.dutch2019.databinding.ItemMainLocationSearchButtonBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.util.getChangedTextColor
-import com.dutch2019.util.marker.getChangedtMarkerBackground
+import com.dutch2019.util.marker.getChangedMarkerBackground
 import com.dutch2019.util.setDefaultLocationItem
 
 class MainRecyclerAdapter(
@@ -79,7 +79,7 @@ class MainRecyclerAdapter(
             if (locationDataList[position].name.isNotEmpty()) {
                 binding.tvName.text = locationDataList[position].name
                 binding.tvName.setTextColor(getChangedTextColor(context))
-                binding.layoutMarker.background = getChangedtMarkerBackground(context)
+                binding.layoutMarker.background = getChangedMarkerBackground(context)
             } else {
                 /*
                    이 코드가 없으면 recycler view item에 유효한 위치가 있을때,

@@ -3,6 +3,7 @@ package com.dutch2019.model
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
+import com.skt.Tmap.TMapMarkerItem2
 import com.skt.Tmap.TMapPoint
 
 @Entity
@@ -10,7 +11,7 @@ data class LocationData(
     var poiID: String = "",
     var name: String = "",
     var address: String = "",
-    var tel : String = "",
+    var tel: String = "",
     var lat: Double = 0.0,
     var lon: Double = 0.0
 ) : Parcelable {
@@ -48,4 +49,7 @@ data class LocationData(
     }
 
     fun convertTMapPoint() = TMapPoint(lat, lon)
+
+    fun isEqualToTMapMarkerItem2(tMapMarkerItem2: TMapMarkerItem2) = lat == tMapMarkerItem2.latitude && lon == tMapMarkerItem2.longitude && name == tMapMarkerItem2.id
+
 }

@@ -46,7 +46,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
 
         markLocationList(tMapView, requireContext(), vm.getLocationList())
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
-        setMarkRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
+        markRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
         mapAutoZoom(tMapView, vm.getLocationList(), vm.getSearchPoint())
         setMarkerClickEvent(tMapView)
 
@@ -103,7 +103,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
                 vm.setSearchPoint(clickedPoint)
                 changeDefaultNearMarks(tMapView, requireContext(), vm.getFacilityList(), tMapMarkerItem)
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
-                //changeNearPrimaryMark(tMapMarkerItem, requireContext())
+                changeNearPrimaryMark(tMapMarkerItem, requireContext())
                 val index = vm.getIndexToFacilityList(clickedPoint, tMapMarkerItem.id)
                 binding.rvNearFacility.scrollToPosition(index)
                 nearRecyclerAdapter.setSelectedPosition(index)

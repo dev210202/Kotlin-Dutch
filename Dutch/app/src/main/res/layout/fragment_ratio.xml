@@ -16,14 +16,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/gray7"
             android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -66,6 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,11 +90,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginBottom="16dp"
                 android:id="@+id/layout_location_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/button_location_round"
                 app:layout_constraintBottom_toTopOf="@+id/layout_location_b"
                 tools:layout_editor_absoluteX="16dp">
@@ -118,8 +118,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="2dp"
-                        android:textColor="@color/white"
                         android:text="A"
+                        android:textColor="@color/white"
                         android:textSize="10sp" />
 
                 </FrameLayout>
@@ -138,8 +138,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
+                    android:id="@+id/layout_close_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -177,13 +179,13 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:text="B"
                         android:id="@+id/tv_marker_b"
                         style="@style/Pretendard_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="2dp"
+                        android:text="B"
                         android:textColor="@color/white"
                         android:textSize="10sp" />
 
@@ -203,6 +205,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
+                    android:id="@+id/layout_close_b"
+                    android:visibility="invisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -230,12 +234,12 @@
 
 
                 <Button
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="16dp"
                     android:id="@+id/btn_ratio_complete"
                     style="@style/Pretendard_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_cta"
