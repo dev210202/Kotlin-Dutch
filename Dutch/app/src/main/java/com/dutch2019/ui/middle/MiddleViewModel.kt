@@ -43,9 +43,6 @@ class MiddleViewModel @Inject constructor(
     private val _routeTime = MutableLiveData<String>("")
     val routeTime: LiveData<String> get() = _routeTime
 
-    private val _ratio = MutableLiveData<String>("5 : 5")
-    val ratio: LiveData<String> get() = _ratio
-
     private val _facilityList = MutableListLiveData<LocationData>()
     val facilityList: LiveData<List<LocationData>> get() = _facilityList
 
@@ -158,9 +155,6 @@ class MiddleViewModel @Inject constructor(
         return result
     }
 
-    fun setRatio(value: String) {
-        _ratio.postValue(value)
-    }
 
     fun setSearchPoint(point: TMapPoint) {
         searchPoint = point
@@ -195,6 +189,14 @@ class MiddleViewModel @Inject constructor(
     fun isNotSetRatioLocationB() = _ratioLocationB.value!!.name.isEmpty()
     fun clearSetRatioLocationA() = _ratioLocationA.postValue(LocationData())
     fun clearSetRatioLocationB() = _ratioLocationB.postValue(LocationData())
+
+    fun getRatioLocationA(): LocationData {
+        return _ratioLocationA.value!!
+    }
+
+    fun getRatioLocationB(): LocationData {
+        return _ratioLocationB.value!!
+    }
     fun setRatioLocationA(locationData: LocationData){
         _ratioLocationA.value = locationData
     }
@@ -205,9 +207,9 @@ class MiddleViewModel @Inject constructor(
         return item.poiName != null && item.upperAddrName != null && item.poiPoint != null
     }
 
-    fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint): TMapPoint? {
+    fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint, ratioValue : Int): TMapPoint {
         var changePoint = TMapPoint(0.0, 0.0)
-        var ratioValue = Integer.valueOf(ratio.value?.split(" : ")?.get(0))
+       // var ratioValue = Integer.valueOf(ratio.value?.split(" : ")?.get(0))
         when {
 
             (ratioValue == 5) -> {

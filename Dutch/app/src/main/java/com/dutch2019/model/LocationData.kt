@@ -3,6 +3,7 @@ package com.dutch2019.model
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
+import com.skt.Tmap.TMapPoint
 
 @Entity
 data class LocationData(
@@ -45,4 +46,6 @@ data class LocationData(
             return arrayOfNulls(size)
         }
     }
+
+    fun convertTMapPoint() = TMapPoint(lat, lon)
 }

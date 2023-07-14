@@ -105,5 +105,6 @@
     <fragment
         android:id="@+id/ratioSelectFragment"
         android:name="com.dutch2019.ui.ratioselect.RatioSelectFragment"
-        android:label="RatioSelectFragment" />
+        android:label="RatioSelectFragment" >
+       </fragment>
 </navigation>

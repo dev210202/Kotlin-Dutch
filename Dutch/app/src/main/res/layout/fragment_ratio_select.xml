@@ -10,7 +10,7 @@
             type="com.dutch2019.ui.middle.MiddleViewModel" />
 
         <variable
-            name="address"
+            name="ratio"
             type="String" />
     </data>
 
@@ -55,7 +55,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layout_middle"
+            android:id="@+id/layout_ratio_select"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="선택된 비울"
+                android:text="@{`선택된 비율: ` + ratio}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/seekbar"
@@ -108,7 +108,7 @@
                 android:max="8"
                 android:progress="4"
                 android:progressDrawable="@drawable/seekbar_background"
-                android:thumb="@drawable/ic_marker_ratio"
+                android:thumb="@drawable/ic_seekbar_thumb"
                 app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -146,15 +146,15 @@
                 <Button
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="16dp"
-                    android:id="@+id/btn_check_nearfacility"
+                    android:id="@+id/btn_ratio_set_complete"
                     style="@style/Pretendard_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_primary_round"
+                    android:background="@drawable/button_cta"
                     android:text="설정 완료"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray2"
                     android:textSize="16sp" />
 
 
