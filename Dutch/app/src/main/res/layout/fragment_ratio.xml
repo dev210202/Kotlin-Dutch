@@ -5,146 +5,253 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.dutch2019.ui.middle.MiddleViewModel" />
+
+        <variable
+            name="address"
+            type="String" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@color/black">
+            android:layout_height="wrap_content"
+            android:background="@color/gray7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView6"
+            <ImageButton
+                android:id="@+id/ib_left_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
-                android:includeFontPadding="false"
-                android:text="위치 간 비율 설정"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_left_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Pretendard_SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:text="비율 설정"
                 android:textColor="@color/white"
-                android:textSize="24dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ib_left_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                app:layout_constraintTop_toTopOf="@+id/ib_left_arrow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="17dp"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="4dp"
-                android:text="숫자가 높아질수록 해당 지점의 거리에 가까워집니다.\n예) A = 2, B = 8일 시, B쪽에 가까워짐"
-                android:textColor="@color/mid_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView6"
 
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"></TextView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/grey_light"
-            android:id="@+id/ratio_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2">
-
-            <TextView
-                android:id="@+id/description_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:includeFontPadding="false"
-                android:text="선택된 거리간 비율"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
-
-            <TextView
-                android:id="@+id/seekbarvalue_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="5 : 5"
-                android:textColor="#ef4b33"
-                app:layout_constraintBottom_toBottomOf="@+id/description_textview"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/description_textview"></TextView>
-
-            <SeekBar
-                android:id="@+id/seekbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:max="8"
-                android:progress="4"
-                android:progressDrawable="@drawable/seekbar_background"
-                android:thumb="@drawable/seekbar_thumb"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_textview"></SeekBar>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:includeFontPadding="false"
-                android:text="A"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekbar"></TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:includeFontPadding="false"
-                android:text="B"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekbar"></TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:layout_weight="0.8"
-            android:id="@+id/buttonlayout"
+            android:id="@+id/layout_ratio"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#2f2f2f"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
 
-            <Button
-                android:id="@+id/button_setting_complete"
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray7"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/Pretendard_Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="변경할 장소 2곳을 선택해주세요"
                 android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="3"
-                android:background="@drawable/button_middle_location_search"
-                android:includeFontPadding="false"
-                android:text="설정 완료"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/layout_location_a"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
-    </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_location_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_location_round"
+                app:layout_constraintBottom_toTopOf="@+id/layout_location_b"
+                tools:layout_editor_absoluteX="16dp">
+
+                <FrameLayout
+
+                    android:id="@+id/layout_marker_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="12dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/ic_marker_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_marker_a"
+                        style="@style/Pretendard_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:text="A"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_name_a"
+                    style="@style/Pretendard_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="위치를 입력해주세요"
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layout_marker_a"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layout_close_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/btn_close_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginVertical="14dp"
+                        android:background="@drawable/ic_close" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_location_b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/button_location_round"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                tools:layout_editor_absoluteX="16dp">
+
+                <FrameLayout
+
+                    android:id="@+id/layout_marker_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="12dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/ic_marker_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_marker_b"
+                        style="@style/Pretendard_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:text="B"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_name_b"
+                    style="@style/Pretendard_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="위치를 입력해주세요"
+                    android:textColor="@color/gray3"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layout_marker_b"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layout_close_b"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/btn_close_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginVertical="14dp"
+                        android:background="@drawable/ic_close" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                <Button
+                    android:id="@+id/btn_ratio_complete"
+                    style="@style/Pretendard_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_cta"
+                    android:text="선택완료"
+                    android:textColor="@color/gray2"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

@@ -90,6 +90,9 @@
         <argument
             android:name="locationdatalist"
             app:argType="com.dutch2019.model.LocationDataList" />
+        <action
+            android:id="@+id/action_ratioFragment_to_ratioSelectFragment"
+            app:destination="@id/ratioSelectFragment" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
@@ -99,4 +102,9 @@
             android:name="locationdata"
             app:argType="com.dutch2019.model.LocationData" />
     </fragment>
+    <fragment
+        android:id="@+id/ratioSelectFragment"
+        android:name="com.dutch2019.ui.ratioselect.RatioSelectFragment"
+        android:label="RatioSelectFragment" >
+       </fragment>
 </navigation>

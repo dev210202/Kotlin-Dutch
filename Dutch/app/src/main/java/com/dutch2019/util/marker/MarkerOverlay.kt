@@ -148,7 +148,7 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
             .setTextColor(ContextCompat.getColor(context, R.color.orange))
     }
 
-    fun chagneTextBlueColor(context: Context) {
+    fun changeTextBlueColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
             .setTextColor(ContextCompat.getColor(context, R.color.blue))
     }
