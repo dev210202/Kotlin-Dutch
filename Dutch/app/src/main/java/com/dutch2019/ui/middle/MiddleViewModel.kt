@@ -20,8 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MiddleViewModel @Inject constructor(
-    private val tMapRepository: TMapRepository,
-    private val dataBaseRepository: DBRepository,
+        private val tMapRepository: TMapRepository,
+        private val dataBaseRepository: DBRepository,
 ) : BaseViewModel() {
 
     private var locationList = listOf<LocationData>()
@@ -107,14 +107,14 @@ class MiddleViewModel @Inject constructor(
 
     fun setRouteTime(point: TMapPoint, latitude: Double, longitude: Double) {
         var startEndPointData =
-            StartEndPointData(point.longitude, point.latitude, longitude, latitude)
+                StartEndPointData(point.longitude, point.latitude, longitude, latitude)
         viewModelScope.launch(Dispatchers.IO) {
             _routeTime.postValue(
-                "소요시간 : " + convertTime(
-                    tMapRepository.getRouteTime(
-                        startEndPointData
+                    convertTime(
+                            tMapRepository.getRouteTime(
+                                    startEndPointData
+                            )
                     )
-                )
             )
         }
     }
@@ -125,11 +125,11 @@ class MiddleViewModel @Inject constructor(
 
     fun saveLocations(locationList: List<LocationData>) {
         val data = LocationDBData(
-            0,
-            centerPoint.latitude,
-            centerPoint.longitude,
-            _centerPointAddress.value!!,
-            locationList
+                0,
+                centerPoint.latitude,
+                centerPoint.longitude,
+                _centerPointAddress.value!!,
+                locationList
         )
         Log.i("data", data.toString())
         viewModelScope.launch(Dispatchers.IO) {
@@ -149,16 +149,16 @@ class MiddleViewModel @Inject constructor(
                 findList!!.forEach { item ->
                     if (isItemDataOK(item)) {
                         nearFacilityList.add(
-                            LocationData(
-                                item.poiid,
-                                item.poiName,
-                                filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
-                                    filtZero(" " + item.buildingNo2)
-                                ),
-                                filtNull(" " + item.telNo),
-                                item.poiPoint.latitude,
-                                item.poiPoint.longitude
-                            )
+                                LocationData(
+                                        item.poiid,
+                                        item.poiName,
+                                        filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
+                                                filtZero(" " + item.buildingNo2)
+                                        ),
+                                        filtNull(" " + item.telNo),
+                                        item.poiPoint.latitude,
+                                        item.poiPoint.longitude
+                                )
                         )
                     }
                 }
