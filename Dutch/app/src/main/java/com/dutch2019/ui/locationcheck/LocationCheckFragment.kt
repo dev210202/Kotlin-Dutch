@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -37,10 +38,8 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 
         binding.btnSetLocation.setOnClickListener {
             vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
-            findNavController().apply {
-                popBackStack()
-                popBackStack()
-            }
+            findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment())
+
         }
         binding.ibLeftArrow.setOnClickListener {
             findNavController().popBackStack()
