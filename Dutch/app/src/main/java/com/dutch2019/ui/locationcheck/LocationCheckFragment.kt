@@ -18,6 +18,8 @@ import com.dutch2019.R
 import com.dutch2019.databinding.FragmentLocationCheckBinding
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.model.LocationData
+import com.dutch2019.util.marker.mapAutoZoom
+import com.dutch2019.util.marker.markLocationCheck
 
 
 class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
@@ -25,21 +27,23 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 ) {
     private val vm: MainViewModel by activityViewModels()
     lateinit var locationData: LocationData
+    lateinit var tMapView: TMapView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        tMapView = TMapView(context)
         LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
             locationData = data.locationData
-            binding.layoutCheckMap.addView(mapSetting(locationData))
             binding.name = data.locationData.name
             binding.address = data.locationData.address
         }
+        tMapView.setCenterPoint(locationData.lon, locationData.lat)
+        markLocationCheck(tMapView, requireContext(), locationData.convertTMapPoint())
+        binding.layoutCheckMap.addView(tMapView)
 
         binding.btnSetLocation.setOnClickListener {
             vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
             findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment())
-
         }
         binding.ibLeftArrow.setOnClickListener {
             findNavController().popBackStack()

@@ -30,7 +30,6 @@ class EmptyDataObserver(private val rv: RecyclerView, private val tv: TextView) 
 
     override fun onChanged() {
         super.onChanged()
-        Log.e("DATA CHANGEd", "!!")
         checkEmpty()
     }
 }

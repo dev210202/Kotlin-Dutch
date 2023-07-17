@@ -30,9 +30,6 @@ class MiddleViewModel @Inject constructor(
     private var ratioPoint = TMapPoint(0.0, 0.0)
     private var searchPoint = TMapPoint(0.0, 0.0)
 
-    private var ratioLocationA = LocationData()
-    private var ratioLocationB = LocationData()
-
     private val _centerPointAddress = MutableLiveData<String>("")
     val centerPointAddress: LiveData<String> get() = _centerPointAddress
 
@@ -63,16 +60,6 @@ class MiddleViewModel @Inject constructor(
     fun getSearchPoint(): TMapPoint = searchPoint
     fun setSearchPoint(point: TMapPoint) {
         searchPoint = point
-    }
-
-    fun getRatioLocationA(): LocationData = ratioLocationA
-    fun setRatioLocationA(locationData: LocationData) {
-        ratioLocationA = locationData
-    }
-
-    fun getRatioLocationB(): LocationData = ratioLocationB
-    fun setRatioLocationB(locationData: LocationData) {
-        ratioLocationB = locationData
     }
 
     fun calculateCenterPoint(locationList: List<LocationData>): TMapPoint {
@@ -168,11 +155,5 @@ class MiddleViewModel @Inject constructor(
             }
         }
     }
-
-    fun isNotSetRatioLocationA() = ratioLocationA.name.isEmpty()
-    fun isNotSetRatioLocationB() = ratioLocationB.name.isEmpty()
-    fun clearSetRatioLocationA() = LocationData().also { ratioLocationA = it }
-    fun clearSetRatioLocationB() = LocationData().also { ratioLocationB = it }
-
 
 }

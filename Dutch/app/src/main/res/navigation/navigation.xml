@@ -110,5 +110,17 @@
     <fragment
         android:id="@+id/ratioSelectFragment"
         android:name="com.dutch2019.ui.ratioselect.RatioSelectFragment"
-        android:label="RatioSelectFragment"></fragment>
+        android:label="RatioSelectFragment">
+        <action
+            android:id="@+id/action_ratioSelectFragment_to_middleFragment"
+            app:destination="@id/middleFragment"
+            app:popUpTo="@layout/fragment_middle"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="ratioA"
+            app:argType="com.dutch2019.model.LocationData" />
+        <argument
+            android:name="ratioB"
+            app:argType="com.dutch2019.model.LocationData" />
+    </fragment>
 </navigation>

@@ -11,8 +11,6 @@ import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.ui.middle.MiddleFragmentArgs
-import com.dutch2019.ui.search.SearchFragmentArgs
 import com.dutch2019.util.*
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,9 +60,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
             binding.recyclerviewMain.scrollToPosition(mainAdapter.getLocationDataList().size - 1)
 
             if (isExistTwoOrMoreLocation()) {
-                setActiveFindMiddleLocationBtn()
+                setButtonState(binding.btnFindMiddlelocation, ButtonState.ACTIVE)
             } else {
-                setDisableFindMiddleLocationBtn()
+                setButtonState(binding.btnFindMiddlelocation, ButtonState.DISABLE)
             }
         }
 
@@ -105,7 +103,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
                     return true
                 }
             }
-            Log.e("count", count.toString())
         }
         return false
     }
@@ -117,16 +114,5 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         } else {
             count++
         }
-    }
-
-    // TODO: button_cta로 교체해서 코드 줄이기
-    private fun setActiveFindMiddleLocationBtn() {
-        binding.btnFindMiddlelocation.setTextColor(getActiveTextColor(context!!))
-        binding.btnFindMiddlelocation.background = getActiveBackground(context!!)
-    }
-
-    private fun setDisableFindMiddleLocationBtn() {
-        binding.btnFindMiddlelocation.setTextColor(getDisableTextColor(context!!))
-        binding.btnFindMiddlelocation.background = getDisableBackground(context!!)
     }
 }

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.skt.Tmap.TMapMarkerItem2
 import com.skt.Tmap.TMapView
 import com.dutch2019.R
+import com.dutch2019.util.getPrimaryTextColor
 
 
 class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
@@ -143,14 +144,17 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
         mHandler!!.post(mRunnable)
     }
 
-    fun changeTextRedColor(context: Context) {
+    fun changeTextPrimaryColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
-            .setTextColor(ContextCompat.getColor(context, R.color.orange))
+            .setTextColor(getPrimaryTextColor(context))
     }
 
     fun changeTextBlueColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
             .setTextColor(ContextCompat.getColor(context, R.color.blue))
     }
-
+    fun changeTextDefaultColor(context: Context) {
+        balloonView.findViewById<TextView>(R.id.bubble_title)
+            .setTextColor(ContextCompat.getColor(context, R.color.black))
+    }
 }

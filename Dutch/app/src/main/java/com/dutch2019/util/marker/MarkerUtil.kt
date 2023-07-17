@@ -2,11 +2,9 @@ package com.dutch2019.util.marker
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.dutch2019.R
@@ -15,10 +13,7 @@ import com.dutch2019.util.MarkerId
 import com.dutch2019.util.changeToDP
 import com.dutch2019.util.getBoldTextFont
 import com.dutch2019.util.zoomToTMapPointPreviousVersion
-import com.skt.Tmap.TMapMarkerItem2
-import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapPolyLine
-import com.skt.Tmap.TMapView
+import com.skt.Tmap.*
 
 
 fun mark(tMapView: TMapView, context: Context, locationData: LocationData, number: Int) {
@@ -52,10 +47,19 @@ fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPo
 
     val marker = MarkerOverlay(tMapView, context, MarkerId.MIDDLE)
     setMarkerVariables(marker, id = MarkerId.MIDDLE, icon = markerImage, point = centerPoint)
-    marker.changeTextRedColor(context)
+    marker.changeTextPrimaryColor(context)
     tMapView.addMarkerItem2(marker.id, marker)
 }
 
+fun markLocationCheck(tMapView: TMapView, context: Context, point: TMapPoint){
+    val markerImage = getLocationCheckMarkerBackground(context).toBitmap()
+    val marker = TMapMarkerItem().apply {
+        icon = markerImage
+        tMapPoint = point
+        setPosition(0.5F, 0.8F)
+    }
+    tMapView.addMarkerItem(marker.id, marker)
+}
 fun markNearFacilityList(tMapView: TMapView, context: Context, locationList: List<LocationData>) {
     locationList.forEach { locationData ->
         markNearFacility(tMapView, context, locationData)
@@ -67,7 +71,7 @@ fun markRatioLocation(tMapView: TMapView, context: Context, centerPoint: TMapPoi
     val markerImage = getRatioMarkerBackground(context).toBitmap()
     val marker = MarkerOverlay(tMapView, context, MarkerId.RATIO)
     setMarkerVariables(marker, id = MarkerId.RATIO, icon = markerImage, point = centerPoint)
-    marker.changeTextRedColor(context)
+    marker.changeTextPrimaryColor(context)
     tMapView.addMarkerItem2(marker.id, marker)
 }
 
@@ -212,6 +216,8 @@ fun getNearMarkerBackground(context: Context) =
 fun getMiddleMarkerBackground(context: Context) =
     ContextCompat.getDrawable(context, R.drawable.ic_marker_middle)!!
 
+fun getLocationCheckMarkerBackground(context: Context) =
+    ContextCompat.getDrawable(context, R.drawable.ic_marker_check)!!
 fun getSelectRatioBigMarkerBackground(context: Context) =
     ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio_24)!!
 

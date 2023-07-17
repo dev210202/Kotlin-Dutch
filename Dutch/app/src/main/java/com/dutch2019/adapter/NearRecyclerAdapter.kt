@@ -1,15 +1,11 @@
 package com.dutch2019.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemNearBinding
 import com.dutch2019.model.LocationData
-import com.dutch2019.ui.near.NearFragmentDirections
 import com.dutch2019.util.*
 
 class NearRecyclerAdapter(
@@ -69,11 +65,11 @@ class NearRecyclerAdapter(
         }
         fun setBackgroundSelected(){
             binding.layoutNear.setBackgroundColor(getSelectedBackgroundColor(context))
-            binding.tvNameItem.setTextColor(getSelectedTextColor(context))
+            binding.tvNameItem.setTextColor(getPrimaryTextColor(context))
         }
         fun setBackgroundDefault(){
             binding.layoutNear.setBackgroundColor(getDefaultBackgroundColor(context))
-            binding.tvNameItem.setTextColor(getActiveTextColor(context))
+            binding.tvNameItem.setTextColor(getActiveCTAButtonTextColor(context))
         }
     }
 }

@@ -40,18 +40,15 @@ class SearchRecyclerAdapter(
         holder.bind(tMapPOIItem)
     }
 
-    class LocationDataViewHolder(private val binding: ItemSearchBinding,
-    private val onRightArrowButtonClicked: (LocationData) -> Unit) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        val layoutSearch = binding.layoutSearch
-
+    class LocationDataViewHolder(
+        private val binding: ItemSearchBinding,
+        private val onRightArrowButtonClicked: (LocationData) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tMapPOIItem: TMapPOIItem) {
             val locationData = convertTMapPOIItemToLocationData(tMapPOIItem)
-
             binding.name = tMapPOIItem.name
             binding.address = filtNull(tMapPOIItem.poiAddress)
-            layoutSearch.setOnClickListener { view ->
+            binding.layoutSearch.setOnClickListener { view ->
                 onRightArrowButtonClicked(locationData)
             }
         }

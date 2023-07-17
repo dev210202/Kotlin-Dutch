@@ -234,6 +234,7 @@
 
 
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_ratio_complete"
                     style="@style/Pretendard_Bold"
                     android:layout_width="wrap_content"
@@ -244,7 +245,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_cta"
                     android:text="선택완료"
-                    android:textColor="@color/gray2"
+                    android:textColor="@color/cta_button_text_disabled"
                     android:textSize="16sp" />
 
 

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemMainLocationAddButtonBinding
 import com.dutch2019.databinding.ItemMainLocationSearchButtonBinding
 import com.dutch2019.model.LocationData
-import com.dutch2019.util.getChangedTextColor
+import com.dutch2019.util.getActiveTextColor
 import com.dutch2019.util.marker.getChangedMarkerBackground
 import com.dutch2019.util.setDefaultLocationItem
 
@@ -78,7 +78,7 @@ class MainRecyclerAdapter(
             binding.tvMarkerNumber.text = (position + 1).toString()
             if (locationDataList[position].name.isNotEmpty()) {
                 binding.tvName.text = locationDataList[position].name
-                binding.tvName.setTextColor(getChangedTextColor(context))
+                binding.tvName.setTextColor(getActiveTextColor(context))
                 binding.layoutMarker.background = getChangedMarkerBackground(context)
             } else {
                 /*
