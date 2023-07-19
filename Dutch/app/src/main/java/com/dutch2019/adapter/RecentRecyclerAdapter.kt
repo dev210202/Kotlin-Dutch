@@ -36,8 +36,8 @@ class RecentRecyclerAdapter(
 
         val layout = binding.layoutRecent
         fun bind(locationSearchData: LocationSearchData) {
-            binding.address = locationSearchData.centerAddress
-            binding.locations = locationSearchData.locations.getLocationsName()
+            //binding.address = locationSearchData.centerAddress
+            //binding.locations = locationSearchData.locations.getLocationsName()
             binding.layoutRecent.setOnClickListener {
                 onRecentItemClicked(locationSearchData)
             }

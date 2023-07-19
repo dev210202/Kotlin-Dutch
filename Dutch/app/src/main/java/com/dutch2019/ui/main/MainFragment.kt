@@ -26,8 +26,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
             vm.setSelectedItemIndex(itemPosition)
             view!!.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToSearchFragment(
-                    locationdbdatalist = vm.getRecentLocationList()
-                        .convertLocationDBDataToDataList()
+                    locationdatalist = LocationDataList(value = vm.getSearchLocationList())
                 )
             )
         }, onLocationCloseButtonClicked = { position ->
@@ -41,7 +40,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         binding.recyclerviewMain.apply {
             adapter = mainAdapter
         }

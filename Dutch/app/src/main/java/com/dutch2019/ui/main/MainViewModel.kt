@@ -1,14 +1,17 @@
 package com.dutch2019.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.model.LocationSearchData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.repository.DBRepository
 import com.dutch2019.repository.TMapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +25,7 @@ class MainViewModel @Inject constructor(
     private val _locationList = MutableListLiveData<LocationData>()
     val locationList: LiveData<List<LocationData>> get() = _locationList
 
-    private var _recentLocationList = listOf<LocationSearchData>()
+    private var searchLocationList = listOf<LocationData>()
     private var _selectedItemIndex = -1
 
 
@@ -55,9 +58,9 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun getRecentLocationList(): List<LocationSearchData> {
+    fun getSearchLocationList(): List<LocationData> {
 
-        return _recentLocationList
+        return searchLocationList
     }
 
     fun getSelectedItemIndex(): Int {
@@ -78,7 +81,31 @@ class MainViewModel @Inject constructor(
         _locationList.add(LocationData())
     }
 
-//    fun saveSearchData(){
-//        dataBaseRepository.insertRecentData()
-//    }
+    fun saveSearchDataIntoDB(data: LocationData) = viewModelScope.launch(Dispatchers.IO) {
+        runCatching {
+            dataBaseRepository.insertSearchData(data)
+        }.onSuccess {
+            Log.e("saveSearchData", data.toString())
+        }.onFailure { throwable ->
+            Log.e("saveSearchData throwable", throwable.toString())
+            throw throwable
+        }
+    }
+
+
+    fun loadSearchData() = viewModelScope.launch(Dispatchers.IO) {
+        runCatching {
+            searchLocationList = dataBaseRepository.getSearchData()
+        }.onSuccess {
+            Log.e("loadSearchData", searchLocationList.toString())
+        }.onFailure {throwable ->
+            throw throwable
+        }
+    }
+
+    fun addSearchData(data : LocationData) {
+        val list= searchLocationList.toMutableList()
+        list.add(0, data)
+        searchLocationList = list
+    }
 }

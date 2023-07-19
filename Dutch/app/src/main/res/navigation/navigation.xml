@@ -15,11 +15,6 @@
         <action
             android:id="@+id/action_mainFragment_to_middleFragment"
             app:destination="@id/middleFragment" />
-        <argument
-            android:name="locationdbdata"
-            android:defaultValue="@null"
-            app:argType="com.dutch2019.model.LocationDBData"
-            app:nullable="true" />
 
 
     </fragment>
@@ -31,15 +26,15 @@
         <action
             android:id="@+id/action_searchFragment_to_locationCheckFragment"
             app:destination="@id/locationCheckFragment" />
-        <argument
-            android:name="locationdbdatalist"
-            app:argType="com.dutch2019.model.LocationDBDataList" />
         <action
             android:id="@+id/action_searchFragment_to_recentEditFragment"
             app:destination="@id/recentEditFragment" />
         <action
             android:id="@+id/action_searchFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="locationdatalist"
+            app:argType="com.dutch2019.model.LocationDataList" />
 
 
     </fragment>

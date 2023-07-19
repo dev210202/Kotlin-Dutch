@@ -1,5 +1,6 @@
 package com.dutch2019.adapter
 
+import android.location.Location
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,22 +34,22 @@ class RecentEditRecyclerAdapter :
         }
     }
 
-    fun getDeleteList(): List<LocationSearchData> {
-        val deleteList = arrayListOf<LocationSearchData>()
+    fun getDeleteList(): List<LocationData> {
+        val deleteList = arrayListOf<LocationData>()
         for (i in 0 until checkList.size) {
             Log.i("checkList T or F", "" + checkList[i] )
             if (checkList[i]) {
-                deleteList.add(locationDataList[i])
+             //   deleteList.add(locationDataList[i])
             }
         }
         deleteList.forEach {
-            Log.i("deleteListdata", it.centerAddress )
+            // Log.i("deleteListdata", it.centerAddress )
         }
         return deleteList
     }
 
-    fun setLocationDataList(list: List<LocationSearchData>) {
-        locationDataList = list
+    fun setLocationDataList(list: List<LocationData>) {
+       //  locationDataList = list
         var newCheckList = ArrayList<Boolean>()
         notifyDataSetChanged()
         locationDataList.forEach { 
@@ -77,8 +78,8 @@ class RecentEditRecyclerAdapter :
         var checkbox = binding.checkbox
 
         fun bind(locationSearchData: LocationSearchData, position: Int) {
-            binding.address = locationSearchData.centerAddress
-            binding.locations = getLocationsName(locationSearchData.locations)
+            //binding.address = locationSearchData.centerAddress
+           // binding.locations = getLocationsName(locationSearchData.locations)
             checkboxLayout.setOnClickListener {
                 checkbox.isChecked
             }

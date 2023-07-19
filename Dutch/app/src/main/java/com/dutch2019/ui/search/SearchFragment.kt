@@ -7,10 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.EmptyDataObserver
-import com.dutch2019.adapter.RecentRecyclerAdapter
 import com.dutch2019.adapter.SearchRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentSearchBinding
+import com.dutch2019.model.LocationData
+import com.dutch2019.util.convertTMapPOIItemToLocationData
 import com.dutch2019.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,45 +37,32 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             registerAdapterDataObserver(emptyDataObserver)
         }
     }
-    private val recentAdapter by lazy {
-        RecentRecyclerAdapter(onRecentItemClicked = { locationDBdata ->
-            findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToMainFragment(
-                    locationDBdata
-                )
-            )
-        }).apply {
-            setLocationDataList(vm.getRecentLocationList())
-        }.apply {
-            registerAdapterDataObserver(emptyDataObserver)
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recentLocationList =
-            SearchFragmentArgs.fromBundle(requireArguments()).locationdbdatalist
+        val searchLocationList = SearchFragmentArgs.fromBundle(requireArguments()).locationdatalist
 
-        vm.setRecentLocationList(
-            recentLocationList.convertLocationDBDataListToData().toMutableList()
-        )
-
-        if (recentLocationList.value.isEmpty()) {
+        vm.setSearchLocationList(searchLocationList.value.toMutableList())
+        if (searchLocationList.value.isEmpty()) {
             setEmptyViewVisible()
         }
 
         binding.recyclerviewSearch.apply {
-            adapter = recentAdapter
+            adapter = searchAdapter
         }
-
+        vm.searchLocationList.observe(viewLifecycleOwner){ list ->
+            searchAdapter.setLocationItemList(list)
+        }
         vm.tMapPOIItemList.observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
+                val locationDataList = mutableListOf<LocationData>()
+                list.forEach {
+                    locationDataList.add(convertTMapPOIItemToLocationData(it))
+                }
                 binding.tvInfo.text = "검색결과"
                 binding.recyclerviewSearch.adapter = searchAdapter
-                searchAdapter.setTMapPOIItemList(
-                    list
-                )
+                searchAdapter.setLocationItemList(locationDataList)
             }
         }
 
@@ -115,6 +103,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     private fun setInitView() {
         binding.tvInfo.text = "최근검색"
         binding.etSearch.text = null
-        binding.recyclerviewSearch.adapter = recentAdapter
+        searchAdapter.setLocationItemList(vm.getSearchLocationList())
     }
 }

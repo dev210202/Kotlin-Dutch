@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
+import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationSearchData
 import com.dutch2019.model.MutableListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,8 +25,8 @@ class SearchViewModel @Inject constructor(
     private val _inputValue = MutableLiveData<String>()
     val inputValue: LiveData<String> get() = _inputValue
 
-    private val _recentLocationList = MutableListLiveData<LocationSearchData>()
-    val recentLocationList: LiveData<List<LocationSearchData>> get() = _recentLocationList
+    private val _searchLocationList = MutableListLiveData<LocationData>()
+    val searchLocationList: LiveData<List<LocationData>> get() = _searchLocationList
     fun search(input: String, showToast: (String) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val resultList = tMapRepository.findAll(input)
@@ -41,10 +42,10 @@ class SearchViewModel @Inject constructor(
         _inputValue.value = input
     }
 
-    fun setRecentLocationList(list: List<LocationSearchData>) {
-        _recentLocationList.value = list
+    fun setSearchLocationList(list: List<LocationData>) {
+        _searchLocationList.value = list
     }
-    fun getRecentLocationList() : List<LocationSearchData> {
-        return _recentLocationList.value!!
+    fun getSearchLocationList() : List<LocationData> {
+        return _searchLocationList.value!!
     }
 }

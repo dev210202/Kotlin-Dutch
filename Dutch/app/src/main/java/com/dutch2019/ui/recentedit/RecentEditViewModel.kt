@@ -19,14 +19,14 @@ class RecentEditViewModel @Inject constructor(
 
     fun getRecentDB() {
         viewModelScope.launch {
-            var list = reverseList(dataBaseRepository.getRecentData())
-            _recentLocationList.value = list
+           // var list = reverseList(dataBaseRepository.getRecentData())
+           // _recentLocationList.value = list
         }
     }
 
     fun deleteRecentDB(list : List<LocationSearchData>){
         viewModelScope.launch {
-            dataBaseRepository.deleteRecentData(list)
+           // dataBaseRepository.deleteRecentData(list)
             getRecentDB()
         }
     }

@@ -1,25 +1,16 @@
 package com.dutch2019.ui.locationcheck
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.dutch2019.base.BaseFragment
-import com.skt.Tmap.TMapMarkerItem
-import com.skt.Tmap.TMapPoint
-import com.skt.Tmap.TMapView
-import com.dutch2019.BuildConfig
 import com.dutch2019.R
+import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentLocationCheckBinding
-import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.model.LocationData
-import com.dutch2019.util.marker.mapAutoZoom
+import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.util.marker.markLocationCheck
+import com.skt.Tmap.TMapView
 
 
 class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
@@ -42,7 +33,10 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
         binding.layoutCheckMap.addView(tMapView)
 
         binding.btnSetLocation.setOnClickListener {
+            locationData = locationData.copy(id = 0)
             vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
+            vm.saveSearchDataIntoDB(locationData)
+            vm.addSearchData(locationData)
             findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment())
         }
         binding.ibLeftArrow.setOnClickListener {

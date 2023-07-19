@@ -119,6 +119,7 @@ class MiddleViewModel @Inject constructor(
                     if (isItemDataOK(item)) {
                         nearFacilityList.add(
                             LocationData(
+                                0,
                                 item.poiid,
                                 item.poiName,
                                 filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(

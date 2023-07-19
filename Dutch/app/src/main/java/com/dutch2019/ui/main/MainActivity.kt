@@ -25,6 +25,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         super.onCreate(savedInstanceState)
 
+        // TODO : 최초 실행시 DB 로드
+        vm.loadSearchData()
         setTMapAPIAuth()
 
         vm.isConfirmedSktMapApikey.observe(this) {
