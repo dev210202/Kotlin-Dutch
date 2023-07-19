@@ -9,15 +9,15 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-data class LocationDBData(
+data class LocationSearchData(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo(name = "centerPointLat")
-    val centerPointLat: Double,
+    val centerPointLat: Double = 0.0,
     @ColumnInfo(name = "centerPointLon")
-    val centerPointLon: Double,
+    val centerPointLon: Double = 0.0,
     @ColumnInfo(name = "centerAddress")
-    val centerAddress: String,
+    val centerAddress: String = "",
     @ColumnInfo(name = "locations")
     val locations: List<LocationData> = listOf<LocationData>()
 ) : Parcelable {
@@ -35,7 +35,7 @@ data class LocationDBData(
     }
 
 
-    fun convertLocationDBDataListToData(list : LocationDBDataList): List<LocationDBData>{
+    fun convertLocationDBDataListToData(list : LocationSearchDataList): List<LocationSearchData>{
         return list.value
     }
 }

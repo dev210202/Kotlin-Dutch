@@ -1,13 +1,11 @@
 package com.dutch2019.ui.middle
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import com.skt.Tmap.TMapPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.dutch2019.model.LocationDBData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.model.StartEndPointData
@@ -20,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MiddleViewModel @Inject constructor(
-        private val tMapRepository: TMapRepository,
-        private val dataBaseRepository: DBRepository,
+    private val tMapRepository: TMapRepository,
+    private val dataBaseRepository: DBRepository,
 ) : BaseViewModel() {
 
     private var locationList = listOf<LocationData>()
@@ -62,16 +60,6 @@ class MiddleViewModel @Inject constructor(
         searchPoint = point
     }
 
-    fun calculateCenterPoint(locationList: List<LocationData>): TMapPoint {
-        var totalLat = 0.0
-        var totalLon = 0.0
-        locationList.forEach { data ->
-            totalLat += data.lat
-            totalLon += data.lon
-        }
-        return TMapPoint(totalLat / locationList.size, totalLon / locationList.size)
-    }
-
 
     fun getIndexToFacilityList(item: TMapPoint, locationName: String): Int {
         val value = _facilityList.value!!.find {
@@ -80,11 +68,6 @@ class MiddleViewModel @Inject constructor(
         return _facilityList.value!!.indexOf(value)
     }
 
-    fun setCenterPointAddress(point: TMapPoint) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _centerPointAddress.postValue(tMapRepository.getAddress(point))
-        }
-    }
 
     fun setCenterPointNearSubway(point: TMapPoint) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -94,14 +77,14 @@ class MiddleViewModel @Inject constructor(
 
     fun setRouteTime(point: TMapPoint, latitude: Double, longitude: Double) {
         var startEndPointData =
-                StartEndPointData(point.longitude, point.latitude, longitude, latitude)
+            StartEndPointData(point.longitude, point.latitude, longitude, latitude)
         viewModelScope.launch(Dispatchers.IO) {
             _routeTime.postValue(
-                    convertTime(
-                            tMapRepository.getRouteTime(
-                                    startEndPointData
-                            )
+                convertTime(
+                    tMapRepository.getRouteTime(
+                        startEndPointData
                     )
+                )
             )
         }
     }
@@ -110,20 +93,19 @@ class MiddleViewModel @Inject constructor(
         _routeTime.value = ""
     }
 
-    fun saveLocations(locationList: List<LocationData>) {
-        val data = LocationDBData(
-                0,
-                centerPoint.latitude,
-                centerPoint.longitude,
-                _centerPointAddress.value!!,
-                locationList
-        )
-        Log.i("data", data.toString())
-        viewModelScope.launch(Dispatchers.IO) {
-            dataBaseRepository.insertRecentData(data)
-        }
+    fun setCenterPointAddress(address: String) {
+        _centerPointAddress.value = address
     }
 
+    fun getCenterPointAddressValue(): String {
+        return _centerPointAddress.value!!
+    }
+
+    fun searchCenterPointAddress(point: TMapPoint) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _centerPointAddress.postValue(tMapRepository.getAddress(point))
+        }
+    }
 
     fun getFacilityList(): List<LocationData> = _facilityList.value!!
 
@@ -136,16 +118,16 @@ class MiddleViewModel @Inject constructor(
                 findList!!.forEach { item ->
                     if (isItemDataOK(item)) {
                         nearFacilityList.add(
-                                LocationData(
-                                        item.poiid,
-                                        item.poiName,
-                                        filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
-                                                filtZero(" " + item.buildingNo2)
-                                        ),
-                                        filtNull(" " + item.telNo),
-                                        item.poiPoint.latitude,
-                                        item.poiPoint.longitude
-                                )
+                            LocationData(
+                                item.poiid,
+                                item.poiName,
+                                filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
+                                    filtZero(" " + item.buildingNo2)
+                                ),
+                                filtNull(" " + item.telNo),
+                                item.poiPoint.latitude,
+                                item.poiPoint.longitude
+                            )
                         )
                     }
                 }
@@ -155,5 +137,4 @@ class MiddleViewModel @Inject constructor(
             }
         }
     }
-
 }

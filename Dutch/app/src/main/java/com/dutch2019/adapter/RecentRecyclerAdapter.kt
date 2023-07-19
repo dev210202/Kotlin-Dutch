@@ -1,23 +1,19 @@
 package com.dutch2019.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemRecentBinding
-import com.dutch2019.model.LocationDBData
-import com.dutch2019.model.LocationData
-import com.dutch2019.model.LocationDataList
+import com.dutch2019.model.LocationSearchData
 import com.dutch2019.util.getLocationsName
 
 class RecentRecyclerAdapter(
-    private val onRecentItemClicked : (LocationDBData) -> Unit,
+    private val onRecentItemClicked : (LocationSearchData) -> Unit,
 ) : RecyclerView.Adapter<RecentRecyclerAdapter.RecentDataViewHolder>() {
 
-    private var locationDataList = listOf<LocationDBData>()
+    private var locationDataList = listOf<LocationSearchData>()
 
-    fun setLocationDataList(list: List<LocationDBData>) {
+    fun setLocationDataList(list: List<LocationSearchData>) {
         locationDataList = list
         notifyDataSetChanged()
     }
@@ -35,15 +31,15 @@ class RecentRecyclerAdapter(
 
     class RecentDataViewHolder(
         private val binding: ItemRecentBinding,
-        private val onRecentItemClicked : (LocationDBData) -> Unit,
+        private val onRecentItemClicked : (LocationSearchData) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         val layout = binding.layoutRecent
-        fun bind(locationDBData: LocationDBData) {
-            binding.address = locationDBData.centerAddress
-            binding.locations = locationDBData.locations.getLocationsName()
+        fun bind(locationSearchData: LocationSearchData) {
+            binding.address = locationSearchData.centerAddress
+            binding.locations = locationSearchData.locations.getLocationsName()
             binding.layoutRecent.setOnClickListener {
-                onRecentItemClicked(locationDBData)
+                onRecentItemClicked(locationSearchData)
             }
         }
     }

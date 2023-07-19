@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.dutch2019.model.LocationDBData
+import com.dutch2019.model.LocationSearchData
 import com.dutch2019.repository.DBRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,8 +14,8 @@ import javax.inject.Inject
 class RecentEditViewModel @Inject constructor(
     private val dataBaseRepository: DBRepository
 ) : BaseViewModel() {
-    private val _recentLocationList = MutableLiveData<List<LocationDBData>>()
-    val recentLocationList: LiveData<List<LocationDBData>> get() = _recentLocationList
+    private val _recentLocationList = MutableLiveData<List<LocationSearchData>>()
+    val recentLocationList: LiveData<List<LocationSearchData>> get() = _recentLocationList
 
     fun getRecentDB() {
         viewModelScope.launch {
@@ -24,15 +24,15 @@ class RecentEditViewModel @Inject constructor(
         }
     }
 
-    fun deleteRecentDB(list : List<LocationDBData>){
+    fun deleteRecentDB(list : List<LocationSearchData>){
         viewModelScope.launch {
             dataBaseRepository.deleteRecentData(list)
             getRecentDB()
         }
     }
 
-    private fun reverseList(list: List<LocationDBData>): List<LocationDBData> {
-        var newList = arrayListOf<LocationDBData>()
+    private fun reverseList(list: List<LocationSearchData>): List<LocationSearchData> {
+        var newList = arrayListOf<LocationSearchData>()
 
         for (i in list.size -1 downTo 0) {
             var listValue = list[i]

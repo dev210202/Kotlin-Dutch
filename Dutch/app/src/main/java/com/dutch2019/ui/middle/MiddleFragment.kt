@@ -4,29 +4,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.skt.Tmap.TMapView
 import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
-import com.dutch2019.base.BaseFragment
 import com.dutch2019.base.LifeCycleFragment
 import com.dutch2019.databinding.FragmentMiddleBinding
 import com.dutch2019.model.LocationDataList
 import com.dutch2019.util.MarkerId
+import com.dutch2019.util.calculateCenterPoint
 import com.dutch2019.util.dismissLoadingDialog
 import com.dutch2019.util.marker.*
 import com.dutch2019.util.showLoadingDialog
 
 @AndroidEntryPoint
-class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
+class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
     R.layout.fragment_middle
 ) {
     private val vm: MiddleViewModel by activityViewModels()
     private lateinit var tMapView: TMapView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         tMapView = TMapView(context)
         binding.vm = vm
@@ -35,18 +37,19 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         binding.layoutMiddle.addView(tMapView)
 
         MiddleFragmentArgs.fromBundle(requireArguments()).let { data ->
-            vm.setLocationList(data.locationlist)
+            vm.setLocationList(data.locationlist.value)
         }
 
-        vm.setCenterPoint(vm.calculateCenterPoint(vm.getLocationList()))
+        vm.setCenterPoint(calculateCenterPoint(vm.getLocationList()))
         vm.setSearchPoint(vm.getCenterPoint())
+        vm.setCenterPointNearSubway(vm.getCenterPoint())
 
         markLocationList(tMapView, requireContext(), vm.getLocationList())
         markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
         markRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
         setBallonOverlayClickEvent(tMapView, vm)
 
-        vm.setCenterPointAddress(vm.getCenterPoint())
+        vm.searchCenterPointAddress(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
 
 
@@ -71,10 +74,11 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
             findNavController().popBackStack()
         }
 
-        vm.centerPointAddress.observe(viewLifecycleOwner, Observer {
-            vm.saveLocations(vm.getLocationList())
-            dismissLoadingDialog()
-        })
+        vm.centerPointAddress.observe(viewLifecycleOwner) { address ->
+            if (address != "") {
+                dismissLoadingDialog()
+            }
+        }
 
     }
 
@@ -83,7 +87,7 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         tMapView.setOnMarkerClickEvent { _, tMapMarkerItem2 ->
             val point = tMapMarkerItem2.tMapPoint
             vm.setSearchPoint(point)
-            viewModel.setCenterPointAddress(point)
+            viewModel.searchCenterPointAddress(point)
             viewModel.setCenterPointNearSubway(point)
             binding.tvInfo.text = tMapMarkerItem2.id
             when (tMapMarkerItem2.id) {
@@ -120,6 +124,4 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
         }
 
     }
-
-
 }

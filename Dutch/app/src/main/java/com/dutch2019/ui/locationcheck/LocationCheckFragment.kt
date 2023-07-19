@@ -49,23 +49,4 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
             findNavController().popBackStack()
         }
     }
-
-
-    fun mapSetting(data: LocationData): TMapView {
-        val markerItemPoint = TMapPoint(data.lat, data.lon)
-
-        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker_check)
-        val bitmap = drawable!!.toBitmap()
-
-        val markerItem = TMapMarkerItem().apply {
-            icon = bitmap
-            tMapPoint = markerItemPoint
-            setPosition(0.5F, 0.8F)
-        }
-        return TMapView(context).apply {
-            setSKTMapApiKey("${BuildConfig.T_MAP_API}")
-            setCenterPoint(data.lon, data.lat)
-            addMarkerItem("markerItem", markerItem)
-        }
-    }
 }

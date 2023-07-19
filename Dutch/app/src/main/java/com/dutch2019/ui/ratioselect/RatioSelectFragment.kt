@@ -1,23 +1,17 @@
 package com.dutch2019.ui.ratioselect
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentRatioSelectBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.ui.middle.MiddleFragmentArgs
 import com.dutch2019.ui.middle.MiddleViewModel
 import com.dutch2019.util.ButtonState
-import com.dutch2019.util.convertLocationDBDataToDataList
 import com.dutch2019.util.getCalculatedRatioPoint
 import com.dutch2019.util.marker.*
 import com.dutch2019.util.setButtonState
@@ -59,7 +53,8 @@ class RatioSelectFragment :
         binding.btnRatioSetComplete.setOnClickListener {
             vm.setRatioPoint(ratioPoint)
             findNavController().navigate(RatioSelectFragmentDirections.actionRatioSelectFragmentToMiddleFragment(
-                LocationDataList().convertLocationData(vm.getLocationList())))
+                locationlist = LocationDataList().convertLocationData(vm.getLocationList())
+            ))
         }
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, ratio: Int, p2: Boolean) {

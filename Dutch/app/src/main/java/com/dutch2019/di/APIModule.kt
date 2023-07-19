@@ -25,8 +25,7 @@ object APIModule {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    val baseUrl = "https://apis.openapi.sk.com/"
-
+    val tMapURL = "https://apis.openapi.sk.com/"
     private fun <T : Any> buildRetrofit(
         baseUrl: String,
         service: KClass<T>,
@@ -39,6 +38,5 @@ object APIModule {
 
     @Provides
     @ViewModelScoped
-    fun provideTMapServiceAPI() : TMapService = buildRetrofit(baseUrl, TMapService::class)
-
+    fun provideTMapServiceAPI() : TMapService = buildRetrofit(tMapURL, TMapService::class)
 }

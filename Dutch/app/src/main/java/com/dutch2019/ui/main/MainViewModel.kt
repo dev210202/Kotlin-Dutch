@@ -1,22 +1,20 @@
 package com.dutch2019.ui.main
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.dutch2019.base.BaseViewModel
-import com.dutch2019.model.LocationDBData
+import com.dutch2019.model.LocationSearchData
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.repository.DBRepository
+import com.dutch2019.repository.TMapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val dataBaseRepository: DBRepository) :
-    BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val dataBaseRepository: DBRepository, private val tMapRepository: TMapRepository
+) : BaseViewModel() {
 
     private val _isConfirmedSktMapApikey = MutableLiveData<Boolean>(false)
     val isConfirmedSktMapApikey: LiveData<Boolean> get() = _isConfirmedSktMapApikey
@@ -24,11 +22,9 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
     private val _locationList = MutableListLiveData<LocationData>()
     val locationList: LiveData<List<LocationData>> get() = _locationList
 
-    private val _recentLocationList = MutableListLiveData<LocationDBData>()
-    val recentLocationList: LiveData<List<LocationDBData>> get() = _recentLocationList
+    private var _recentLocationList = listOf<LocationSearchData>()
+    private var _selectedItemIndex = -1
 
-    private val _selectedItemIndex = MutableLiveData<Int>()
-    val selectedItemIndex: LiveData<Int> get() = _selectedItemIndex
 
     init {
         createEmptyLeastLocationItems()
@@ -58,22 +54,18 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
         return _locationList.value!!
     }
 
-    fun loadRecentDB() {
-        viewModelScope.launch {
-            _recentLocationList.value = dataBaseRepository.getRecentData()
-        }
-    }
 
-    fun getRecentLocationList(): List<LocationDBData> {
-        return _recentLocationList.value!!
+    fun getRecentLocationList(): List<LocationSearchData> {
+
+        return _recentLocationList
     }
 
     fun getSelectedItemIndex(): Int {
-        return _selectedItemIndex.value!!
+        return _selectedItemIndex
     }
 
     fun setSelectedItemIndex(index: Int) {
-        _selectedItemIndex.value = index
+        _selectedItemIndex = index
     }
 
     fun changeLocationListItem(position: Int, locationData: LocationData) {
@@ -85,4 +77,8 @@ class MainViewModel @Inject constructor(private val dataBaseRepository: DBReposi
         _locationList.add(LocationData())
         _locationList.add(LocationData())
     }
+
+//    fun saveSearchData(){
+//        dataBaseRepository.insertRecentData()
+//    }
 }

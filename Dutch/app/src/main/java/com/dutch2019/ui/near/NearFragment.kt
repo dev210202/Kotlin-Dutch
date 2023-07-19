@@ -1,11 +1,15 @@
 package com.dutch2019.ui.near
 
+import android.content.Intent
 import android.graphics.PointF
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.EmptyDataObserver
 import com.dutch2019.adapter.NearRecyclerAdapter
@@ -26,6 +30,13 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
             removeAllBallon(tMapView)
             val clickedItem = tMapView.getMarkerItem2FromID(locationData.name)
             clickedItem.onSingleTapUp(PointF(), tMapView)
+            setButtonState(binding.btnShare, ButtonState.ACTIVE)
+        }, onInternetClicked = { locationData ->
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://m.search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${locationData.name}")
+            )
+            startActivity(intent)
         }).apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
@@ -60,6 +71,14 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
         binding.btnCulture.setOnClickListener(chipOnClickListener)
         binding.btnFood.setOnClickListener(chipOnClickListener)
         binding.btnCafe.setOnClickListener(chipOnClickListener)
+
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.btnShare.setOnClickListener {
+
+        }
     }
 
     inner class ChipOnClickListener : OnClickListener {
@@ -71,26 +90,22 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
             when (view) {
                 binding.btnTransport -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(Category.TRANSPORT)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.TRANSPORT)
                     )
                 }
                 binding.btnFood -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(Category.FOOD)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.FOOD)
                     )
                 }
                 binding.btnCafe -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(Category.CAFE)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CAFE)
                     )
                 }
                 binding.btnCulture -> {
                     vm.searchNearFacility(
-                        vm.getSearchPoint(),
-                        getFacilitySearchCategory(Category.CULTURE)
+                        vm.getSearchPoint(), getFacilitySearchCategory(Category.CULTURE)
                     )
                 }
             }
@@ -108,15 +123,12 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
         tMapView.setOnMarkerClickEvent { _, tMapMarkerItem ->
             if (isNotLocationMarker(tMapMarkerItem.id, vm.getLocationList()) && isNotMiddleMarker(
                     tMapMarkerItem.id
-                )
+                ) && isNotRatioMarker(tMapMarkerItem.id)
             ) {
                 val clickedPoint = tMapMarkerItem.tMapPoint
                 vm.setSearchPoint(clickedPoint)
                 changeDefaultNearMarks(
-                    tMapView,
-                    requireContext(),
-                    vm.getFacilityList(),
-                    tMapMarkerItem
+                    tMapView, requireContext(), vm.getFacilityList(), tMapMarkerItem
                 )
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
                 changeNearPrimaryMark(tMapMarkerItem, requireContext())
@@ -128,6 +140,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
                 vm.setSearchPoint(clickedPoint)
                 tMapView.setCenterPoint(clickedPoint.longitude, clickedPoint.latitude)
             }
+            setButtonState(binding.btnShare, ButtonState.ACTIVE)
         }
     }
 

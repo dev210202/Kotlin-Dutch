@@ -190,7 +190,7 @@ fun changeSelectRatioMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
 }
 
 fun isNotMiddleMarker(id: String) = id != MarkerId.MIDDLE
-
+fun isNotRatioMarker(id:String) = id != MarkerId.RATIO
 fun isNotLocationMarker(id: String, list: List<LocationData>): Boolean {
     list.forEach { locationData ->
         if (locationData.name == id) {

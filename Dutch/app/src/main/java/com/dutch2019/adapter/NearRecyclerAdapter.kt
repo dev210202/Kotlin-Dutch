@@ -9,7 +9,8 @@ import com.dutch2019.model.LocationData
 import com.dutch2019.util.*
 
 class NearRecyclerAdapter(
-    private val onItemClicked : (LocationData) -> Unit
+    private val onItemClicked : (LocationData) -> Unit,
+    private val onInternetClicked : (LocationData) -> Unit
 ) :
     RecyclerView.Adapter<NearRecyclerAdapter.NearViewHolder>() {
 
@@ -33,7 +34,7 @@ class NearRecyclerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearViewHolder {
         val binding =
             ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NearViewHolder(binding, parent.context)
+        return NearViewHolder(binding, parent.context, onInternetClicked)
     }
 
     override fun getItemCount(): Int = locationDataList.size
@@ -55,13 +56,17 @@ class NearRecyclerAdapter(
 
     inner class NearViewHolder(
         private val binding: ItemNearBinding,
-        private val context: Context
+        private val context: Context,
+        private val onInternetClicked: (LocationData) -> Unit,
     ) :
         RecyclerView.ViewHolder(binding.root) {
          val layout = binding.layoutNear
         fun bind(locationData: LocationData) {
             binding.name = locationData.name
             binding.address = locationData.address
+            binding.ibInternet.setOnClickListener {
+                onInternetClicked(locationData)
+            }
         }
         fun setBackgroundSelected(){
             binding.layoutNear.setBackgroundColor(getSelectedBackgroundColor(context))

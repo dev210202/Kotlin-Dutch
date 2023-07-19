@@ -1,7 +1,6 @@
 package com.dutch2019.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -40,17 +39,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
     }
 
-    override fun onViewCreated(view : View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        MainFragmentArgs.fromBundle(requireArguments()).locationdbdata.apply {
-            if(this.isNotNull()){
-                val loadedList =this!!.locations.toMutableList()
-                loadedList.add(LocationData())
-                vm.setLocationList(loadedList)
-            }
-        }
-
+        
         binding.recyclerviewMain.apply {
             adapter = mainAdapter
         }
@@ -66,33 +57,35 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
             }
         }
 
+
+
         binding.imagebuttonMainLogo.setOnClickListener {
             checkHashKey()
         }
 
 
         binding.btnFindMiddlelocation.setOnClickListener {
-            val locationList = vm.getLocationList()
-
             if (isExistTwoOrMoreLocation()) {
-                checkFindMiddleLocationAvailable(locationList)
+                if (isAvailableFindMiddleLocation()) {
+                    view!!.findNavController().navigate(
+                        MainFragmentDirections.actionMainFragmentToMiddleFragment(
+                            locationlist = LocationDataList().convertLocationData(
+                                list = vm.getLocationList()
+                            )
+                        )
+                    )
+
+                } else {
+                    context?.toast("인터넷 연결을 확인해주세요!")
+                }
             } else {
                 context?.toast("위치를 2개 이상 설정해주세요!")
             }
         }
     }
 
-    private fun checkFindMiddleLocationAvailable(locationList: List<LocationData>) {
-        if (checkNetWorkStatus(requireContext()) == NetWorkStatus.NONE) {
-            context?.toast("인터넷 연결을 확인해주세요!")
-        } else {
-            view!!.findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToMiddleFragment(
-                    LocationDataList().convertLocationData(locationList)
-                )
-            )
-        }
-    }
+    private fun isAvailableFindMiddleLocation() =
+        (checkNetWorkStatus(requireContext()) != NetWorkStatus.NONE)
 
     private fun isExistTwoOrMoreLocation(): Boolean {
         var count = 0

@@ -187,9 +187,10 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray_round"
+                    android:background="@drawable/button_cta"
+                    android:enabled="false"
                     android:text="친구에게 공유하기"
-                    android:textColor="@color/gray2"
+                    android:textColor="@color/cta_button_text_disabled"
                     android:textSize="16sp" />
 
 

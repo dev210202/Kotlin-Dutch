@@ -20,11 +20,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
 ) {
 
     private val vm: SearchViewModel by viewModels()
-    private val recentLocationList by lazy { SearchFragmentArgs.fromBundle(requireArguments()).locationdbdatalist }
     private val emptyDataObserver by lazy {
         EmptyDataObserver(
-            binding.recyclerviewSearch,
-            binding.tvEmpty
+            binding.recyclerviewSearch, binding.tvEmpty
         )
     }
     private val searchAdapter by lazy {
@@ -39,25 +37,28 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }
     }
     private val recentAdapter by lazy {
-        RecentRecyclerAdapter(
-            onRecentItemClicked = {locationDBdata ->
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToMainFragment(
-                        locationDBdata
-                    )
+        RecentRecyclerAdapter(onRecentItemClicked = { locationDBdata ->
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToMainFragment(
+                    locationDBdata
                 )
-            }
-        ).apply {
+            )
+        }).apply {
             setLocationDataList(vm.getRecentLocationList())
         }.apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
     }
 
-    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.setRecentLocationList(recentLocationList.convertLocationDBDataListToData())
+        val recentLocationList =
+            SearchFragmentArgs.fromBundle(requireArguments()).locationdbdatalist
+
+        vm.setRecentLocationList(
+            recentLocationList.convertLocationDBDataListToData().toMutableList()
+        )
 
         if (recentLocationList.value.isEmpty()) {
             setEmptyViewVisible()

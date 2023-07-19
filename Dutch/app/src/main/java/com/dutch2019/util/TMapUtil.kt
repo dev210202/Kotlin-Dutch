@@ -17,7 +17,15 @@ fun convertTMapPOIItemToLocationData(tMapPOIItem: TMapPOIItem): LocationData = L
 
 fun isItemDataOK(item: TMapPOIItem) =
     item.poiName != null && item.upperAddrName != null && item.poiPoint != null
-
+fun calculateCenterPoint(locationList: List<LocationData>): TMapPoint {
+    var totalLat = 0.0
+    var totalLon = 0.0
+    locationList.forEach { data ->
+        totalLat += data.lat
+        totalLon += data.lon
+    }
+    return TMapPoint(totalLat / locationList.size, totalLon / locationList.size)
+}
 fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint, ratioValue: Int): TMapPoint {
     var changeLat = 0.0
     var changeLon = 0.0

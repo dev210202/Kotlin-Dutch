@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemRecentEditBinding
-import com.dutch2019.model.LocationDBData
+import com.dutch2019.model.LocationSearchData
 import com.dutch2019.model.LocationData
 
 class RecentEditRecyclerAdapter :
     RecyclerView.Adapter<RecentEditRecyclerAdapter.RecentEditDataViewHolder>() {
 
-    private var locationDataList = listOf<LocationDBData>()
+    private var locationDataList = listOf<LocationSearchData>()
     private var checkList = ArrayList<Boolean>()
     private var isAllSelectChecked = false
 
@@ -33,8 +33,8 @@ class RecentEditRecyclerAdapter :
         }
     }
 
-    fun getDeleteList(): List<LocationDBData> {
-        val deleteList = arrayListOf<LocationDBData>()
+    fun getDeleteList(): List<LocationSearchData> {
+        val deleteList = arrayListOf<LocationSearchData>()
         for (i in 0 until checkList.size) {
             Log.i("checkList T or F", "" + checkList[i] )
             if (checkList[i]) {
@@ -47,7 +47,7 @@ class RecentEditRecyclerAdapter :
         return deleteList
     }
 
-    fun setLocationDataList(list: List<LocationDBData>) {
+    fun setLocationDataList(list: List<LocationSearchData>) {
         locationDataList = list
         var newCheckList = ArrayList<Boolean>()
         notifyDataSetChanged()
@@ -76,9 +76,9 @@ class RecentEditRecyclerAdapter :
         var checkboxLayout = binding.layoutCheckbox
         var checkbox = binding.checkbox
 
-        fun bind(locationDBData: LocationDBData, position: Int) {
-            binding.address = locationDBData.centerAddress
-            binding.locations = getLocationsName(locationDBData.locations)
+        fun bind(locationSearchData: LocationSearchData, position: Int) {
+            binding.address = locationSearchData.centerAddress
+            binding.locations = getLocationsName(locationSearchData.locations)
             checkboxLayout.setOnClickListener {
                 checkbox.isChecked
             }
