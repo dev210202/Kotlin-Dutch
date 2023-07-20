@@ -16,11 +16,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dataBaseRepository: DBRepository, private val tMapRepository: TMapRepository
+    private val dataBaseRepository: DBRepository
 ) : BaseViewModel() {
 
-    private val _isConfirmedSktMapApikey = MutableLiveData<Boolean>(false)
-    val isConfirmedSktMapApikey: LiveData<Boolean> get() = _isConfirmedSktMapApikey
+    private val _isCompleteLoadDatabase = MutableLiveData<Boolean>(false)
+    val isCompleteLoadDatabase: LiveData<Boolean> get() = _isCompleteLoadDatabase
 
     private val _locationList = MutableListLiveData<LocationData>()
     val locationList: LiveData<List<LocationData>> get() = _locationList
@@ -33,12 +33,12 @@ class MainViewModel @Inject constructor(
         createEmptyLeastLocationItems()
     }
 
-    fun setConfirmedSktMapApikey() {
-        _isConfirmedSktMapApikey.postValue(true)
+    fun setCompleteLoadDatabase() {
+        _isCompleteLoadDatabase.postValue(true)
     }
 
-    fun isConfirmedSktMapApikey(): Boolean {
-        return _isConfirmedSktMapApikey.value!!
+    fun isCompleteLoadDatabase(): Boolean {
+        return _isCompleteLoadDatabase.value!!
     }
 
     fun addLocation(locationData: LocationData) {
@@ -85,9 +85,8 @@ class MainViewModel @Inject constructor(
         runCatching {
             dataBaseRepository.insertSearchData(data)
         }.onSuccess {
-            Log.e("saveSearchData", data.toString())
+            setCompleteLoadDatabase()
         }.onFailure { throwable ->
-            Log.e("saveSearchData throwable", throwable.toString())
             throw throwable
         }
     }
@@ -97,7 +96,6 @@ class MainViewModel @Inject constructor(
         runCatching {
             searchLocationList = dataBaseRepository.getSearchData()
         }.onSuccess {
-            Log.e("loadSearchData", searchLocationList.toString())
         }.onFailure { throwable ->
             throw throwable
         }
