@@ -3,6 +3,7 @@ package com.dutch2019.ui.search
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
@@ -20,7 +21,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     R.layout.fragment_search
 ) {
 
-    private val vm: SearchViewModel by viewModels()
+    private val vm: SearchViewModel by activityViewModels()
     private val emptyDataObserver by lazy {
         EmptyDataObserver(
             binding.recyclerviewSearch, binding.tvEmpty
@@ -61,6 +62,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                     locationDataList.add(convertTMapPOIItemToLocationData(it))
                 }
                 binding.tvInfo.text = "검색결과"
+                binding.tvEmpty.visibility = View.INVISIBLE
                 binding.recyclerviewSearch.adapter = searchAdapter
                 searchAdapter.setLocationItemList(locationDataList)
             }

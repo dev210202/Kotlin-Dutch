@@ -98,7 +98,7 @@ class MainViewModel @Inject constructor(
             searchLocationList = dataBaseRepository.getSearchData()
         }.onSuccess {
             Log.e("loadSearchData", searchLocationList.toString())
-        }.onFailure {throwable ->
+        }.onFailure { throwable ->
             throw throwable
         }
     }

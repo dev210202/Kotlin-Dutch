@@ -18,14 +18,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val vm: MainViewModel by viewModels()
-    private val middleVM : MiddleViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
-        // TODO : 최초 실행시 DB 로드
         vm.loadSearchData()
         setTMapAPIAuth()
 

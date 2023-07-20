@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/gray7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray7">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
@@ -44,14 +43,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/item_recent_edit"
             android:id="@+id/rv_recent_edit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            tools:listitem="@layout/item_recent_edit" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -63,6 +63,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
+                android:id="@+id/btn_select_all"
                 style="@style/Pretendard_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,13 +75,15 @@
                 android:textSize="16sp" />
 
             <Button
+                android:id="@+id/btn_delete"
                 style="@style/Pretendard_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_gray_round"
-                android:text="0개 삭제"
-                android:textColor="@color/gray3"
+                android:background="@drawable/button_cta"
+                android:enabled="false"
+                android:text="삭제"
+                android:textColor="@color/cta_button_text_disabled"
                 android:textSize="16sp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
