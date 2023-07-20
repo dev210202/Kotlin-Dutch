@@ -1,5 +1,6 @@
 package com.dutch2019.ui.middle
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.dutch2019.model.StartEndPointData
 import com.dutch2019.repository.DBRepository
 import com.dutch2019.repository.TMapRepository
 import com.dutch2019.util.*
+import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -113,28 +115,41 @@ class MiddleViewModel @Inject constructor(
     fun searchNearFacility(point: TMapPoint, category: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val nearFacilityList = mutableListOf<LocationData>()
-            val findList = tMapRepository.findNearFacility(point, category)
-            if (findList.isNotNull()) {
-                findList!!.forEach { item ->
-                    if (isItemDataOK(item)) {
-                        nearFacilityList.add(
-                            LocationData(
-                                0,
-                                item.poiid,
-                                item.poiName,
-                                filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
-                                    filtZero(" " + item.buildingNo2)
-                                ),
-                                filtNull(" " + item.telNo),
-                                item.poiPoint.latitude,
-                                item.poiPoint.longitude
+            lateinit var findList: ArrayList<TMapPOIItem>
+            runCatching {
+                tMapRepository.findNearFacility(point, category)
+            }.onSuccess { result ->
+                if (result.isNotNull()) {
+                    findList = result!!
+                    findList.forEach { item ->
+                        if (isItemDataOK(item)) {
+                            nearFacilityList.add(
+                                LocationData(
+                                    0,
+                                    item.poiid,
+                                    item.poiName,
+                                    filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
+                                        filtZero(" " + item.buildingNo2)
+                                    ),
+                                    filtNull(" " + item.telNo),
+                                    item.poiPoint.latitude,
+                                    item.poiPoint.longitude
+                                )
                             )
-                        )
+                        }
                     }
+                    getLocationList().forEach { locationData ->
+                        val sameLocation = nearFacilityList.find { listData ->
+                            (listData.lat == locationData.lat) && (listData.lon == locationData.lon)
+                        }
+                        nearFacilityList.remove(sameLocation)
+                    }
+                    _facilityList.postValue(nearFacilityList)
+                } else {
+                    _facilityList.postValue(listOf())
                 }
-                _facilityList.postValue(nearFacilityList)
-            } else {
-                _facilityList.postValue(listOf())
+            }.onFailure { throwable ->
+                throw throwable
             }
         }
     }
