@@ -12,6 +12,7 @@ import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
 import com.dutch2019.ui.middle.MiddleViewModel
 import com.dutch2019.util.ButtonState
+import com.dutch2019.util.calculateCenterPoint
 import com.dutch2019.util.getCalculatedRatioPoint
 import com.dutch2019.util.marker.*
 import com.dutch2019.util.setButtonState
@@ -23,7 +24,7 @@ class RatioSelectFragment :
     BaseFragment<FragmentRatioSelectBinding>(R.layout.fragment_ratio_select) {
 
     private val vm: MiddleViewModel by activityViewModels()
-    private lateinit var  tMapView :TMapView
+    private lateinit var tMapView: TMapView
     private lateinit var ratioPoint: TMapPoint
     private var ratioLocationA = LocationData()
     private var ratioLocationB = LocationData()
@@ -31,8 +32,8 @@ class RatioSelectFragment :
         super.onViewCreated(view, savedInstanceState)
 
         RatioSelectFragmentArgs.fromBundle(requireArguments()).let { data ->
-            ratioLocationA= data.ratioA
-            ratioLocationB= data.ratioB
+            ratioLocationA = data.ratioA
+            ratioLocationB = data.ratioB
         }
 
         tMapView = TMapView(context)
@@ -41,7 +42,14 @@ class RatioSelectFragment :
             tMapView, requireContext(), ratioLocationA, ratioLocationB
         )
         mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
-        markRatioLocation(tMapView, requireContext(), vm.getCenterPoint())
+        markRatioLocation(
+            tMapView,
+            requireContext(),
+            calculateCenterPoint(
+                ratioLocationA.convertTMapPoint(),
+                ratioLocationB.convertTMapPoint()
+            )
+        )
         drawLine(
             tMapView,
             ratioLocationA.convertTMapPoint(),
@@ -52,13 +60,15 @@ class RatioSelectFragment :
 
         binding.btnRatioSetComplete.setOnClickListener {
             vm.setRatioPoint(ratioPoint)
-            findNavController().navigate(RatioSelectFragmentDirections.actionRatioSelectFragmentToMiddleFragment(
-                locationlist = LocationDataList().convertLocationData(vm.getLocationList())
-            ))
+            findNavController().navigate(
+                RatioSelectFragmentDirections.actionRatioSelectFragmentToMiddleFragment(
+                    locationlist = LocationDataList().convertLocationData(vm.getLocationList())
+                )
+            )
         }
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, ratio: Int, p2: Boolean) {
-                binding.ratio = "${(ratio +1)} : ${(9 - ratio)}"
+                binding.ratio = "${(ratio + 1)} : ${(9 - ratio)}"
                 ratioPoint = getCalculatedRatioPoint(
                     ratioLocationA.convertTMapPoint(),
                     ratioLocationB.convertTMapPoint(),

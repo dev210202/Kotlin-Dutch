@@ -26,6 +26,10 @@ fun calculateCenterPoint(locationList: List<LocationData>): TMapPoint {
     }
     return TMapPoint(totalLat / locationList.size, totalLon / locationList.size)
 }
+
+fun calculateCenterPoint(locationA : TMapPoint, locationB : TMapPoint): TMapPoint {
+    return TMapPoint((locationA.latitude + locationB.latitude) / 2, (locationA.longitude + locationB.longitude) / 2)
+}
 fun getCalculatedRatioPoint(point1: TMapPoint, point2: TMapPoint, ratioValue: Int): TMapPoint {
     var changeLat = 0.0
     var changeLon = 0.0
