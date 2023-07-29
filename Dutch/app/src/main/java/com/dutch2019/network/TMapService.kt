@@ -3,7 +3,6 @@ package com.dutch2019.network
 import com.dutch2019.BuildConfig
 import com.dutch2019.model.RouteDataList
 import com.dutch2019.model.StartEndPointData
-import com.dutch2019.model.ZipData
 import retrofit2.Response
 import retrofit2.http.*
 

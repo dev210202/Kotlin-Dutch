@@ -22,23 +22,26 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tMapView = TMapView(context)
         LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
             locationData = data.locationData
             binding.name = data.locationData.name
             binding.address = data.locationData.address
         }
-        tMapView.setCenterPoint(locationData.lon, locationData.lat)
-        markLocationCheck(tMapView, requireContext(), locationData.convertTMapPoint())
-        binding.layoutCheckMap.addView(tMapView)
+        tMapView = TMapView(context).apply {
+            this.setCenterPoint(locationData.lon, locationData.lat)
+            markLocationCheck(this, requireContext(), locationData.convertTMapPoint())
+            binding.layoutCheckMap.addView(this)
+        }
 
         binding.btnSetLocation.setOnClickListener {
-            locationData = locationData.copy(id = 0)
-            vm.changeLocationListItem(vm.getSelectedItemIndex(), locationData)
-            vm.saveSearchDataIntoDB(locationData)
-            vm.addSearchData(locationData)
+            locationData.copy(id = 0).apply {
+                vm.changeLocationListItem(vm.getSelectedItemIndex(), this)
+                vm.saveSearchDataIntoDB(this)
+                vm.addDBData(this)
+            }
             findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment())
         }
+
         binding.ibLeftArrow.setOnClickListener {
             findNavController().popBackStack()
         }

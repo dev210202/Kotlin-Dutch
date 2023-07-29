@@ -17,15 +17,15 @@ import kotlin.reflect.KClass
 @InstallIn(ViewModelComponent::class)
 object APIModule {
 
-    val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    val okHttpClient = OkHttpClient.Builder()
+    private val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(1, TimeUnit.MINUTES)
         .readTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(15, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
         .build()
 
-    val tMapURL = "https://apis.openapi.sk.com/"
+    private const val tMapURL = "https://apis.openapi.sk.com/"
     private fun <T : Any> buildRetrofit(
         baseUrl: String,
         service: KClass<T>,

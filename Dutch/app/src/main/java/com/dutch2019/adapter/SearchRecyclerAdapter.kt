@@ -21,15 +21,15 @@ class SearchRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationDataViewHolder {
-        val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return LocationDataViewHolder(binding, onRightArrowButtonClicked)
+        ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+            return LocationDataViewHolder(this, onRightArrowButtonClicked)
+        }
     }
 
     override fun getItemCount(): Int = locationDataList.size
 
     override fun onBindViewHolder(holder: LocationDataViewHolder, position: Int) {
-        val locationData = locationDataList[position]
-        holder.bind(locationData)
+        holder.bind(locationDataList[position])
     }
 
     class LocationDataViewHolder(

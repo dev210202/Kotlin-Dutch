@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_splash"
+        android:background="@color/gray7"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,7 +103,7 @@
             android:id="@+id/recyclerview_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/black_splash"
+            android:background="@color/gray7"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_info" />

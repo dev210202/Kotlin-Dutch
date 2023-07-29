@@ -7,14 +7,8 @@ import android.os.Bundle
 import android.os.Process
 import android.util.Log
 import com.dutch2019.ui.error.ErrorActivity
-import java.io.PrintWriter
-import java.io.StringWriter
-import kotlin.Unit.toString
-
-object IntentValue {
-    const val LAST_INTENT = "LAST_INTENT"
-    const val ERROR_TEXT = "EXTRA_ERROR_TEXT"
-}
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 
 fun getMessageByErrorTypeClassify(errorMessage: String?): String {
     when (errorMessage) {
@@ -74,6 +68,7 @@ class ExceptionHandler(application: Application) : Thread.UncaughtExceptionHandl
     private fun isSkipActivity(activity: Activity) = activity is ErrorActivity
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
+        Firebase.crashlytics.recordException(throwable)
         lastActivity?.run {
             startErrorActivity(this, throwable.cause!!.stackTraceToString())
         }
@@ -84,8 +79,8 @@ class ExceptionHandler(application: Application) : Thread.UncaughtExceptionHandl
     private fun startErrorActivity(activity: Activity, errorText: String) = activity.run {
         val lastActivityIntent = Intent(this, activity.javaClass)
         val errorActivityIntent = Intent(this, ErrorActivity::class.java).apply {
-            putExtra(IntentValue.ERROR_TEXT, errorText)
-            putExtra(IntentValue.LAST_INTENT, lastActivityIntent)
+            putExtra("errorText", errorText)
+            putExtra("lastIntent", lastActivityIntent)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         startActivity(errorActivityIntent)

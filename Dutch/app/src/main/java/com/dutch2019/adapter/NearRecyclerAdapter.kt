@@ -9,10 +9,9 @@ import com.dutch2019.model.LocationData
 import com.dutch2019.util.*
 
 class NearRecyclerAdapter(
-    private val onItemClicked : (LocationData) -> Unit,
-    private val onInternetClicked : (LocationData) -> Unit
-) :
-    RecyclerView.Adapter<NearRecyclerAdapter.NearViewHolder>() {
+    private val onItemClicked: (LocationData) -> Unit,
+    private val onInternetClicked: (LocationData) -> Unit
+) : RecyclerView.Adapter<NearRecyclerAdapter.NearViewHolder>() {
 
 
     private var selectedPosition = -1
@@ -24,33 +23,34 @@ class NearRecyclerAdapter(
 
     }
 
-    fun setSelectedPosition(position: Int){
+    fun setSelectedPosition(position: Int) {
         val beforePosition = selectedPosition
         selectedPosition = position
         notifyItemChanged(position)
         notifyItemChanged(beforePosition)
-
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearViewHolder {
-        val binding =
-            ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NearViewHolder(binding, parent.context, onInternetClicked)
+        ItemNearBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+            return NearViewHolder(this, parent.context, onInternetClicked)
+        }
     }
 
     override fun getItemCount(): Int = locationDataList.size
 
 
     override fun onBindViewHolder(holder: NearViewHolder, position: Int) {
-        holder.bind(locationDataList[position])
-        holder.layout.setOnClickListener {
-            setSelectedPosition(holder.adapterPosition)
-            onItemClicked(locationDataList[position])
-        }
-        if(selectedPosition == position){
-            holder.setBackgroundSelected()
-        }
-        else{
-            holder.setBackgroundDefault()
+        holder.run {
+            bind(locationDataList[position])
+            layout.setOnClickListener {
+                setSelectedPosition(holder.adapterPosition)
+                onItemClicked(locationDataList[position])
+            }
+            if (selectedPosition == position) {
+                setBackgroundSelected()
+            } else {
+                setBackgroundDefault()
+            }
         }
     }
 
@@ -58,23 +58,25 @@ class NearRecyclerAdapter(
         private val binding: ItemNearBinding,
         private val context: Context,
         private val onInternetClicked: (LocationData) -> Unit,
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
-         val layout = binding.layoutNear
+    ) : RecyclerView.ViewHolder(binding.root) {
+        val layout = binding.layoutNear
         fun bind(locationData: LocationData) {
-            binding.name = locationData.name
-            binding.address = locationData.address
-            binding.ibInternet.setOnClickListener {
-                onInternetClicked(locationData)
+            locationData.apply {
+                binding.locationData = this
+                binding.ibInternet.setOnClickListener{
+                    onInternetClicked(this)
+                }
             }
         }
-        fun setBackgroundSelected(){
-            binding.layoutNear.setBackgroundColor(getSelectedBackgroundColor(context))
-            binding.tvNameItem.setTextColor(getPrimaryTextColor(context))
+
+        fun setBackgroundSelected() {
+            binding.layoutNear.setBackgroundColor(Color.BACKGROUND_SELECTED.getColor(context))
+            binding.tvNameItem.setTextColor(Color.TEXT_PRIMARY.getColor(context))
         }
-        fun setBackgroundDefault(){
-            binding.layoutNear.setBackgroundColor(getDefaultBackgroundColor(context))
-            binding.tvNameItem.setTextColor(getActiveCTAButtonTextColor(context))
+
+        fun setBackgroundDefault() {
+            binding.layoutNear.setBackgroundColor(Color.BACKGROUND_DEFAULT.getColor(context))
+            binding.tvNameItem.setTextColor(Color.TEXT_WHITE.getColor(context))
         }
     }
 }

@@ -1,24 +1,17 @@
 package com.dutch2019.util
 
 import android.content.Context
-import com.dutch2019.model.LocationSearchData
-import com.dutch2019.model.LocationSearchDataList
+import android.widget.Button
 import com.dutch2019.model.LocationData
 
 fun Any?.isNotNull() = this != null
 
-fun List<LocationData>.getLocationsName(): String {
-    var locationsName = ""
-    this.forEach { locationData ->
-        locationsName += if (locationsName.isNotEmpty()) {
-            " - " + locationData.name
-        } else {
-            locationData.name
-        }
-    }
-    return locationsName
-}
+fun LocationData.isSameData(compareData: LocationData) =
+    this.lat == compareData.lat && this.lon == compareData.lon
 
-fun List<LocationSearchData>.convertLocationDBDataToDataList() = LocationSearchDataList(value = this)
-
-fun changeToDP(value :Int , context: Context) = value * context.resources.displayMetrics.density
+fun LocationData.isSamePoint(compareLat: Double, compareLon: Double) =
+    this.lat == compareLat && this.lon == compareLon
+fun LocationData.isNotSamePoint(compareLat: Double, compareLon: Double) =
+    this.lat != compareLat || this.lon != compareLon
+fun Button.isNotSelected() = !this.isSelected
+fun changeToDP(value: Int, context: Context) = value * context.resources.displayMetrics.density

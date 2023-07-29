@@ -13,9 +13,9 @@
     <application
         android:name=".DutchApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/dutch_ic_launcher"
+        android:icon="@mipmap/ic_launcher_dutch"
         android:label="더치"
-        android:roundIcon="@mipmap/dutch_ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_dutch_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Splash">
 

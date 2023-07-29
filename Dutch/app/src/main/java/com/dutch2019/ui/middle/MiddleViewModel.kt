@@ -1,6 +1,7 @@
 package com.dutch2019.ui.middle
 
-import android.util.Log
+import android.content.ActivityNotFoundException
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,9 +11,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.model.StartEndPointData
-import com.dutch2019.repository.DBRepository
+import com.dutch2019.repository.FirebaseRepository
 import com.dutch2019.repository.TMapRepository
 import com.dutch2019.util.*
+import com.kakao.sdk.common.util.KakaoCustomTabsClient
+import com.kakao.sdk.link.LinkClient
+import com.kakao.sdk.link.WebSharerClient
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Content
+import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.Link
 import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,8 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MiddleViewModel @Inject constructor(
-    private val tMapRepository: TMapRepository,
-    private val dataBaseRepository: DBRepository,
+    private val tMapRepository: TMapRepository, private val firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
     private var locationList = listOf<LocationData>()
@@ -29,6 +36,8 @@ class MiddleViewModel @Inject constructor(
     private var centerPoint = TMapPoint(0.0, 0.0)
     private var ratioPoint = TMapPoint(0.0, 0.0)
     private var searchPoint = TMapPoint(0.0, 0.0)
+    private var selectedLocationData = LocationData()
+    private lateinit var imageUri: String
 
     private val _centerPointAddress = MutableLiveData<String>("")
     val centerPointAddress: LiveData<String> get() = _centerPointAddress
@@ -62,12 +71,17 @@ class MiddleViewModel @Inject constructor(
         searchPoint = point
     }
 
+    fun getSelectedLocation(): LocationData = selectedLocationData
+    fun setSelectedLocation(locationData: LocationData) {
+        selectedLocationData = locationData
+    }
 
     fun getIndexToFacilityList(item: TMapPoint, locationName: String): Int {
-        val value = _facilityList.value!!.find {
-            it.lat == item.latitude && it.lon == item.longitude && it.name == locationName
+        _facilityList.value!!.find {
+            it.isSamePoint(item.latitude, item.longitude) && it.name == locationName
+        }.apply {
+            return _facilityList.value!!.indexOf(this)
         }
-        return _facilityList.value!!.indexOf(value)
     }
 
 
@@ -78,16 +92,12 @@ class MiddleViewModel @Inject constructor(
     }
 
     fun setRouteTime(point: TMapPoint, latitude: Double, longitude: Double) {
-        var startEndPointData =
-            StartEndPointData(point.longitude, point.latitude, longitude, latitude)
         viewModelScope.launch(Dispatchers.IO) {
-            _routeTime.postValue(
-                convertTime(
-                    tMapRepository.getRouteTime(
-                        startEndPointData
-                    )
-                )
-            )
+            StartEndPointData(point.longitude, point.latitude, longitude, latitude).apply {
+                tMapRepository.getRouteTime(this).apply {
+                    _routeTime.postValue(this)
+                }
+            }
         }
     }
 
@@ -105,7 +115,9 @@ class MiddleViewModel @Inject constructor(
 
     fun searchCenterPointAddress(point: TMapPoint) {
         viewModelScope.launch(Dispatchers.IO) {
-            _centerPointAddress.postValue(tMapRepository.getAddress(point))
+            tMapRepository.getAddress(point).apply {
+                _centerPointAddress.postValue(this)
+            }
         }
     }
 
@@ -115,41 +127,71 @@ class MiddleViewModel @Inject constructor(
     fun searchNearFacility(point: TMapPoint, category: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val nearFacilityList = mutableListOf<LocationData>()
-            lateinit var findList: ArrayList<TMapPOIItem>
             runCatching {
                 tMapRepository.findNearFacility(point, category)
             }.onSuccess { result ->
-                if (result.isNotNull()) {
-                    findList = result!!
-                    findList.forEach { item ->
+                result?.let {
+                    it.forEach { item ->
                         if (isItemDataOK(item)) {
-                            nearFacilityList.add(
-                                LocationData(
-                                    0,
-                                    item.poiid,
-                                    item.poiName,
-                                    filtNull(item.poiAddress) + filtNull(" " + item.buildingNo1) + " " + filtNull(
-                                        filtZero(" " + item.buildingNo2)
-                                    ),
-                                    filtNull(" " + item.telNo),
-                                    item.poiPoint.latitude,
-                                    item.poiPoint.longitude
-                                )
-                            )
+                            nearFacilityList.add(LocationData().setNearFacilityItem(item))
                         }
                     }
                     getLocationList().forEach { locationData ->
-                        val sameLocation = nearFacilityList.find { listData ->
-                            (listData.lat == locationData.lat) && (listData.lon == locationData.lon)
+                        nearFacilityList.find { listData ->
+                            listData.isSameData(locationData)
+                        }.apply {
+                            nearFacilityList.remove(this)
                         }
-                        nearFacilityList.remove(sameLocation)
                     }
                     _facilityList.postValue(nearFacilityList)
-                } else {
-                    _facilityList.postValue(listOf())
                 }
             }.onFailure { throwable ->
                 throw throwable
+            }
+        }
+    }
+
+    fun loadShareImage() {
+        viewModelScope.launch(Dispatchers.IO) {
+            imageUri = firebaseRepository.readImage()
+        }
+    }
+
+    fun shareKakao(location: LocationData, context: Context) {
+
+        val name = filtDoubleBlank(location.name)
+        val address = filtDoubleBlank(location.address)
+        val url = "https://map.kakao.com/link/map/$name,${location.lat},${location.lon}"
+
+        val feedTemplate = FeedTemplate(
+            content = Content(
+                title = "더치가 중간지점을 찾아왔어요!",
+                description = "$name\n$address",
+                imageUrl = imageUri,
+                link = Link(webUrl = url, mobileWebUrl = url)
+            ), buttons = listOf(Button(title = "상세정보 보기", Link(webUrl = url, mobileWebUrl = url)))
+        )
+        LinkClient.instance.apply {
+            if (isKakaoLinkAvailable(context)) {
+                defaultTemplate(context, feedTemplate) { _, error ->
+                    error?.let {
+                        throw error
+                    }
+                }
+            } else {
+                WebSharerClient.instance.defaultTemplateUri(feedTemplate).apply {
+                    try {
+                        KakaoCustomTabsClient.openWithDefault(context, this)
+                    } catch (error: Exception) {
+                        // 카카오톡이 없고, 카카오링크가 안보내지는 경우
+                        throw error
+                    }
+                    try {
+                        KakaoCustomTabsClient.open(context, this)
+                    } catch (error: Exception) {
+                        throw error
+                    }
+                }
             }
         }
     }

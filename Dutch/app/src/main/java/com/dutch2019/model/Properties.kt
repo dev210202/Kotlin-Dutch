@@ -1,15 +1,15 @@
 package com.dutch2019.model
 
 data class Properties(
-    var totalDistance: String,
-    var totalTime: String,
-    var totalFare :String,
-    var taxiFare : String,
-    var index : String,
-    var pointIndex : String,
-    var name : String,
-    var description : String,
-    var nextRoadName : String,
-    var turnType: String,
-    var pointType: String
+    val totalDistance: String,
+    val totalTime: String,
+    val totalFare :String,
+    val taxiFare : String,
+    val index : String,
+    val pointIndex : String,
+    val name : String,
+    val description : String,
+    val nextRoadName : String,
+    val turnType: String,
+    val pointType: String
 )

@@ -1,9 +1,10 @@
 package com.dutch2019.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
 import com.dutch2019.adapter.MainRecyclerAdapter
 import com.dutch2019.base.BaseFragment
@@ -19,15 +20,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     R.layout.fragment_main
 ) {
 
-    var count = 0
+    private var count = 0
     private val vm: MainViewModel by activityViewModels()
     private val mainAdapter by lazy {
         MainRecyclerAdapter(onLocationSearchButtonClicked = { itemPosition ->
             vm.setSelectedItemIndex(itemPosition)
-            view!!.findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToSearchFragment(
-                    locationdatalist = LocationDataList(value = vm.getSearchLocationList())
-                )
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToSearchFragment()
             )
         }, onLocationCloseButtonClicked = { position ->
             vm.removeAtLocationList(position)
@@ -46,13 +45,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
 
         vm.locationList.observe(viewLifecycleOwner) { list ->
-            mainAdapter.setLocationDataList(list)
-            binding.recyclerviewMain.scrollToPosition(mainAdapter.getLocationDataList().size - 1)
-
+            mainAdapter.run{
+                setLocationDataList(list)
+                binding.recyclerviewMain.scrollToPosition(this.getLocationDataList().size - 1)
+            }
             if (isExistTwoOrMoreLocation()) {
-                setButtonState(binding.btnFindMiddlelocation, ButtonState.ACTIVE)
-            } else {
-                setButtonState(binding.btnFindMiddlelocation, ButtonState.DISABLE)
+                ButtonState.ACTIVE.changeButton(binding.btnFindMiddlelocation)
+             } else {
+                ButtonState.DISABLE.changeButton(binding.btnFindMiddlelocation)
             }
         }
 
@@ -66,14 +66,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         binding.btnFindMiddlelocation.setOnClickListener {
             if (isExistTwoOrMoreLocation()) {
                 if (isAvailableFindMiddleLocation()) {
-                    view!!.findNavController().navigate(
+                    findNavController().navigate(
                         MainFragmentDirections.actionMainFragmentToMiddleFragment(
                             locationlist = LocationDataList().convertLocationData(
                                 list = vm.getLocationList()
                             )
                         )
                     )
-
                 } else {
                     context?.toast("인터넷 연결을 확인해주세요!")
                 }
@@ -101,8 +100,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
 
     private fun checkHashKey() {
         if (count == 5) {
-            var keyHash = Utility.getKeyHash(requireContext())
-            context?.toast("Key Hash : " + keyHash)
+            val keyHash = Utility.getKeyHash(requireContext())
+            context?.toast("Key Hash : $keyHash")
+            Log.i("key hash", keyHash)
         } else {
             count++
         }

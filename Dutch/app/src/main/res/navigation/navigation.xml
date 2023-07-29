@@ -6,6 +6,7 @@
     app:startDestination="@id/mainFragment">
 
     <fragment
+        tools:layout="@layout/fragment_main"
         android:id="@+id/mainFragment"
         android:name="com.dutch2019.ui.main.MainFragment"
         android:label="MainFragment">
@@ -32,13 +33,12 @@
         <action
             android:id="@+id/action_searchFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
-        <argument
-            android:name="locationdatalist"
-            app:argType="com.dutch2019.model.LocationDataList" />
+         />
 
 
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_location_check"
         android:id="@+id/locationCheckFragment"
         android:name="com.dutch2019.ui.locationcheck.LocationCheckFragment"
         android:label="LocationCheckFragment">
@@ -70,12 +70,10 @@
         android:id="@+id/nearFragment"
         android:name="com.dutch2019.ui.near.NearFragment"
         android:label="NearFragment">
-        <action
-            android:id="@+id/action_nearFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
+        tools:layout="@layout/fragment_recent_edit"
         android:id="@+id/recentEditFragment"
         android:name="com.dutch2019.ui.recentedit.RecentEditFragment"
         android:label="RecentEditFragment">
@@ -83,7 +81,7 @@
         <action
             android:id="@+id/action_recentEditFragment_to_searchFragment"
             app:destination="@id/searchFragment"
-            app:popUpTo="@layout/fragment_search"
+            app:popUpTo="@id/searchFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -99,14 +97,7 @@
             android:id="@+id/action_ratioFragment_to_ratioSelectFragment"
             app:destination="@id/ratioSelectFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.dutch2019.ui.Info.InfoFragment"
-        android:label="InfoFragment">
-        <argument
-            android:name="locationdata"
-            app:argType="com.dutch2019.model.LocationData" />
-    </fragment>
+
     <fragment
         android:id="@+id/ratioSelectFragment"
         android:name="com.dutch2019.ui.ratioselect.RatioSelectFragment"
@@ -114,7 +105,7 @@
         <action
             android:id="@+id/action_ratioSelectFragment_to_middleFragment"
             app:destination="@id/middleFragment"
-            app:popUpTo="@layout/fragment_middle"
+            app:popUpTo="@id/middleFragment"
             app:popUpToInclusive="true" />
         <argument
             android:name="ratioA"

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.activityViewModels
 import com.dutch2019.BuildConfig
 import com.dutch2019.R
 import com.dutch2019.base.LifeCycleActivity
@@ -24,7 +25,6 @@ class MainActivity : LifeCycleActivity<ActivityMainBinding>(R.layout.activity_ma
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
-
         vm.loadSearchData()
         setTMapAPIAuth()
 

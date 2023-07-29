@@ -11,20 +11,21 @@ data class LocationDataList(
 ) : Parcelable {
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-
+        parcel.writeList(value)
     }
-
     override fun describeContents(): Int {
         return 0
     }
 
     fun convertLocationData(list: List<LocationData>): LocationDataList {
-        val locationDataList = mutableListOf<LocationData>()
-        list.forEach { locationData ->
-            if(locationData.name.isNotEmpty()) {
-                locationDataList.add(locationData)
+        mutableListOf<LocationData>().apply {
+            list.forEach { locationData ->
+                if(locationData.name.isNotEmpty()) {
+                    this.add(locationData)
+                }
             }
+        }.run {
+            return LocationDataList(value = this)
         }
-        return LocationDataList(value = locationDataList)
     }
 }

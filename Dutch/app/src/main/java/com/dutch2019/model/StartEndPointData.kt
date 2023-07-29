@@ -1,8 +1,8 @@
 package com.dutch2019.model
 
 data class StartEndPointData(
-    var endX : Double,
-    var endY : Double,
-    var startX : Double,
-    var startY : Double
+    val endX : Double,
+    val endY : Double,
+    val startX : Double,
+    val startY : Double
 )

@@ -8,6 +8,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import com.dutch2019.db.RecentLocationDB
 import com.dutch2019.network.TMapService
 import com.dutch2019.repository.DBRepository
+import com.dutch2019.repository.FirebaseRepository
 import com.dutch2019.repository.TMapRepository
 
 @Module
@@ -20,4 +21,8 @@ object RepoModule {
     @Provides
     @ViewModelScoped
     fun provideDBRepository(db : RecentLocationDB) : DBRepository = DBRepository(db)
+
+    @Provides
+    @ViewModelScoped
+    fun provideFirebaseRepository() : FirebaseRepository = FirebaseRepository()
 }

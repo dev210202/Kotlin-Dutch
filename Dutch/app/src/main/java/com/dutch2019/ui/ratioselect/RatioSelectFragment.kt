@@ -11,11 +11,8 @@ import com.dutch2019.databinding.FragmentRatioSelectBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
 import com.dutch2019.ui.middle.MiddleViewModel
-import com.dutch2019.util.ButtonState
-import com.dutch2019.util.calculateCenterPoint
-import com.dutch2019.util.getCalculatedRatioPoint
+import com.dutch2019.util.*
 import com.dutch2019.util.marker.*
-import com.dutch2019.util.setButtonState
 import com.skt.Tmap.TMapPoint
 import com.skt.Tmap.TMapView
 
@@ -26,37 +23,29 @@ class RatioSelectFragment :
     private val vm: MiddleViewModel by activityViewModels()
     private lateinit var tMapView: TMapView
     private lateinit var ratioPoint: TMapPoint
-    private var ratioLocationA = LocationData()
-    private var ratioLocationB = LocationData()
+    private var ratioA = LocationData()
+    private var ratioB = LocationData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ratio = "5 : 5"
         RatioSelectFragmentArgs.fromBundle(requireArguments()).let { data ->
-            ratioLocationA = data.ratioA
-            ratioLocationB = data.ratioB
+            ratioA = data.ratioA
+            ratioB = data.ratioB
         }
 
-        tMapView = TMapView(context)
-        markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
-        markSelectRatioLocation(
-            tMapView, requireContext(), ratioLocationA, ratioLocationB
-        )
-        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
-        markRatioLocation(
-            tMapView,
-            requireContext(),
-            calculateCenterPoint(
-                ratioLocationA.convertTMapPoint(),
-                ratioLocationB.convertTMapPoint()
+        tMapView = TMapView(context).apply {
+            markMiddleLocation(this, requireContext(), vm.getCenterPoint())
+            markSelectRatioLocation(this, requireContext(), ratioA, ratioB)
+            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
+            markRatioLocation(
+                this,
+                requireContext(),
+                calculateCenterPoint(ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
             )
-        )
-        drawLine(
-            tMapView,
-            ratioLocationA.convertTMapPoint(),
-            ratioLocationB.convertTMapPoint()
-        )
-        binding.layoutRatioSelect.addView(tMapView)
-        binding.ratio = "5 : 5"
+            drawLine(this, ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
+            binding.layoutRatioSelect.addView(this)
+        }
 
         binding.btnRatioSetComplete.setOnClickListener {
             vm.setRatioPoint(ratioPoint)
@@ -70,15 +59,11 @@ class RatioSelectFragment :
             override fun onProgressChanged(p0: SeekBar?, ratio: Int, p2: Boolean) {
                 binding.ratio = "${(ratio + 1)} : ${(9 - ratio)}"
                 ratioPoint = getCalculatedRatioPoint(
-                    ratioLocationA.convertTMapPoint(),
-                    ratioLocationB.convertTMapPoint(),
-                    ratio + 1
+                    ratioA.convertTMapPoint(), ratioB.convertTMapPoint(), ratio + 1
                 )
-                markRatioLocation(
-                    tMapView, requireContext(), ratioPoint
-                )
-                if (!binding.btnRatioSetComplete.isSelected) {
-                    setButtonState(binding.btnRatioSetComplete, ButtonState.ACTIVE)
+                markRatioLocation(tMapView, requireContext(), ratioPoint)
+                if (binding.btnRatioSetComplete.isNotSelected()) {
+                    ButtonState.ACTIVE.changeButton(binding.btnRatioSetComplete)
                 }
             }
 

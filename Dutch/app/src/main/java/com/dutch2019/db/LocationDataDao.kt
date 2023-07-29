@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.dutch2019.model.LocationData
-import com.dutch2019.model.LocationSearchData
 
 @Dao
 interface LocationDataDao {

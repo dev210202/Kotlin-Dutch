@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemMainLocationAddButtonBinding
 import com.dutch2019.databinding.ItemMainLocationSearchButtonBinding
 import com.dutch2019.model.LocationData
-import com.dutch2019.util.getActiveTextColor
-import com.dutch2019.util.marker.getChangedMarkerBackground
+import com.dutch2019.util.Color
+import com.dutch2019.util.marker.Marker
 import com.dutch2019.util.setDefaultLocationItem
 
 class MainRecyclerAdapter(
@@ -24,28 +24,29 @@ class MainRecyclerAdapter(
         notifyDataSetChanged()
     }
 
-    fun getLocationDataList(): List<LocationData> {
-        return locationDataList
-    }
+    fun getLocationDataList(): List<LocationData> = locationDataList
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> {
-                val view = ItemMainLocationSearchButtonBinding.inflate(
+                ItemMainLocationSearchButtonBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
-                LocationSearchViewHolder(
-                    view,
-                    onLocationSearchButtonClicked,
-                    onLocationCloseButtonClicked,
-                    parent.context
-                )
+                ).run {
+                    LocationSearchViewHolder(
+                        this,
+                        onLocationSearchButtonClicked,
+                        onLocationCloseButtonClicked,
+                        parent.context
+                    )
+                }
             }
             else -> {
-                val view = ItemMainLocationAddButtonBinding.inflate(
+                ItemMainLocationAddButtonBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
-                LocationAddViewHolder(view, onLocationAddButtonClicked)
+                ).run {
+                    LocationAddViewHolder(this, onLocationAddButtonClicked)
+                }
             }
         }
     }
@@ -62,8 +63,6 @@ class MainRecyclerAdapter(
             is LocationSearchViewHolder -> {
                 holder.bind(position)
             }
-            is LocationAddViewHolder -> {
-            }
         }
     }
 
@@ -75,11 +74,11 @@ class MainRecyclerAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.locationData = locationDataList[position]
-            binding.tvMarkerNumber.text = (position + 1).toString()
+            binding.tvMarkerNumber.text = "${position +1}"
             if (locationDataList[position].name.isNotEmpty()) {
                 binding.tvName.text = locationDataList[position].name
-                binding.tvName.setTextColor(getActiveTextColor(context))
-                binding.layoutMarker.background = getChangedMarkerBackground(context)
+                binding.tvName.setTextColor(Color.TEXT_ACTIVE.getColor(context))
+                binding.layoutMarker.background = Marker.CHANGED.getMark(context)
             } else {
                 /*
                    이 코드가 없으면 recycler view item에 유효한 위치가 있을때,

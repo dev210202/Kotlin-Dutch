@@ -8,7 +8,6 @@ import com.dutch2019.base.BaseViewModel
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.MutableListLiveData
 import com.dutch2019.repository.DBRepository
-import com.dutch2019.repository.TMapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,8 +25,8 @@ class MainViewModel @Inject constructor(
     val locationList: LiveData<List<LocationData>> get() = _locationList
 
     private var searchLocationList = listOf<LocationData>()
+    private var locationDBList = listOf<LocationData>()
     private var _selectedItemIndex = -1
-
 
     init {
         createEmptyLeastLocationItems()
@@ -57,9 +56,10 @@ class MainViewModel @Inject constructor(
         return _locationList.value!!
     }
 
-
+    fun getLocationDBList(): List<LocationData> {
+        return locationDBList
+    }
     fun getSearchLocationList(): List<LocationData> {
-
         return searchLocationList
     }
 
@@ -76,9 +76,9 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createEmptyLeastLocationItems() {
-        _locationList.add(LocationData())
-        _locationList.add(LocationData())
-        _locationList.add(LocationData())
+        repeat(3){
+            _locationList.add(LocationData())
+        }
     }
 
     fun saveSearchDataIntoDB(data: LocationData) = viewModelScope.launch(Dispatchers.IO) {
@@ -94,16 +94,41 @@ class MainViewModel @Inject constructor(
 
     fun loadSearchData() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            searchLocationList = dataBaseRepository.getSearchData()
-        }.onSuccess {
+            dataBaseRepository.getSearchData()
+        }.onSuccess { list ->
+            locationDBList = list
         }.onFailure { throwable ->
             throw throwable
         }
     }
 
-    fun addSearchData(data : LocationData) {
-        val list= searchLocationList.toMutableList()
-        list.add(0, data)
-        searchLocationList = list
+    fun addDBData(data: LocationData) {
+        locationDBList.toMutableList().apply {
+            add(0, data)
+        }.apply {
+            locationDBList = this
+        }
+    }
+
+    fun changeSearchLocationList(list: List<LocationData>) {
+        locationDBList.toMutableList().apply {
+            list.forEach { locationData ->
+                this.remove(locationData)
+            }
+        }.apply {
+            locationDBList = this
+        }
+    }
+
+    fun deleteCheckedList(list: List<LocationData>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                dataBaseRepository.deleteRecentData(list)
+            }.onSuccess {
+                Log.e("deleteCheckedList", "success")
+            }.onFailure { throwable ->
+                throw throwable
+            }
+        }
     }
 }

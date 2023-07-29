@@ -9,9 +9,8 @@ import dagger.hilt.android.HiltAndroidApp
 class DutchApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        KakaoSdk.init(this, "${BuildConfig.KAKAO_API}")
-        // Utility.getKeyHash(this)
-        val handler = Thread.getDefaultUncaughtExceptionHandler() ?: return
+        KakaoSdk.init(this, BuildConfig.KAKAO_API)
+        Thread.getDefaultUncaughtExceptionHandler() ?: return
         Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
     }
 }

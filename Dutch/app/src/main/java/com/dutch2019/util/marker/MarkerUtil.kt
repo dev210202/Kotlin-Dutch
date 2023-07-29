@@ -5,21 +5,62 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.dutch2019.R
 import com.dutch2019.model.LocationData
-import com.dutch2019.util.MarkerId
-import com.dutch2019.util.changeToDP
-import com.dutch2019.util.getBoldTextFont
-import com.dutch2019.util.zoomToTMapPointPreviousVersion
+import com.dutch2019.util.*
 import com.skt.Tmap.*
 
+enum class Marker {
+    CUSTOM, DEFAULT, CHANGED, NEAR, NEAR_PRIMARY, MIDDLE, CHECK, SELECT_RATIO, SELECT_RATIO_BIG, RATIO;
+
+    fun getMark(context: Context) = when (this) {
+        CUSTOM -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_black)!!
+        }
+        DEFAULT -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_gray)!!
+
+        }
+        CHANGED -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_gray5)!!
+
+        }
+        NEAR -> {
+            ContextCompat.getDrawable(context, R.drawable.marker_near)!!
+
+        }
+        NEAR_PRIMARY -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_primary)!!
+        }
+        MIDDLE -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_middle)!!
+
+        }
+        CHECK -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_check)!!
+
+        }
+        SELECT_RATIO -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio)!!
+
+        }
+        SELECT_RATIO_BIG -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio_24)!!
+
+        }
+        RATIO -> {
+            ContextCompat.getDrawable(context, R.drawable.ic_marker_ratio)!!
+        }
+    }
+}
 
 fun mark(tMapView: TMapView, context: Context, locationData: LocationData, number: Int) {
-    tMapView.setOnMarkerClickEvent { p0, p1 -> }
+    tMapView.setOnMarkerClickEvent { _, _ -> }
     val markerItemPoint = TMapPoint(locationData.lat, locationData.lon)
-    val markerBitmap = getCustomMarkerBackground(context).toBitmap()
+    val markerBitmap = Marker.CUSTOM.getMark(context).toBitmap()
     val marker = MarkerOverlay(tMapView, context, locationData.name)
     drawTextOnMarker(context, markerBitmap, number.toString())
     setMarkerVariables(marker, id = locationData.name, icon = markerBitmap, point = markerItemPoint)
@@ -27,9 +68,8 @@ fun mark(tMapView: TMapView, context: Context, locationData: LocationData, numbe
 }
 
 fun markNearFacility(tMapView: TMapView, context: Context, locationData: LocationData) {
-    val markerImage = getNearMarkerBackground(context).toBitmap()
+    val markerImage = Marker.NEAR.getMark(context).toBitmap()
     val markerItemPoint = TMapPoint(locationData.lat, locationData.lon)
-
     val marker = MarkerOverlay(tMapView, context, locationData.name)
     setMarkerVariables(marker, id = locationData.name, icon = markerImage, point = markerItemPoint)
     tMapView.addMarkerItem2(marker.id, marker)
@@ -43,16 +83,15 @@ fun markLocationList(tMapView: TMapView, context: Context, locationList: List<Lo
 }
 
 fun markMiddleLocation(tMapView: TMapView, context: Context, centerPoint: TMapPoint) {
-    val markerImage = getMiddleMarkerBackground(context).toBitmap()
-
-    val marker = MarkerOverlay(tMapView, context, MarkerId.MIDDLE)
-    setMarkerVariables(marker, id = MarkerId.MIDDLE, icon = markerImage, point = centerPoint)
+    val markerImage = Marker.MIDDLE.getMark(context).toBitmap()
+    val marker = MarkerOverlay(tMapView, context, MarkerId.MIDDLE.value)
+    setMarkerVariables(marker, id = MarkerId.MIDDLE.value, icon = markerImage, point = centerPoint)
     marker.changeTextPrimaryColor(context)
     tMapView.addMarkerItem2(marker.id, marker)
 }
 
-fun markLocationCheck(tMapView: TMapView, context: Context, point: TMapPoint){
-    val markerImage = getLocationCheckMarkerBackground(context).toBitmap()
+fun markLocationCheck(tMapView: TMapView, context: Context, point: TMapPoint) {
+    val markerImage = Marker.CHECK.getMark(context).toBitmap()
     val marker = TMapMarkerItem().apply {
         icon = markerImage
         tMapPoint = point
@@ -60,6 +99,7 @@ fun markLocationCheck(tMapView: TMapView, context: Context, point: TMapPoint){
     }
     tMapView.addMarkerItem(marker.id, marker)
 }
+
 fun markNearFacilityList(tMapView: TMapView, context: Context, locationList: List<LocationData>) {
     locationList.forEach { locationData ->
         markNearFacility(tMapView, context, locationData)
@@ -67,10 +107,10 @@ fun markNearFacilityList(tMapView: TMapView, context: Context, locationList: Lis
 }
 
 fun markRatioLocation(tMapView: TMapView, context: Context, centerPoint: TMapPoint) {
-    tMapView.setOnMarkerClickEvent { p0, p1 -> }
-    val markerImage = getRatioMarkerBackground(context).toBitmap()
-    val marker = MarkerOverlay(tMapView, context, MarkerId.RATIO)
-    setMarkerVariables(marker, id = MarkerId.RATIO, icon = markerImage, point = centerPoint)
+    tMapView.setOnMarkerClickEvent { _, _ -> }
+    val markerImage = Marker.RATIO.getMark(context).toBitmap()
+    val marker = MarkerOverlay(tMapView, context, MarkerId.RATIO.value)
+    setMarkerVariables(marker, id = MarkerId.RATIO.value, icon = markerImage, point = centerPoint)
     marker.changeTextPrimaryColor(context)
     tMapView.addMarkerItem2(marker.id, marker)
 }
@@ -78,8 +118,8 @@ fun markRatioLocation(tMapView: TMapView, context: Context, centerPoint: TMapPoi
 fun markSelectRatioLocation(
     tMapView: TMapView, context: Context, LocationA: LocationData, LocationB: LocationData
 ) {
-    tMapView.setOnMarkerClickEvent { p0, p1 -> }
-    val markerImageA = getSelectRatioBigMarkerBackground(context).toBitmap()
+    tMapView.setOnMarkerClickEvent { _, _ -> }
+    val markerImageA = Marker.SELECT_RATIO_BIG.getMark(context).toBitmap()
     val markerA = MarkerOverlay(tMapView, context, LocationA.name)
     setMarkerVariables(
         markerA, id = LocationA.name, icon = markerImageA, point = LocationA.convertTMapPoint()
@@ -87,7 +127,7 @@ fun markSelectRatioLocation(
     drawTextOnMarker(context, markerImageA, "A")
     tMapView.addMarkerItem2(markerA.id, markerA)
 
-    val markerImageB = getSelectRatioBigMarkerBackground(context).toBitmap()
+    val markerImageB = Marker.SELECT_RATIO_BIG.getMark(context).toBitmap()
     val markerB = MarkerOverlay(tMapView, context, LocationB.name)
     setMarkerVariables(
         markerB, id = LocationB.name, icon = markerImageB, point = LocationB.convertTMapPoint()
@@ -109,29 +149,44 @@ fun changeDefaultNearMarks(
     clickedMarkerItem: TMapMarkerItem2
 ) {
     locationList.forEach { locationData ->
-        if (isSameLocation(clickedMarkerItem, locationData)) {
-            val markerItem = tMapView.getMarkerItem2FromID(locationData.name)
-            markerItem.icon = getNearMarkerBackground(context).toBitmap()
+        if (locationData.isNotSamePoint(clickedMarkerItem.latitude, clickedMarkerItem.longitude)) {
+            tMapView.getMarkerItem2FromID(locationData.name).icon =
+                Marker.NEAR.getMark(context).toBitmap()
         }
     }
 }
 
+fun findSameLocationDataFromMarkerItem(
+    clickedMarkerItem: TMapMarkerItem2, locationList: List<LocationData>
+): LocationData {
+    locationList.forEach { locationData ->
+        if (locationData.isSamePoint(clickedMarkerItem.latitude, clickedMarkerItem.longitude)) {
+            return locationData
+        }
+    }
+    return LocationData()
+}
+
 fun mapAutoZoom(tMapView: TMapView, locationList: List<LocationData>, centerPoint: TMapPoint) {
     val leftTopPoint = TMapPoint(centerPoint.latitude, centerPoint.longitude)
-    val rightBottomPoint = TMapPoint( centerPoint.latitude, centerPoint.longitude)
+    val rightBottomPoint = TMapPoint(centerPoint.latitude, centerPoint.longitude)
 
     try {
         for (i in locationList.indices) {
             if (locationList.isNotEmpty()) {
                 leftTopPoint.latitude = checkTopLat(locationList[i], leftTopPoint.latitude)
                 leftTopPoint.longitude = checkTopLon(locationList[i], leftTopPoint.longitude)
-                rightBottomPoint.latitude = checkBottomLat(locationList[i], rightBottomPoint.latitude)
-                rightBottomPoint.longitude = checkBottomLon(locationList[i], rightBottomPoint.longitude)
+                rightBottomPoint.latitude =
+                    checkBottomLat(locationList[i], rightBottomPoint.latitude)
+                rightBottomPoint.longitude =
+                    checkBottomLon(locationList[i], rightBottomPoint.longitude)
             }
         }
-        tMapView.setCenterPoint(centerPoint.longitude, centerPoint.latitude)
-        // 업데이트된 API가 zoomLevel을 정상적으로 불러오지 않아서 확장함수를 사용한다.
-        tMapView.zoomToTMapPointPreviousVersion(leftTopPoint, rightBottomPoint)
+        tMapView.run {
+            setCenterPoint(centerPoint.longitude, centerPoint.latitude)
+            // 업데이트된 API가 zoomLevel을 정상적으로 불러오지 않아서 확장함수를 사용한다.
+            zoomToTMapPointPreviousVersion(leftTopPoint, rightBottomPoint)
+        }
     } catch (e: Exception) {
         tMapView.setCenterPoint(centerPoint.longitude, centerPoint.latitude)
     }
@@ -179,18 +234,8 @@ fun removeAllBallon(tMapView: TMapView) {
     }
 }
 
-fun changeNearPrimaryMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
-    tMapMarkerItem.icon =
-        ContextCompat.getDrawable(context, R.drawable.ic_marker_primary)!!.toBitmap()
-}
-
-fun changeSelectRatioMark(tMapMarkerItem: TMapMarkerItem2, context: Context) {
-    tMapMarkerItem.icon = getSelectRatioBigMarkerBackground(context).toBitmap()
-
-}
-
-fun isNotMiddleMarker(id: String) = id != MarkerId.MIDDLE
-fun isNotRatioMarker(id:String) = id != MarkerId.RATIO
+fun isNotMiddleMarker(id: String) = id != MarkerId.MIDDLE.value
+fun isNotRatioMarker(id: String) = id != MarkerId.RATIO.value
 fun isNotLocationMarker(id: String, list: List<LocationData>): Boolean {
     list.forEach { locationData ->
         if (locationData.name == id) {
@@ -200,32 +245,8 @@ fun isNotLocationMarker(id: String, list: List<LocationData>): Boolean {
     return true
 }
 
-
-fun getCustomMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_black)!!
-
-fun getDefaultMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_gray)!!
-
-fun getChangedMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_gray5)!!
-
-fun getNearMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.marker_near)!!
-
-fun getMiddleMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_middle)!!
-
-fun getLocationCheckMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_check)!!
-fun getSelectRatioBigMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio_24)!!
-
-fun getSelectRatioMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_select_ratio)!!
-
-fun getRatioMarkerBackground(context: Context) =
-    ContextCompat.getDrawable(context, R.drawable.ic_marker_ratio)!!
+fun isNearFacilityMarker(id: String, list: List<LocationData>): Boolean =
+    isNotLocationMarker(id, list) && isNotMiddleMarker(id) && isNotRatioMarker(id)
 
 fun drawTextOnMarker(context: Context, bitmap: Bitmap, text: String) {
 
@@ -249,18 +270,18 @@ fun drawTextOnMarker(context: Context, bitmap: Bitmap, text: String) {
 }
 
 fun drawLine(tMapView: TMapView, pointA: TMapPoint, pointB: TMapPoint) {
-    val polyLine = TMapPolyLine()
-    polyLine.addLinePoint(pointA)
-    polyLine.addLinePoint(pointB)
-    tMapView.addTMapPolyLine("ratioline", polyLine)
+    TMapPolyLine().apply {
+        addLinePoint(pointA)
+        addLinePoint(pointB)
+        tMapView.addTMapPolyLine("ratioline", this)
+    }
 }
 
 fun setMarkerVariables(marker: TMapMarkerItem2, id: String, icon: Bitmap, point: TMapPoint) {
-    marker.id = id
-    marker.icon = icon
-    marker.setPosition(0.5F, 0.8F)
-    marker.tMapPoint = point
+    marker.apply {
+        this.id = id
+        this.icon = icon
+        setPosition(0.5F, 0.8F)
+        tMapPoint = point
+    }
 }
-
-private fun isSameLocation(tMapMarkerItem: TMapMarkerItem2, locationData: LocationData) =
-    locationData.lat != tMapMarkerItem.latitude && locationData.lon != tMapMarkerItem.longitude

@@ -14,11 +14,10 @@ import androidx.core.content.ContextCompat
 import com.skt.Tmap.TMapMarkerItem2
 import com.skt.Tmap.TMapView
 import com.dutch2019.R
-import com.dutch2019.util.getPrimaryTextColor
+import com.dutch2019.util.Color
 
 
-class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
-    TMapMarkerItem2() {
+class MarkerOverlay(view: TMapView, context: Context, labelName: String) : TMapMarkerItem2() {
     private var balloonView: BalloonOverlayView
     private var dm: DisplayMetrics = DisplayMetrics()
     var mAnimationCount = 0
@@ -37,32 +36,23 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         )
         balloonView.layout(
-            0,
-            0,
-            balloonView.measuredWidth,
-            balloonView.measuredHeight
+            0, 0, balloonView.measuredWidth, balloonView.measuredHeight
         )
     }
 
 
     override fun draw(
-        canvas: Canvas,
-        mapView: TMapView,
-        showCallout: Boolean
+        canvas: Canvas, mapView: TMapView, showCallout: Boolean
     ) {
         val x = mapView.getRotatedMapXForPoint(
-            tMapPoint.latitude,
-            tMapPoint.longitude
+            tMapPoint.latitude, tMapPoint.longitude
         )
         val y = mapView.getRotatedMapYForPoint(
-            tMapPoint.latitude,
-            tMapPoint.longitude
+            tMapPoint.latitude, tMapPoint.longitude
         )
         canvas.save()
         canvas.rotate(
-            -mapView.rotate,
-            mapView.centerPointX.toFloat(),
-            mapView.centerPointY.toFloat()
+            -mapView.rotate, mapView.centerPointX.toFloat(), mapView.centerPointY.toFloat()
         )
         val xPos = positionX
         val yPos = positionY
@@ -91,9 +81,7 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
             balloonView.visibility = VISIBLE
             canvas.save()
             canvas.rotate(
-                -mapView.rotate,
-                mapView.centerPointX.toFloat(),
-                mapView.centerPointY.toFloat()
+                -mapView.rotate, mapView.centerPointX.toFloat(), mapView.centerPointY.toFloat()
             )
             balloonView.measure(
                 MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
@@ -146,15 +134,16 @@ class MarkerOverlay(view: TMapView, context: Context, labelName: String) :
 
     fun changeTextPrimaryColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
-            .setTextColor(getPrimaryTextColor(context))
+            .setTextColor(Color.TEXT_PRIMARY.getColor(context))
     }
 
     fun changeTextBlueColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
-            .setTextColor(ContextCompat.getColor(context, R.color.blue))
+            .setTextColor(Color.TEXT_RATIO.getColor(context))
     }
+
     fun changeTextDefaultColor(context: Context) {
         balloonView.findViewById<TextView>(R.id.bubble_title)
-            .setTextColor(ContextCompat.getColor(context, R.color.black))
+            .setTextColor(Color.MARKER_DEFAULT.getColor(context))
     }
 }

@@ -12,11 +12,8 @@ import com.dutch2019.R
 import com.dutch2019.base.LifeCycleFragment
 import com.dutch2019.databinding.FragmentMiddleBinding
 import com.dutch2019.model.LocationDataList
-import com.dutch2019.util.MarkerId
-import com.dutch2019.util.calculateCenterPoint
-import com.dutch2019.util.dismissLoadingDialog
+import com.dutch2019.util.*
 import com.dutch2019.util.marker.*
-import com.dutch2019.util.showLoadingDialog
 
 @AndroidEntryPoint
 class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
@@ -28,14 +25,9 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        tMapView = TMapView(context)
-        binding.vm = vm
-
         showLoadingDialog(requireActivity())
-        binding.layoutMiddle.addView(tMapView)
 
+        binding.vm = vm
         MiddleFragmentArgs.fromBundle(requireArguments()).let { data ->
             vm.setLocationList(data.locationlist.value)
         }
@@ -43,29 +35,29 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
         vm.setCenterPoint(calculateCenterPoint(vm.getLocationList()))
         vm.setSearchPoint(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
-
-        markLocationList(tMapView, requireContext(), vm.getLocationList())
-        markMiddleLocation(tMapView, requireContext(), vm.getCenterPoint())
-        markRatioLocation(tMapView, requireContext(), vm.getRatioPoint())
-        setBallonOverlayClickEvent(tMapView, vm)
-
         vm.searchCenterPointAddress(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
 
 
-        mapAutoZoom(tMapView, vm.getLocationList(), vm.getCenterPoint())
+        tMapView = TMapView(context).apply {
+            markLocationList(this, requireContext(), vm.getLocationList())
+            markMiddleLocation(this, requireContext(), vm.getCenterPoint())
+            markRatioLocation(this, requireContext(), vm.getRatioPoint())
+            setBallonOverlayClickEvent(this)
+            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
+            binding.layoutMiddle.addView(this)
+        }
 
-        binding.btnRatio.setOnClickListener { view ->
-            view.findNavController().navigate(
+        binding.btnRatio.setOnClickListener {
+            findNavController().navigate(
                 MiddleFragmentDirections.actionMiddleFragmentToRatioFragment(
                     LocationDataList().convertLocationData(vm.getLocationList())
                 )
             )
         }
 
-        binding.btnCheckNearfacility.setOnClickListener { view ->
-            binding.layoutMiddle.removeView(tMapView)
-            view.findNavController().navigate(
+        binding.btnCheckNearfacility.setOnClickListener {
+            findNavController().navigate(
                 MiddleFragmentDirections.actionMiddleFragmentToNearFragment()
             )
         }
@@ -75,47 +67,40 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
         }
 
         vm.centerPointAddress.observe(viewLifecycleOwner) { address ->
-            if (address != "") {
-                dismissLoadingDialog()
-            }
+            if (address.isNotEmpty()) dismissLoadingDialog()
         }
 
     }
 
-    private fun setBallonOverlayClickEvent(tMapView: TMapView, viewModel: MiddleViewModel) {
+    private fun setBallonOverlayClickEvent(tMapView: TMapView) {
 
         tMapView.setOnMarkerClickEvent { _, tMapMarkerItem2 ->
-            val point = tMapMarkerItem2.tMapPoint
-            vm.setSearchPoint(point)
-            viewModel.searchCenterPointAddress(point)
-            viewModel.setCenterPointNearSubway(point)
+            tMapMarkerItem2.tMapPoint.apply {
+                vm.setSearchPoint(this)
+                vm.searchCenterPointAddress(this)
+                vm.setCenterPointNearSubway(this)
+            }
+
             binding.tvInfo.text = tMapMarkerItem2.id
+
             when (tMapMarkerItem2.id) {
-                MarkerId.MIDDLE -> {
+                MarkerId.MIDDLE.value -> {
                     (tMapMarkerItem2 as MarkerOverlay).changeTextPrimaryColor(requireContext())
-                    binding.tvInfo.setTextColor(
-                        ContextCompat.getColor(tMapView.rootView.context, R.color.orange)
-                    )
-                    viewModel.resetRouteTime()
+                    binding.tvInfo.setTextColor(Color.TEXT_PRIMARY.getColor(tMapView.rootView.context))
+                    vm.resetRouteTime()
                 }
-                MarkerId.RATIO -> {
+                MarkerId.RATIO.value -> {
                     (tMapMarkerItem2 as MarkerOverlay).changeTextBlueColor(requireContext())
-                    binding.tvInfo.setTextColor(
-                        ContextCompat.getColor(tMapView.rootView.context, R.color.skyblue)
-                    )
-                    viewModel.setRouteTime(
-                        viewModel.getCenterPoint(),
-                        tMapMarkerItem2.latitude,
-                        tMapMarkerItem2.longitude
+                    binding.tvInfo.setTextColor(Color.TEXT_RATIO.getColor(tMapView.rootView.context))
+                    vm.setRouteTime(
+                        vm.getCenterPoint(), tMapMarkerItem2.latitude, tMapMarkerItem2.longitude
                     )
                 }
                 else -> {
                     (tMapMarkerItem2 as MarkerOverlay).changeTextDefaultColor(requireContext())
-                    binding.tvInfo.setTextColor(
-                        ContextCompat.getColor(tMapView.rootView.context, R.color.gray2)
-                    )
-                    viewModel.setRouteTime(
-                        viewModel.getCenterPoint(),
+                    binding.tvInfo.setTextColor(Color.TEXT_DEFAULT.getColor(tMapView.rootView.context))
+                    vm.setRouteTime(
+                        vm.getCenterPoint(),
                         tMapMarkerItem2.latitude,
                         tMapMarkerItem2.longitude
                     )
