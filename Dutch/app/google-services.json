@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578948835811",
+    "project_id": "dutch2023-b04c6",
+    "storage_bucket": "dutch2023-b04c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578948835811:android:9d0913290a78465d9cd8d6",
+        "android_client_info": {
+          "package_name": "com.dutch2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578948835811-6kslfea9096rh2cmin2j8kc0ve02ms2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK_TUBV1g5lv7fvi5Z2zFMTpEQyfN9hW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578948835811-6kslfea9096rh2cmin2j8kc0ve02ms2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
