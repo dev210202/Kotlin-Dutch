@@ -29,32 +29,14 @@ class RatioSelectFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.ratio = "5 : 5"
-        RatioSelectFragmentArgs.fromBundle(requireArguments()).let { data ->
-            ratioA = data.ratioA
-            ratioB = data.ratioB
-        }
 
-        tMapView = TMapView(context).apply {
-            markMiddleLocation(this, requireContext(), vm.getCenterPoint())
-            markSelectRatioLocation(this, requireContext(), ratioA, ratioB)
-            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
-            markRatioLocation(
-                this,
-                requireContext(),
-                calculateCenterPoint(ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
-            )
-            drawLine(this, ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
-            binding.layoutRatioSelect.addView(this)
-        }
+        initRatioAandB()
+        initTMapView()
+        initButtonRatioSetComplete()
+        initSeekBar()
+    }
 
-        binding.btnRatioSetComplete.setOnClickListener {
-            vm.setRatioPoint(ratioPoint)
-            findNavController().navigate(
-                RatioSelectFragmentDirections.actionRatioSelectFragmentToMiddleFragment(
-                    locationlist = LocationDataList().convertLocationData(vm.getLocationList())
-                )
-            )
-        }
+    private fun initSeekBar() {
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, ratio: Int, p2: Boolean) {
                 binding.ratio = "${(ratio + 1)} : ${(9 - ratio)}"
@@ -74,5 +56,38 @@ class RatioSelectFragment :
             }
 
         })
+    }
+
+    private fun initButtonRatioSetComplete() {
+        binding.btnRatioSetComplete.setOnClickListener {
+            vm.setRatioPoint(ratioPoint)
+            findNavController().navigate(
+                RatioSelectFragmentDirections.actionRatioSelectFragmentToMiddleFragment(
+                    locationlist = LocationDataList().convertLocationData(vm.getLocationList())
+                )
+            )
+        }
+    }
+
+    private fun initTMapView() {
+        tMapView = TMapView(context).apply {
+            markMiddleLocation(this, requireContext(), vm.getCenterPoint())
+            markSelectRatioLocation(this, requireContext(), ratioA, ratioB)
+            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
+            markRatioLocation(
+                this,
+                requireContext(),
+                calculateCenterPoint(ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
+            )
+            drawLine(this, ratioA.convertTMapPoint(), ratioB.convertTMapPoint())
+            binding.layoutRatioSelect.addView(this)
+        }
+    }
+
+    private fun initRatioAandB() {
+        RatioSelectFragmentArgs.fromBundle(requireArguments()).let { data ->
+            ratioA = data.ratioA
+            ratioB = data.ratioB
+        }
     }
 }

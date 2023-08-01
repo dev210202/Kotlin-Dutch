@@ -76,6 +76,6 @@ abstract class LifeCycleFragment<B : ViewDataBinding>(
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("onDestroyView","!")
+        Log.i("onDestroy","!")
     }
 }

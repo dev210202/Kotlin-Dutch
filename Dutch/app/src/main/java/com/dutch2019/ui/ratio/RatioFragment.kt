@@ -31,17 +31,22 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
     private var ratioLocationB = LocationData()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tMapView = TMapView(context).apply {
-            markLocationList(this, requireContext(), vm.getLocationList())
-            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
-            setMarkerClickEvent(this)
-            binding.layoutRatio.addView(this)
-        }
 
+        initTMapView()
+        initButtonCloseA()
+        initButtonCloseB()
+        initButtonRatioComplete()
+    }
 
-        binding.layoutCloseA.setOnClickListener(OnCloseClickListener())
+    private fun initButtonCloseB() {
         binding.layoutCloseB.setOnClickListener(OnCloseClickListener())
+    }
 
+    private fun initButtonCloseA() {
+        binding.layoutCloseA.setOnClickListener(OnCloseClickListener())
+    }
+
+    private fun initButtonRatioComplete() {
         binding.btnRatioComplete.setOnClickListener { button ->
             if (button.isSelected) {
                 findNavController().navigate(
@@ -53,6 +58,15 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
         }
     }
 
+    private fun initTMapView() {
+        tMapView = TMapView(context).apply {
+            markLocationList(this, requireContext(), vm.getLocationList())
+            mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
+            setMarkerClickEvent(this)
+            binding.layoutRatio.addView(this)
+        }
+    }
+
     inner class OnCloseClickListener : OnClickListener {
         override fun onClick(view: View?) {
             val objectToChange = object {
@@ -61,14 +75,14 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
                 lateinit var textView: TextView
                 lateinit var markerLayout: FrameLayout
 
-                fun setCloseA(){
+                fun setCloseA() {
                     id = binding.tvNameA.text.toString()
                     textView = binding.tvNameA
                     markerLayout = binding.layoutMarkerA
                     previousIconBitmap = markerItemAPreviousBitmap
                 }
 
-                fun setCloseB(){
+                fun setCloseB() {
                     id = binding.tvNameB.text.toString()
                     textView = binding.tvNameB
                     markerLayout = binding.layoutMarkerB
@@ -102,7 +116,7 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
             }[0]
 
             if (isNotSetRatioLocationA()) {
-                setSelectedMarkerToRatioLocationA(tMapMarkerItem2,location)
+                setSelectedMarkerToRatioLocationA(tMapMarkerItem2, location)
                 markerItemAPreviousBitmap = tMapMarkerItem2.icon
             } else if (isNotSetRatioLocationB()) {
                 setSelectedMarkerToRatioLocationB(tMapMarkerItem2, location)
@@ -115,7 +129,9 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
         }
     }
 
-    private fun setSelectedMarkerToRatioLocationB(tMapMarkerItem2: TMapMarkerItem2, location: LocationData) {
+    private fun setSelectedMarkerToRatioLocationB(
+        tMapMarkerItem2: TMapMarkerItem2, location: LocationData
+    ) {
         tMapMarkerItem2.icon = Marker.SELECT_RATIO_BIG.getMark(requireContext()).toBitmap()
         drawTextOnMarker(requireContext(), tMapMarkerItem2.icon, "B")
         setLayoutRatioLocationView(
@@ -127,7 +143,9 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
         ratioLocationB = location
     }
 
-    private fun setSelectedMarkerToRatioLocationA(tMapMarkerItem2 : TMapMarkerItem2, location: LocationData) {
+    private fun setSelectedMarkerToRatioLocationA(
+        tMapMarkerItem2: TMapMarkerItem2, location: LocationData
+    ) {
         tMapMarkerItem2.icon = Marker.SELECT_RATIO_BIG.getMark(requireContext()).toBitmap()
         drawTextOnMarker(requireContext(), tMapMarkerItem2.icon, "A")
         setLayoutRatioLocationView(

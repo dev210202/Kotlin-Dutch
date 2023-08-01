@@ -2,21 +2,19 @@ package com.dutch2019.ui.middle
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.skt.Tmap.TMapView
 import dagger.hilt.android.AndroidEntryPoint
 import com.dutch2019.R
-import com.dutch2019.base.LifeCycleFragment
+import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMiddleBinding
 import com.dutch2019.model.LocationDataList
 import com.dutch2019.util.*
 import com.dutch2019.util.marker.*
 
 @AndroidEntryPoint
-class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
+class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
     R.layout.fragment_middle
 ) {
     private val vm: MiddleViewModel by activityViewModels()
@@ -28,17 +26,49 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
         showLoadingDialog(requireActivity())
 
         binding.vm = vm
-        MiddleFragmentArgs.fromBundle(requireArguments()).let { data ->
-            vm.setLocationList(data.locationlist.value)
-        }
+        initLocationList()
 
         vm.setCenterPoint(calculateCenterPoint(vm.getLocationList()))
         vm.setSearchPoint(vm.getCenterPoint())
-        vm.setCenterPointNearSubway(vm.getCenterPoint())
         vm.searchCenterPointAddress(vm.getCenterPoint())
         vm.setCenterPointNearSubway(vm.getCenterPoint())
 
+        initTMapView()
+        initButtonRatio()
+        initButtonCheckNearFacility()
+        initButtonLeftArrow()
 
+        vm.centerPointAddress.observe(viewLifecycleOwner) { address ->
+            if (address.isNotEmpty()) dismissLoadingDialog()
+        }
+
+    }
+
+    private fun initButtonLeftArrow() {
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun initButtonCheckNearFacility() {
+        binding.btnCheckNearfacility.setOnClickListener {
+            findNavController().navigate(
+                MiddleFragmentDirections.actionMiddleFragmentToNearFragment()
+            )
+        }
+    }
+
+    private fun initButtonRatio() {
+        binding.btnRatio.setOnClickListener {
+            findNavController().navigate(
+                MiddleFragmentDirections.actionMiddleFragmentToRatioFragment(
+                    LocationDataList().convertLocationData(vm.getLocationList())
+                )
+            )
+        }
+    }
+
+    private fun initTMapView() {
         tMapView = TMapView(context).apply {
             markLocationList(this, requireContext(), vm.getLocationList())
             markMiddleLocation(this, requireContext(), vm.getCenterPoint())
@@ -47,29 +77,12 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
             mapAutoZoom(this, vm.getLocationList(), vm.getCenterPoint())
             binding.layoutMiddle.addView(this)
         }
+    }
 
-        binding.btnRatio.setOnClickListener {
-            findNavController().navigate(
-                MiddleFragmentDirections.actionMiddleFragmentToRatioFragment(
-                    LocationDataList().convertLocationData(vm.getLocationList())
-                )
-            )
+    private fun initLocationList() {
+        MiddleFragmentArgs.fromBundle(requireArguments()).let { data ->
+            vm.setLocationList(data.locationlist.value)
         }
-
-        binding.btnCheckNearfacility.setOnClickListener {
-            findNavController().navigate(
-                MiddleFragmentDirections.actionMiddleFragmentToNearFragment()
-            )
-        }
-
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        vm.centerPointAddress.observe(viewLifecycleOwner) { address ->
-            if (address.isNotEmpty()) dismissLoadingDialog()
-        }
-
     }
 
     private fun setBallonOverlayClickEvent(tMapView: TMapView) {
@@ -93,16 +106,14 @@ class MiddleFragment : LifeCycleFragment<FragmentMiddleBinding>(
                     (tMapMarkerItem2 as MarkerOverlay).changeTextBlueColor(requireContext())
                     binding.tvInfo.setTextColor(Color.TEXT_RATIO.getColor(tMapView.rootView.context))
                     vm.setRouteTime(
-                        vm.getCenterPoint(), tMapMarkerItem2.latitude, tMapMarkerItem2.longitude
+                        startPoint = tMapMarkerItem2.tMapPoint, endPoint = vm.getCenterPoint()
                     )
                 }
                 else -> {
                     (tMapMarkerItem2 as MarkerOverlay).changeTextDefaultColor(requireContext())
                     binding.tvInfo.setTextColor(Color.TEXT_DEFAULT.getColor(tMapView.rootView.context))
                     vm.setRouteTime(
-                        vm.getCenterPoint(),
-                        tMapMarkerItem2.latitude,
-                        tMapMarkerItem2.longitude
+                        startPoint = tMapMarkerItem2.tMapPoint, endPoint = vm.getCenterPoint()
                     )
                 }
             }

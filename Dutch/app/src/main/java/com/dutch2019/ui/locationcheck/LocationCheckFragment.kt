@@ -22,17 +22,21 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
-            locationData = data.locationData
-            binding.name = data.locationData.name
-            binding.address = data.locationData.address
-        }
-        tMapView = TMapView(context).apply {
-            this.setCenterPoint(locationData.lon, locationData.lat)
-            markLocationCheck(this, requireContext(), locationData.convertTMapPoint())
-            binding.layoutCheckMap.addView(this)
-        }
 
+        initLocationData()
+        initTMapView()
+        initButtonSetLocation()
+        initButtonLeftArrow()
+
+    }
+
+    private fun initButtonLeftArrow() {
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun initButtonSetLocation() {
         binding.btnSetLocation.setOnClickListener {
             locationData.copy(id = 0).apply {
                 vm.changeLocationListItem(vm.getSelectedItemIndex(), this)
@@ -41,9 +45,21 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
             }
             findNavController().navigate(LocationCheckFragmentDirections.actionLocationCheckFragmentToMainFragment())
         }
+    }
 
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
+    private fun initTMapView() {
+        tMapView = TMapView(context).apply {
+            this.setCenterPoint(locationData.lon, locationData.lat)
+            markLocationCheck(this, requireContext(), locationData.convertTMapPoint())
+            binding.layoutCheckMap.addView(this)
+        }
+    }
+
+    private fun initLocationData() {
+        LocationCheckFragmentArgs.fromBundle(requireArguments()).let { data ->
+            locationData = data.locationData
+            binding.name = data.locationData.name
+            binding.address = data.locationData.address
         }
     }
 }

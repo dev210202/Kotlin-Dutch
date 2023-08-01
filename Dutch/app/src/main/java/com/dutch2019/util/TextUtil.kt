@@ -30,3 +30,22 @@ fun filtZero(value: String): String = value.replace(" 0", "")
 
 
 fun filtDoubleBlank(value: String): String = value.replace("  ", " ")
+
+fun convertTime(time: String): String {
+    var result = ""
+    var totalTime = time.toInt()
+    if (totalTime >= 3600) {
+        var hour = totalTime / 3600
+        totalTime %= 3600
+        result = hour.toString() + "시간"
+    }
+    if (totalTime >= 60) {
+        var minute = totalTime / 60
+        totalTime %= 60
+        result += minute.toString() + "분"
+    }
+    if (totalTime > 0) {
+        result += totalTime.toString() + "초"
+    }
+    return result
+}

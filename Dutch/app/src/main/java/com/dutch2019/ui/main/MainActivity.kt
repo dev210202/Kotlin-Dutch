@@ -2,6 +2,7 @@ package com.dutch2019.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -25,6 +26,10 @@ class MainActivity : LifeCycleActivity<ActivityMainBinding>(R.layout.activity_ma
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
+        
         vm.loadSearchData()
         setTMapAPIAuth()
 
@@ -58,6 +63,7 @@ class MainActivity : LifeCycleActivity<ActivityMainBinding>(R.layout.activity_ma
             setSKTMapAuthentication(BuildConfig.T_MAP_API)
         }
     }
+
     inner class AuthCallback : TMapTapi.OnAuthenticationListenerCallback {
 
         override fun SKTMapApikeySucceed() {

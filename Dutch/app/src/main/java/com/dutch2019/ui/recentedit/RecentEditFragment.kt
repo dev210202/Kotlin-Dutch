@@ -23,15 +23,29 @@ class RecentEditFragment : BaseFragment<FragmentRecentEditBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvRecentEdit.apply {
-            recentEditAdapter.setLocationDataList(vm.getLocationDBList())
-            adapter = recentEditAdapter
-        }
+        initRecyclerView()
+        initButtonLeftArrow()
+        initButtonSelectAll()
+        initButtonDelete()
 
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
-        }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        recentEditAdapter.clearCheckList()
+    }
+
+    private fun initButtonDelete() {
+        binding.btnDelete.setOnClickListener {
+            recentEditAdapter.getCheckList().apply {
+                vm.deleteCheckedList(this)
+                vm.changeSearchLocationList(this)
+            }
+            findNavController().navigate(RecentEditFragmentDirections.actionRecentEditFragmentToSearchFragment())
+        }
+    }
+
+    private fun initButtonSelectAll() {
         binding.btnSelectAll.setOnClickListener {
             recentEditAdapter.selectAllCheckBox(isSelectState = { isSelect ->
                 if (isSelect) {
@@ -41,14 +55,18 @@ class RecentEditFragment : BaseFragment<FragmentRecentEditBinding>(
                 }
             })
         }
+    }
 
-        binding.btnDelete.setOnClickListener {
-            recentEditAdapter.getCheckList().apply {
-                vm.deleteCheckedList(this)
-                vm.changeSearchLocationList(this)
-            }
-            findNavController().navigate(RecentEditFragmentDirections.actionRecentEditFragmentToSearchFragment())
+    private fun initButtonLeftArrow() {
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
+    }
 
+    private fun initRecyclerView() {
+        binding.rvRecentEdit.apply {
+            recentEditAdapter.setLocationDataList(vm.getLocationDBList())
+            adapter = recentEditAdapter
+        }
     }
 }

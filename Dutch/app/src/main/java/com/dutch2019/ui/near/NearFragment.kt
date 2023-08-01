@@ -53,6 +53,57 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
 
         vm.loadShareImage()
 
+        initTMapView()
+        initChipButtons()
+        initButtonLeftArrow()
+        initButtonShare()
+
+        vm.facilityList.observe(viewLifecycleOwner) { list ->
+            if (list.isEmpty()) {
+                setEmptyViewVisible()
+            } else {
+                mapAutoZoom(tMapView, vm.getFacilityList(), vm.getSearchPoint())
+            }
+            setAdapterList(list)
+            markNearFacilityList(tMapView, requireContext(), list)
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        vm.clearFacilityList()
+    }
+
+    private fun initButtonShare() {
+        binding.btnShare.setOnClickListener {
+            vm.getSelectedLocation().apply {
+                vm.shareKakao(location = this, context = requireContext())
+            }
+        }
+    }
+
+    private fun initButtonLeftArrow() {
+        binding.ibLeftArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun initChipButtons() {
+        binding.btnTransport.setOnClickListener(chipOnClickListener)
+        binding.btnCulture.setOnClickListener(chipOnClickListener)
+        binding.btnFood.setOnClickListener(chipOnClickListener)
+        binding.btnCafe.setOnClickListener(chipOnClickListener)
+    }
+
+    private fun setAdapterList(list: List<LocationData>) {
+        nearRecyclerAdapter.run {
+            binding.rvNearFacility.adapter = this
+            this.setLocationDataList(list)
+        }
+    }
+
+    private fun initTMapView() {
         tMapView = TMapView(context).apply {
             markLocationList(this, requireContext(), vm.getLocationList())
             markMiddleLocation(this, requireContext(), vm.getCenterPoint())
@@ -61,40 +112,18 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
             setMarkerClickEvent(this)
             binding.layoutNear.addView(this)
         }
-
-        vm.facilityList.observe(viewLifecycleOwner) { list ->
-            if (list.isEmpty()) {
-                setEmptyViewVisible()
-            }
-            nearRecyclerAdapter.run {
-                binding.rvNearFacility.adapter = this
-                this.setLocationDataList(list)
-            }
-            markNearFacilityList(tMapView, requireContext(), list)
-        }
-        binding.btnTransport.setOnClickListener(chipOnClickListener)
-        binding.btnCulture.setOnClickListener(chipOnClickListener)
-        binding.btnFood.setOnClickListener(chipOnClickListener)
-        binding.btnCafe.setOnClickListener(chipOnClickListener)
-
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding.btnShare.setOnClickListener {
-            vm.getSelectedLocation().apply {
-                vm.shareKakao(location = this, context = requireContext())
-            }
-        }
     }
 
     inner class ChipOnClickListener : OnClickListener {
         override fun onClick(view: View) {
             setOtherChipsStateDefault()
             ButtonState.ACTIVE.changeButton(view as Button)
+            ButtonState.DISABLE.changeButton(binding.btnShare)
             removeAllNearFacilityMark(tMapView, vm.getFacilityList())
             setEmptyViewInvisible()
+            vm.clearSelectedLocation()
             vm.searchNearFacility(vm.getSearchPoint(), getSearchKeyWords(view.text.toString()))
+            nearRecyclerAdapter.setSelectedPosition(-1)
         }
     }
 
@@ -160,6 +189,7 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
             }.apply {
                 vm.setSelectedLocation(this)
             }
+
             ButtonState.ACTIVE.changeButton(binding.btnShare)
         }
     }

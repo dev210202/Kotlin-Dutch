@@ -16,15 +16,26 @@ class RecentEditRecyclerAdapter() :
     private var isSelectedAll = false
     fun setLocationDataList(list: List<LocationData>) {
         locationDataList = list
+        list.forEachIndexed { index, locationData ->
+            Log.e("List ITEM $index", locationData.toString())
+
+        }
         notifyDataSetChanged()
     }
 
     fun getCheckList() = checkList
+    fun clearCheckList() = checkList.clear()
 
     fun selectAllCheckBox(isSelectState: (Boolean) -> Unit) {
         isSelectedAll = !isSelectedAll
         isSelectState(isSelectedAll)
-        notifyItemRangeChanged(0, locationDataList.size)
+        if(isSelectedAll){
+            checkList = locationDataList.toMutableList()
+        }
+        else{
+            checkList.clear()
+        }
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentEditDataViewHolder {
@@ -36,34 +47,28 @@ class RecentEditRecyclerAdapter() :
     override fun getItemCount(): Int = locationDataList.size
 
     override fun onBindViewHolder(holder: RecentEditDataViewHolder, position: Int) {
-        holder.apply {
-            checkbox.isChecked = isSelectedAll
-            bind(locationDataList[position], position)
-        }
+        holder.bind(locationDataList[position], position)
+
     }
 
     inner class RecentEditDataViewHolder(
         private val binding: ItemRecentEditBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        val checkbox = binding.checkbox
-        fun bind(locationData: LocationData, position: Int) {
+       fun bind(locationData: LocationData, position: Int) {
             binding.locationData = locationData
-            if (checkbox.isChecked) {
-                if (checkList.find { data -> data == locationData } == null) {
-                    checkList.add(locationDataList[position])
-                }
-            } else {
-                checkList.remove(locationDataList[position])
-            }
+
+            binding.checkbox.isChecked = isSelectedAll
+
             binding.layoutRecentEdit.setOnClickListener {
-                checkbox.isChecked = !checkbox.isChecked
-                if (checkbox.isChecked) {
+                binding.checkbox.isChecked = !binding.checkbox.isChecked
+                if (binding.checkbox.isChecked) {
                     checkList.add(locationDataList[position])
                 } else {
                     checkList.remove(locationDataList[position])
                 }
             }
+
         }
     }
 

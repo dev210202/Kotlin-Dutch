@@ -1,6 +1,5 @@
 package com.dutch2019.ui.middle
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,7 +20,6 @@ import com.kakao.sdk.template.model.Button
 import com.kakao.sdk.template.model.Content
 import com.kakao.sdk.template.model.FeedTemplate
 import com.kakao.sdk.template.model.Link
-import com.skt.Tmap.poi_item.TMapPOIItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -75,6 +73,9 @@ class MiddleViewModel @Inject constructor(
     fun setSelectedLocation(locationData: LocationData) {
         selectedLocationData = locationData
     }
+    fun clearSelectedLocation(){
+        selectedLocationData = LocationData()
+    }
 
     fun getIndexToFacilityList(item: TMapPoint, locationName: String): Int {
         _facilityList.value!!.find {
@@ -91,12 +92,22 @@ class MiddleViewModel @Inject constructor(
         }
     }
 
-    fun setRouteTime(point: TMapPoint, latitude: Double, longitude: Double) {
+    fun setRouteTime(startPoint: TMapPoint, endPoint: TMapPoint) {
         viewModelScope.launch(Dispatchers.IO) {
-            StartEndPointData(point.longitude, point.latitude, longitude, latitude).apply {
-                tMapRepository.getRouteTime(this).apply {
-                    _routeTime.postValue(this)
+            StartEndPointData(
+                startX = startPoint.longitude,
+                startY = startPoint.latitude,
+                endX = endPoint.longitude,
+                endY = endPoint.latitude
+            ).apply {
+                runCatching {
+                    tMapRepository.getRouteTime(this)
+                }.onSuccess { result ->
+                    _routeTime.postValue(convertTime(result))
+                }.onFailure { throwable ->
+                    throw throwable
                 }
+
             }
         }
     }
@@ -122,7 +133,7 @@ class MiddleViewModel @Inject constructor(
     }
 
     fun getFacilityList(): List<LocationData> = _facilityList.value!!
-
+    fun clearFacilityList() = _facilityList.clear()
 
     fun searchNearFacility(point: TMapPoint, category: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -130,23 +141,32 @@ class MiddleViewModel @Inject constructor(
             runCatching {
                 tMapRepository.findNearFacility(point, category)
             }.onSuccess { result ->
-                result?.let {
-                    it.forEach { item ->
+                if (result.isNotNull()) {
+                    result!!.forEach { item ->
                         if (isItemDataOK(item)) {
                             nearFacilityList.add(LocationData().setNearFacilityItem(item))
                         }
                     }
-                    getLocationList().forEach { locationData ->
-                        nearFacilityList.find { listData ->
-                            listData.isSameData(locationData)
-                        }.apply {
-                            nearFacilityList.remove(this)
-                        }
-                    }
+                    removeDuplicatesFromList(getLocationList(), nearFacilityList)
                     _facilityList.postValue(nearFacilityList)
+                }
+                else{
+                    _facilityList.postValue(listOf())
                 }
             }.onFailure { throwable ->
                 throw throwable
+            }
+        }
+    }
+
+    private fun removeDuplicatesFromList(
+        currentList: List<LocationData>, list: MutableList<LocationData>
+    ) {
+        currentList.forEach { locationData ->
+            list.find { listData ->
+                listData.isSameData(locationData)
+            }.apply {
+                list.remove(this)
             }
         }
     }
@@ -173,9 +193,12 @@ class MiddleViewModel @Inject constructor(
         )
         LinkClient.instance.apply {
             if (isKakaoLinkAvailable(context)) {
-                defaultTemplate(context, feedTemplate) { _, error ->
+                defaultTemplate(context, feedTemplate) { linkResult, error ->
                     error?.let {
                         throw error
+                    }
+                    linkResult?.let {
+                        context.startActivity(linkResult.intent)
                     }
                 }
             } else {

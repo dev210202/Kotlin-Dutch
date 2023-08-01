@@ -1,5 +1,6 @@
 package com.dutch2019.repository
 
+import android.util.Log
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapPoint
 import com.dutch2019.model.RouteDataList
@@ -11,7 +12,8 @@ import java.lang.Exception
 class TMapRepository(private val api: TMapService) {
 
     fun findAll(input: String): ArrayList<TMapPOIItem>? = TMapData().findAllPOI(input)
-    fun findNearFacility(point: TMapPoint, category: String): ArrayList<TMapPOIItem>? = TMapData().findAroundNamePOI(point, category, 3, 50)
+    fun findNearFacility(point: TMapPoint, category: String): ArrayList<TMapPOIItem>? =
+        TMapData().findAroundNamePOI(point, category, 3, 50)
 
     fun getAddress(point: TMapPoint): String {
         return try {
@@ -30,7 +32,12 @@ class TMapRepository(private val api: TMapService) {
     }
 
     suspend fun getRouteTime(startEndPointData: StartEndPointData): String {
-        return filtRouteTime(api.getRouteTime(startEndPointData).body()!!)
+        return try {
+            filtRouteTime(api.getRouteTime(startEndPointData).body()!!)
+        } catch (e: Exception) {
+            Log.e("EXCEPTION", e.toString())
+            ""
+        }
     }
 
     private fun filtRouteTime(routeDataList: RouteDataList): String {

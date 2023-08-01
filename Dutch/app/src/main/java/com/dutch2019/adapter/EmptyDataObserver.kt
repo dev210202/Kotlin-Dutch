@@ -14,9 +14,10 @@ class EmptyDataObserver(private val rv: RecyclerView, private val tv: TextView) 
         super.onChanged()
         checkEmpty()
     }
+
     private fun checkEmpty() {
         rv.adapter.run {
-            when(this){
+            when (this) {
                 is SearchRecyclerAdapter -> {
                     tv.text = "검색된 결과가 없습니다."
                 }
@@ -24,10 +25,9 @@ class EmptyDataObserver(private val rv: RecyclerView, private val tv: TextView) 
                     tv.text = "검색된 결과가 없습니다.\n 다른 카테고리를 선택해주세요"
                 }
             }
-            if(this?.itemCount == 0){
+            if (this!!.itemCount == 0) {
                 tv.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 tv.visibility = View.INVISIBLE
             }
         }

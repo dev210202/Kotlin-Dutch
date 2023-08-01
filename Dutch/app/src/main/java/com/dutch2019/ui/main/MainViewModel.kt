@@ -48,9 +48,6 @@ class MainViewModel @Inject constructor(
         _locationList.remove(_locationList.value!![position])
     }
 
-    fun setLocationList(list: List<LocationData>) {
-        _locationList.value = list
-    }
 
     fun getLocationList(): List<LocationData> {
         return _locationList.value!!
@@ -59,10 +56,6 @@ class MainViewModel @Inject constructor(
     fun getLocationDBList(): List<LocationData> {
         return locationDBList
     }
-    fun getSearchLocationList(): List<LocationData> {
-        return searchLocationList
-    }
-
     fun getSelectedItemIndex(): Int {
         return _selectedItemIndex
     }
@@ -123,10 +116,9 @@ class MainViewModel @Inject constructor(
     fun deleteCheckedList(list: List<LocationData>) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                dataBaseRepository.deleteRecentData(list)
-            }.onSuccess {
-                Log.e("deleteCheckedList", "success")
+                dataBaseRepository.deleteRecentData(list.toMutableList())
             }.onFailure { throwable ->
+                Log.e("deleteCheckedList fail", throwable.toString())
                 throw throwable
             }
         }

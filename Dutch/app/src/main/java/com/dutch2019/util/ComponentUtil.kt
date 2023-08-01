@@ -23,13 +23,13 @@ enum class ButtonState {
             button.setTextColor(Color.CTA_ACTIVE.getColor(button.context))
         }
         DISABLE -> {
-            button.isSelected = false
-            button.setTextColor(Color.CTA_DEFAULT.getColor(button.context))
-        }
-        DEFAULT -> {
             button.isEnabled = false
             button.isSelected = false
             button.setTextColor(Color.CTA_DISABLED.getColor(button.context))
+        }
+        DEFAULT -> {
+            button.isSelected = false
+            button.setTextColor(Color.CTA_DEFAULT.getColor(button.context))
         }
     }
 }

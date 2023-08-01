@@ -40,29 +40,22 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerviewMain.apply {
-            adapter = mainAdapter
-        }
+        initRecyclerView()
+        initButtonLogo()
+        initButtonFindMiddleLocation()
 
         vm.locationList.observe(viewLifecycleOwner) { list ->
-            mainAdapter.run{
-                setLocationDataList(list)
-                binding.recyclerviewMain.scrollToPosition(this.getLocationDataList().size - 1)
-            }
+            setAdapterList(list)
             if (isExistTwoOrMoreLocation()) {
                 ButtonState.ACTIVE.changeButton(binding.btnFindMiddlelocation)
-             } else {
+            } else {
                 ButtonState.DISABLE.changeButton(binding.btnFindMiddlelocation)
             }
         }
 
+    }
 
-
-        binding.imagebuttonMainLogo.setOnClickListener {
-            checkHashKey()
-        }
-
-
+    private fun initButtonFindMiddleLocation() {
         binding.btnFindMiddlelocation.setOnClickListener {
             if (isExistTwoOrMoreLocation()) {
                 if (isAvailableFindMiddleLocation()) {
@@ -79,6 +72,25 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
             } else {
                 context?.toast("위치를 2개 이상 설정해주세요!")
             }
+        }
+    }
+
+    private fun initButtonLogo() {
+        binding.imagebuttonMainLogo.setOnClickListener {
+            checkHashKey()
+        }
+    }
+
+    private fun setAdapterList(list: List<LocationData>) {
+        mainAdapter.run {
+            setLocationDataList(list)
+            binding.recyclerviewMain.scrollToPosition(this.getLocationDataList().size - 1)
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerviewMain.apply {
+            adapter = mainAdapter
         }
     }
 
