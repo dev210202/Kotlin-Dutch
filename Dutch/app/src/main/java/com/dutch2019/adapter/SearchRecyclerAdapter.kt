@@ -1,6 +1,7 @@
 package com.dutch2019.adapter
 
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemSearchBinding
@@ -39,7 +40,7 @@ class SearchRecyclerAdapter(
         fun bind(locationData: LocationData) {
             binding.name = locationData.name
             binding.address = filtNull(locationData.address)
-            binding.layoutSearch.setOnClickListener { view ->
+            binding.layoutSearch.setOnClickListener {
                 onRightArrowButtonClicked(locationData)
             }
         }

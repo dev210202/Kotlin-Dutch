@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_title"
             style="@style/Pretendard_Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_error" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tv_info"
             style="@style/Pretendard_Bold"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -58,7 +58,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_refresh"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <Button
             android:gravity="center"
@@ -77,7 +77,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:layout_margin="16dp"
+        android:layout_margin="36dp"
         style="@style/Pretendard_Bold"
         android:textSize="12sp"
         android:id="@+id/tv_error"

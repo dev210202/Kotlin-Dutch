@@ -33,11 +33,17 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         initTMapView()
+        initButtonLeftArrow()
         initButtonCloseA()
         initButtonCloseB()
         initButtonRatioComplete()
     }
-
+    private fun initButtonLeftArrow() {
+        OnClickListener { findNavController().popBackStack() }.apply {
+            binding.layoutIbLeftArrow.setOnClickListener(this)
+            binding.ibLeftArrow.setOnClickListener(this)
+        }
+    }
     private fun initButtonCloseB() {
         binding.layoutCloseB.setOnClickListener(OnCloseClickListener())
     }
@@ -69,6 +75,7 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
 
     inner class OnCloseClickListener : OnClickListener {
         override fun onClick(view: View?) {
+            
             val objectToChange = object {
                 var id = ""
                 lateinit var previousIconBitmap: Bitmap
@@ -116,11 +123,11 @@ class RatioFragment : BaseFragment<FragmentRatioBinding>(
             }[0]
 
             if (isNotSetRatioLocationA()) {
-                setSelectedMarkerToRatioLocationA(tMapMarkerItem2, location)
                 markerItemAPreviousBitmap = tMapMarkerItem2.icon
+                setSelectedMarkerToRatioLocationA(tMapMarkerItem2, location)
             } else if (isNotSetRatioLocationB()) {
-                setSelectedMarkerToRatioLocationB(tMapMarkerItem2, location)
                 markerItemBPreviousBitmap = tMapMarkerItem2.icon
+                setSelectedMarkerToRatioLocationB(tMapMarkerItem2, location)
             }
 
             if (isSetLocationAandB()) {

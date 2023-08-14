@@ -14,7 +14,7 @@ abstract class LifeCycleFragment<B : ViewDataBinding>(
 ) : Fragment(layoutRes) {
 
     protected lateinit var binding: B
-        private set
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

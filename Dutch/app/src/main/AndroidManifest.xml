@@ -13,6 +13,7 @@
     <application
         android:name=".DutchApplication"
         android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher_dutch"
         android:label="더치"
         android:roundIcon="@mipmap/ic_launcher_dutch_round"

@@ -2,6 +2,7 @@ package com.dutch2019.ui.locationcheck
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
@@ -17,22 +18,21 @@ class LocationCheckFragment : BaseFragment<FragmentLocationCheckBinding>(
     R.layout.fragment_location_check
 ) {
     private val vm: MainViewModel by activityViewModels()
-    lateinit var locationData: LocationData
-    lateinit var tMapView: TMapView
+    private lateinit var locationData: LocationData
+    private lateinit var tMapView: TMapView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initLocationData()
         initTMapView()
         initButtonSetLocation()
         initButtonLeftArrow()
-
     }
 
     private fun initButtonLeftArrow() {
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
+        OnClickListener { findNavController().popBackStack() }.apply {
+            binding.layoutIbLeftArrow.setOnClickListener(this)
+            binding.ibLeftArrow.setOnClickListener(this)
         }
     }
 

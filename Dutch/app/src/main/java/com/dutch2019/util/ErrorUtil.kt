@@ -70,7 +70,7 @@ class ExceptionHandler(application: Application) : Thread.UncaughtExceptionHandl
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
         Firebase.crashlytics.recordException(throwable)
         lastActivity?.run {
-            startErrorActivity(this, throwable.cause!!.stackTraceToString())
+            startErrorActivity(this, throwable.message!!)
         }
         Process.killProcess(Process.myPid())
         System.exit(0)

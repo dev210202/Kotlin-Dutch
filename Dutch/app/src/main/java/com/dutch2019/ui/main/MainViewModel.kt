@@ -1,6 +1,5 @@
 package com.dutch2019.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -56,6 +55,7 @@ class MainViewModel @Inject constructor(
     fun getLocationDBList(): List<LocationData> {
         return locationDBList
     }
+
     fun getSelectedItemIndex(): Int {
         return _selectedItemIndex
     }
@@ -69,7 +69,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createEmptyLeastLocationItems() {
-        repeat(3){
+        repeat(3) {
             _locationList.add(LocationData())
         }
     }
@@ -118,7 +118,6 @@ class MainViewModel @Inject constructor(
             runCatching {
                 dataBaseRepository.deleteRecentData(list.toMutableList())
             }.onFailure { throwable ->
-                Log.e("deleteCheckedList fail", throwable.toString())
                 throw throwable
             }
         }

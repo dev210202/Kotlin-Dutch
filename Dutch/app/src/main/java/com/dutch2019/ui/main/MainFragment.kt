@@ -58,7 +58,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
     private fun initButtonFindMiddleLocation() {
         binding.btnFindMiddlelocation.setOnClickListener {
             if (isExistTwoOrMoreLocation()) {
-                if (isAvailableFindMiddleLocation()) {
+                if (isNetworkOk()) {
                     findNavController().navigate(
                         MainFragmentDirections.actionMainFragmentToMiddleFragment(
                             locationlist = LocationDataList().convertLocationData(
@@ -94,7 +94,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
         }
     }
 
-    private fun isAvailableFindMiddleLocation() =
+    private fun isNetworkOk() =
         (checkNetWorkStatus(requireContext()) != NetWorkStatus.NONE)
 
     private fun isExistTwoOrMoreLocation(): Boolean {

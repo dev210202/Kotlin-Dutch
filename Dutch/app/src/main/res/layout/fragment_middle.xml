@@ -26,16 +26,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/ib_left_arrow"
+            <LinearLayout
+                android:id="@+id/layout_ib_left_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="14dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_left_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/ib_left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/ic_left_arrow" />
+            </LinearLayout>
 
             <TextView
                 style="@style/Pretendard_SemiBold"
@@ -45,10 +51,10 @@
                 android:text="중간지점 검색 결과"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ib_left_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_ib_left_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ib_left_arrow" />
+                app:layout_constraintTop_toTopOf="@+id/layout_ib_left_arrow" />
 
             <Button
                 android:id="@+id/btn_ratio"
@@ -69,9 +75,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-            android:orientation="horizontal"/>
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"

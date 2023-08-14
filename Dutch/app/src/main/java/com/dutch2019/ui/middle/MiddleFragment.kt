@@ -2,6 +2,7 @@ package com.dutch2019.ui.middle
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.skt.Tmap.TMapView
@@ -45,8 +46,11 @@ class MiddleFragment : BaseFragment<FragmentMiddleBinding>(
     }
 
     private fun initButtonLeftArrow() {
-        binding.ibLeftArrow.setOnClickListener {
+        OnClickListener{
             findNavController().popBackStack()
+        }.apply {
+            binding.ibLeftArrow.setOnClickListener(this)
+            binding.layoutIbLeftArrow.setOnClickListener(this)
         }
     }
 

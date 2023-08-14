@@ -2,6 +2,7 @@ package com.dutch2019.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dutch2019.databinding.ItemMainLocationAddButtonBinding
@@ -60,9 +61,7 @@ class MainRecyclerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LocationSearchViewHolder -> {
-                holder.bind(position)
-            }
+            is LocationSearchViewHolder -> holder.bind(position)
         }
     }
 
@@ -74,7 +73,7 @@ class MainRecyclerAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.locationData = locationDataList[position]
-            binding.tvMarkerNumber.text = "${position +1}"
+            binding.tvMarkerNumber.text = "${position + 1}"
             if (locationDataList[position].name.isNotEmpty()) {
                 binding.tvName.text = locationDataList[position].name
                 binding.tvName.setTextColor(Color.TEXT_ACTIVE.getColor(context))
@@ -86,8 +85,11 @@ class MainRecyclerAdapter(
                  */
                 setDefaultLocationItem(context, binding.tvName, binding.layoutMarker)
             }
-            binding.btnClose.setOnClickListener {
+            OnClickListener {
                 onLocationCloseButtonClicked(position)
+            }.apply {
+                binding.btnClose.setOnClickListener(this)
+                binding.layoutBtnClose.setOnClickListener(this)
             }
             binding.layoutSearch.setOnClickListener {
                 onLocationSearchButtonClicked(position)

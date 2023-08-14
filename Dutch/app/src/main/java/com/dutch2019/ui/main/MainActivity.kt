@@ -9,6 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.activityViewModels
 import com.dutch2019.BuildConfig
 import com.dutch2019.R
+import com.dutch2019.base.BaseActivity
 import com.dutch2019.base.LifeCycleActivity
 import com.dutch2019.databinding.ActivityMainBinding
 import com.dutch2019.util.getMessageByErrorTypeClassify
@@ -17,7 +18,7 @@ import com.skt.Tmap.TMapTapi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : LifeCycleActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val vm: MainViewModel by viewModels()
     private val tMapTapi: TMapTapi by lazy { TMapTapi(this) }

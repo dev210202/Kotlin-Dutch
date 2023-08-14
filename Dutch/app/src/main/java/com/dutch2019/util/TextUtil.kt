@@ -31,6 +31,8 @@ fun filtZero(value: String): String = value.replace(" 0", "")
 
 fun filtDoubleBlank(value: String): String = value.replace("  ", " ")
 
+fun flitBracket(value: String): String = value.replace("[", " ").replace("]", "")
+
 fun convertTime(time: String): String {
     var result = ""
     var totalTime = time.toInt()

@@ -179,7 +179,7 @@ class MiddleViewModel @Inject constructor(
 
     fun shareKakao(location: LocationData, context: Context) {
 
-        val name = filtDoubleBlank(location.name)
+        val name = flitBracket(filtDoubleBlank(location.name))
         val address = filtDoubleBlank(location.address)
         val url = "https://map.kakao.com/link/map/$name,${location.lat},${location.lon}"
 

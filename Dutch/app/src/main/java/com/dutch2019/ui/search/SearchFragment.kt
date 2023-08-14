@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.View.OnClickListener
+import android.view.View.OnKeyListener
 import android.view.View.VISIBLE
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -76,8 +78,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     }
 
     private fun initButtonClose() {
-        binding.ibClose.setOnClickListener {
+        OnClickListener{
             setRecentSearchView()
+        }.apply {
+            binding.ibClose.setOnClickListener(this)
+            binding.layoutIbClose.setOnClickListener(this)
         }
     }
 
@@ -96,13 +101,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     }
 
     private fun initButtonSearch() {
-        binding.ibSearch.setOnClickListener {
+        OnClickListener {
             vm.search(binding.etSearch.text.toString(), showToast = { toastMessage ->
                 activity!!.runOnUiThread {
                     context!!.toast(toastMessage)
                 }
             })
-            binding.btnEdit.visibility = INVISIBLE
+        }.apply {
+            binding.ibSearch.setOnClickListener(this)
+            binding.layoutIbSearch.setOnClickListener(this)
         }
     }
 

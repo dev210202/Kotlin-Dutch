@@ -30,96 +30,110 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-
+                <LinearLayout
+                    android:id="@+id/layout_ib_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                 <ImageButton
                     android:id="@+id/ib_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
 
-                    android:background="@drawable/ic_search_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/ic_search_24" />
+                </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/et_search"
                     style="@style/Pretendard_SemiBold"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="12dp"
                     android:background="@color/transparent"
                     android:hint="@string/et_search"
-                    android:textColorHint="@color/gray3"
                     android:inputType="text"
                     android:maxLines="2"
+                    android:textColorHint="@color/gray3"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ib_close"
-                    app:layout_constraintStart_toEndOf="@+id/ib_search"
+                    app:layout_constraintEnd_toStartOf="@+id/layout_ib_close"
+                    app:layout_constraintStart_toEndOf="@+id/layout_ib_search"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layout_ib_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
 
                 <ImageButton
                     android:id="@+id/ib_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:background="@drawable/ic_close"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    android:layout_margin="12dp"
+                    android:background="@drawable/ic_close" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:layout_marginTop="13dp"
-            android:layout_marginLeft="16dp"
-            android:id="@+id/tv_info"
-            style="@style/Pretendard_Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="최근검색"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-        <Button
-            android:id="@+id/btn_edit"
-            android:background="@color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="편집"
-            android:padding="13dp"
-
-            android:textColor="@color/gray3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-        <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/item_search"
-            android:layout_marginTop="13dp"
-            android:id="@+id/recyclerview_search"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/gray7"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info" />
-
-        <TextView
-            android:id="@+id/tv_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:visibility="invisible"
-            android:text="@string/recent_empty"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerview_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+    <TextView
+        android:id="@+id/tv_info"
+        style="@style/Pretendard_Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="13dp"
+        android:text="최근검색"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:padding="13dp"
+        android:text="편집"
+
+        android:textColor="@color/gray3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray7"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info"
+        tools:listitem="@layout/item_search" />
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/recent_empty"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </layout>

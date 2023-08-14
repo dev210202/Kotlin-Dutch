@@ -2,6 +2,7 @@ package com.dutch2019.ui.recentedit
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
@@ -58,8 +59,9 @@ class RecentEditFragment : BaseFragment<FragmentRecentEditBinding>(
     }
 
     private fun initButtonLeftArrow() {
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
+        OnClickListener { findNavController().popBackStack() }.apply {
+            binding.layoutIbLeftArrow.setOnClickListener(this)
+            binding.ibLeftArrow.setOnClickListener(this)
         }
     }
 

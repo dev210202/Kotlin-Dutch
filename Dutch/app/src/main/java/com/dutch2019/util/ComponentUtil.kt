@@ -3,6 +3,7 @@ package com.dutch2019.util
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
+import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -10,6 +11,9 @@ import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.dutch2019.R
 import com.dutch2019.util.marker.Marker
 
@@ -85,4 +89,11 @@ fun setDefaultLocationItem(context: Context, textview: TextView, layout: FrameLa
     textview.setTextColor(Color.CTA_DEFAULT.getColor(context))
     Color.CTA_DEFAULT.getColor(context)
     layout.background = Marker.DEFAULT.getMark(context)
+}
+
+
+fun onClickLeftArrowButton(view: View){
+    view.setOnClickListener {
+        view.findNavController().popBackStack()
+    }
 }

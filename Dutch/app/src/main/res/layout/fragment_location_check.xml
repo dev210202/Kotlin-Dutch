@@ -16,27 +16,32 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/gray7"
             android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/ib_left_arrow"
+            <LinearLayout
+                android:id="@+id/layout_ib_left_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="14dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_left_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/ib_left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/ic_left_arrow" />
+            </LinearLayout>
 
             <TextView
                 style="@style/Pretendard_SemiBold"
@@ -46,10 +51,10 @@
                 android:text="선택 위치"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ib_left_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_ib_left_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ib_left_arrow" />
+                app:layout_constraintTop_toTopOf="@+id/layout_ib_left_arrow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -57,9 +62,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-            android:orientation="horizontal" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -82,7 +87,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                tools:text="세종대학교"
                 style="@style/Pretendard_Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,7 +96,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="세종대학교" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -102,9 +107,9 @@
                 android:text="@{address}"
                 android:textColor="@color/gray4"
                 android:textSize="14dp"
-                tools:text="서울특별시 광진구 ~"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                tools:text="서울특별시 광진구 ~" />
+
             <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
@@ -117,8 +122,8 @@
                     style="@style/Pretendard_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_primary_round"
                     android:text="위치 설정"

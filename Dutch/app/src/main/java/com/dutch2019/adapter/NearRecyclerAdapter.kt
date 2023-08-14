@@ -63,7 +63,7 @@ class NearRecyclerAdapter(
         fun bind(locationData: LocationData) {
             locationData.apply {
                 binding.locationData = this
-                binding.ibInternet.setOnClickListener{
+                binding.layoutIbInternet.setOnClickListener{
                     onInternetClicked(this)
                 }
             }

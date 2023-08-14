@@ -2,6 +2,8 @@ package com.dutch2019.ui.ratioselect
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
+import android.view.ViewGroup.*
 import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -32,6 +34,7 @@ class RatioSelectFragment :
 
         initRatioAandB()
         initTMapView()
+        initButtonLeftArrow()
         initButtonRatioSetComplete()
         initSeekBar()
     }
@@ -56,6 +59,13 @@ class RatioSelectFragment :
             }
 
         })
+    }
+
+    private fun initButtonLeftArrow() {
+        OnClickListener { findNavController().popBackStack() }.apply {
+            binding.layoutIbLeftArrow.setOnClickListener(this)
+            binding.ibLeftArrow.setOnClickListener(this)
+        }
     }
 
     private fun initButtonRatioSetComplete() {

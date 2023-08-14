@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-    <variable
-        name="locationData"
-        type="com.dutch2019.model.LocationData" />
+
+        <variable
+            name="locationData"
+            type="com.dutch2019.model.LocationData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +31,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
 
-            app:layout_constraintEnd_toStartOf="@+id/ib_internet"
+            app:layout_constraintEnd_toStartOf="@+id/layout_ib_internet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/cities" />
@@ -50,20 +51,27 @@
             android:textColor="@color/gray3"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ib_internet"
+            app:layout_constraintEnd_toStartOf="@+id/layout_ib_internet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name_item"
             tools:text="@tools:sample/cities" />
 
-        <ImageButton
-            android:layout_marginEnd="16dp"
-            android:id="@+id/ib_internet"
+        <LinearLayout
+            android:id="@+id/layout_ib_internet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_internet_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageButton
+                android:id="@+id/ib_internet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_internet_24"
+                />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

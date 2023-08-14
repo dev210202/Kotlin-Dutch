@@ -27,17 +27,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/ib_left_arrow"
+            <LinearLayout
+                android:id="@+id/layout_ib_left_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="14dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_left_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <ImageButton
+                    android:id="@+id/ib_left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/ic_left_arrow" />
+            </LinearLayout>
             <TextView
                 style="@style/Pretendard_SemiBold"
                 android:layout_width="wrap_content"
@@ -46,10 +51,10 @@
                 android:text="비율 설정"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ib_left_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_ib_left_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ib_left_arrow" />
+                app:layout_constraintTop_toTopOf="@+id/layout_ib_left_arrow" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

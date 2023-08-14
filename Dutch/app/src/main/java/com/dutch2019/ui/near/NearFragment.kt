@@ -84,8 +84,9 @@ class NearFragment : BaseFragment<FragmentNearBinding>(R.layout.fragment_near) {
     }
 
     private fun initButtonLeftArrow() {
-        binding.ibLeftArrow.setOnClickListener {
-            findNavController().popBackStack()
+        OnClickListener { findNavController().popBackStack() }.apply {
+            binding.layoutIbLeftArrow.setOnClickListener(this)
+            binding.ibLeftArrow.setOnClickListener(this)
         }
     }
 
