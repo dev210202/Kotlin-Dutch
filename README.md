@@ -5,7 +5,7 @@
    
 
 #### 더치는 입력한 위치들의 중간지점을 찾아주고 중간지점 근처의 대중교통, 문화시설, 음식점, 카페를 찾아 카카오톡으로 공유할 수 있는 서비스입니다.
-![Frame 50](https://github.com/dev210202/Kotlin-Dutch/assets/32587845/34d9fd1c-4440-4089-a616-a320c3e1bbe5)
+![Frame 50](https://github.com/dev210202/Kotlin-Dutch/assets/32587845/7c4ce50c-b48a-4811-936b-bb3635362f5c)
 
 #### 사용기술
 Java, Kotlin, MVVM, Coroutine, Retrofit, Room, DataBinding, LiveData, Hilt, TMap API, Kakao API
