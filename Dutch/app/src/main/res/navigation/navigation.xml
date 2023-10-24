@@ -24,6 +24,12 @@
         android:name="com.dutch2019.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
+        <argument
+            android:name="selectedItemIndex"
+            app:argType="integer"
+            android:defaultValue="0"
+            />
+
         <action
             android:id="@+id/action_searchFragment_to_locationCheckFragment"
             app:destination="@id/locationCheckFragment" />
@@ -45,6 +51,10 @@
         <argument
             android:name="locationData"
             app:argType="com.dutch2019.model.LocationData" />
+        <argument
+            android:name="selectedItemIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_locationCheckFragment_to_mainFragment"
             app:destination="@id/mainFragment"

@@ -11,6 +11,7 @@ import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentMainBinding
 import com.dutch2019.model.LocationData
 import com.dutch2019.model.LocationDataList
+import com.dutch2019.ui.LocationViewModel
 import com.dutch2019.util.*
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,12 +22,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(
 ) {
 
     private var count = 0
-    private val vm: MainViewModel by activityViewModels()
+    private val vm: LocationViewModel by activityViewModels()
     private val mainAdapter by lazy {
         MainRecyclerAdapter(onLocationSearchButtonClicked = { itemPosition ->
-            vm.setSelectedItemIndex(itemPosition)
             findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToSearchFragment()
+                MainFragmentDirections.actionMainFragmentToSearchFragment(itemPosition)
             )
         }, onLocationCloseButtonClicked = { position ->
             vm.removeAtLocationList(position)

@@ -16,6 +16,7 @@ import com.dutch2019.adapter.SearchRecyclerAdapter
 import com.dutch2019.base.BaseFragment
 import com.dutch2019.databinding.FragmentSearchBinding
 import com.dutch2019.model.LocationData
+import com.dutch2019.ui.locationcheck.LocationCheckFragmentArgs
 import com.dutch2019.ui.main.MainViewModel
 import com.dutch2019.util.convertTMapPOIItemToLocationData
 import com.dutch2019.util.toast
@@ -38,16 +39,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         SearchRecyclerAdapter(onRightArrowButtonClicked = { locationData ->
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToLocationCheckFragment(
-                    locationData = locationData
+                    locationData = locationData,
+                    selectedItemIndex = selectedItemIndex
                 )
             )
         }).apply {
             registerAdapterDataObserver(emptyDataObserver)
         }
     }
+    private var selectedItemIndex = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getSelectedItemIndex()
 
         initRecyclerView().run {
             initAdapterItem()
@@ -67,6 +72,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         initButtonClose()
         initButtonEdit()
 
+    }
+
+    private fun getSelectedItemIndex() {
+        SearchFragmentArgs.fromBundle(requireArguments()).let { data ->
+            selectedItemIndex = data.selectedItemIndex
+        }
     }
 
     private fun initButtonEdit() {
