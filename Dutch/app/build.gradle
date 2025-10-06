@@ -16,14 +16,14 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     namespace 'com.dutch2019'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.dutch2019"
         minSdk 23
-        targetSdk 34
-        versionCode 38
-        versionName "3.0.8"
+        targetSdk 35
+        versionCode 39
+        versionName "3.0.9"
 
         // local properties key
         manifestPlaceholders["KAKAO_API"] = properties['kakaoAPIKey']

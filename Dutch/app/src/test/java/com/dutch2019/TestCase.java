@@ -71,8 +71,13 @@ public class TestCase {
 
     @Test
     public void main() {
+        test();
     }
-    
+
+    private void test() {
+
+    }
+
     private void tc10_checkDisplayNoHistory() {
         boolean isTestSuccess = false;
         boolean isNoHistoryTextDisplayed = false;
